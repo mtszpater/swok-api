@@ -6,6 +6,6 @@ include "config.php";
 $adm = new AdminService('dupa', 'haslo', $database);
 
 
-$adm->registerUser("testowys3", "jasiek");
+$adm->registerUser("testowys5123", "jasiek");
 
 ?>

@@ -11,21 +11,42 @@ class AdminService
 
     public function __construct($user_login, $user_password, DatabaseOperation $database)
     {
+        $this->database = $database;
+
+        if( ! $this->database->isAdmin($user_login, $user_password) ){
+            echo "Nie masz uprawnień";
+            return false;
+
+            //TODO WYWALIĆ JAKIŚ BŁĄD TUTAJ JAK NIE MA PRAWNIEN
+        }
+
         $this->user_login = $user_login;
         $this->user_password = $user_password;
-        $this->database = $database;
+
+
     }
 
     public function registerUser($user_login, $user_password){
 
-        if($this->database->isAdmin($this->user_login, $this->user_password) ){
-
-            if($this->database->registerUser($user_login, $user_password))
-                echo "Zarejestrowalem uzytkownika";
-            else
-                echo "Nie moglem go zarejestrowac";
-
+        if( empty($user_password) || empty($user_login)){
+            echo "Puste pola";
+            return false;
         }
+
+        if( $this->database->isLoginBusy($user_login) ){
+            echo "Login zajęty";
+            return false;
+        }
+
+
+        if($this->database->registerUser($user_login, $user_password)) {
+            echo "Zarejestrowalem uzytkownika";
+            return true;
+        }
+
+
+        echo "Nie moglem go zarejestrowac";
+        return false;
 
     }
 

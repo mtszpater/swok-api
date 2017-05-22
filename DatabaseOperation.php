@@ -12,6 +12,6 @@ interface DatabaseOperation
     public function userExists($user_login, $user_password);
     public function isAdmin($user_login, $user_password);
     public function registerUser($user_login, $user_password);
-
+    public function isLoginBusy($user_login);
 
 }

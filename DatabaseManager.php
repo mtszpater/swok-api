@@ -33,6 +33,12 @@ class DatabaseManager implements DatabaseOperation {
 
     }
 
+    public function isLoginBusy($user_login){
+        $query = pg_query($this->connection, "select * from member WHERE login='$user_login'");
+
+        return pg_num_rows($query) == 1 ? true : false;
+    }
+
     function __destruct()
     {
         pg_close($this->connection);
