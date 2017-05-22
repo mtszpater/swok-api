@@ -8,7 +8,7 @@ class DatabaseManager {
 
 	public function has_perm($user_login, $user_password){
 
-		$query = pg_query($this->connection, "select * from member WHERE 	login='$user_login' AND password='$user_password';");
+		$query = pg_query($this->connection, "select * from member WHERE login='$user_login' AND password='$user_password';");
 
 		if( pg_num_rows($query) == 1) return true; else return false;
 	}
