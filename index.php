@@ -3,7 +3,9 @@ include "config.php";
 
 
 
-if ($database->has_perm("dupa", "haslo") == true) echo "ok"; else echo "dupa";
+$adm = new AdminService('dupa', 'haslo', $database);
 
+
+$adm->registerUser("testowys3", "jasiek");
 
 ?>

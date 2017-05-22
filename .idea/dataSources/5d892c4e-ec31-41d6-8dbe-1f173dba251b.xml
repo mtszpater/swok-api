@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="PostgreSQL - springbootdb@localhost">
+  <database-model serializer="dbm" rdbms="POSTGRES" format-version="4.2">
+    <root id="1"/>
+    <database id="2" parent="1" name="springbootdb">
+      <ObjectId>40965</ObjectId>
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </database>
+    <schema id="3" parent="2" name="public">
+      <ObjectId>2200</ObjectId>
+      <IntrospectionTimestamp>2017-05-22.23:03:50.833</IntrospectionTimestamp>
+      <IntrospectionStateNumber>3239</IntrospectionStateNumber>
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="4" parent="2" name="pg_catalog">
+      <ObjectId>11</ObjectId>
+    </schema>
+    <schema id="5" parent="2" name="pg_toast">
+      <ObjectId>99</ObjectId>
+    </schema>
+    <schema id="6" parent="2" name="pg_temp_1">
+      <ObjectId>11848</ObjectId>
+    </schema>
+    <schema id="7" parent="2" name="pg_toast_temp_1">
+      <ObjectId>11849</ObjectId>
+    </schema>
+    <schema id="8" parent="2" name="information_schema">
+      <ObjectId>12381</ObjectId>
+    </schema>
+    <sequence id="9" parent="3" name="logs_id_seq">
+      <ObjectId>51066</ObjectId>
+      <StateNumber>3221</StateNumber>
+      <BelongsToColumn>1</BelongsToColumn>
+    </sequence>
+    <sequence id="10" parent="3" name="talk_id_seq">
+      <ObjectId>51022</ObjectId>
+      <StateNumber>3216</StateNumber>
+      <BelongsToColumn>1</BelongsToColumn>
+    </sequence>
+    <sequence id="11" parent="3" name="talk_proposal_id_seq">
+      <ObjectId>51001</ObjectId>
+      <StateNumber>3214</StateNumber>
+      <BelongsToColumn>1</BelongsToColumn>
+    </sequence>
+    <table id="12" parent="3" name="attendance_on_talks">
+      <ObjectId>51042</ObjectId>
+      <StateNumber>3236</StateNumber>
+    </table>
+    <table id="13" parent="3" name="event">
+      <ObjectId>51012</ObjectId>
+      <StateNumber>3226</StateNumber>
+    </table>
+    <table id="14" parent="3" name="friendship">
+      <ObjectId>51050</ObjectId>
+      <StateNumber>3230</StateNumber>
+    </table>
+    <table id="15" parent="3" name="logs">
+      <ObjectId>51068</ObjectId>
+      <StateNumber>3233</StateNumber>
+    </table>
+    <table id="16" parent="3" name="member">
+      <ObjectId>50992</ObjectId>
+      <StateNumber>3233</StateNumber>
+    </table>
+    <table id="17" parent="3" name="rate">
+      <ObjectId>51057</ObjectId>
+      <StateNumber>3232</StateNumber>
+    </table>
+    <table id="18" parent="3" name="registrations_on_events">
+      <ObjectId>51034</ObjectId>
+      <StateNumber>3226</StateNumber>
+    </table>
+    <table id="19" parent="3" name="talk">
+      <ObjectId>51024</ObjectId>
+      <StateNumber>3239</StateNumber>
+    </table>
+    <table id="20" parent="3" name="talk_proposal">
+      <ObjectId>51003</ObjectId>
+      <StateNumber>3222</StateNumber>
+    </table>
+    <routine id="21" parent="3" name="add">
+      <ObjectId>43981</ObjectId>
+      <StateNumber>1710</StateNumber>
+      <ArgumentsDefinition>numeric</ArgumentsDefinition>
+      <ResultsDefinition>bigint</ResultsDefinition>
+      <LanguageName>sql</LanguageName>
+      <RoutineKind>function</RoutineKind>
+    </routine>
+    <routine id="22" parent="3" name="get_all_events_members">
+      <ObjectId>44200</ObjectId>
+      <StateNumber>3234</StateNumber>
+      <ArgumentsDefinition>numeric</ArgumentsDefinition>
+      <ResultsDefinition>bigint</ResultsDefinition>
+      <LanguageName>sql</LanguageName>
+      <RoutineKind>function</RoutineKind>
+    </routine>
+    <routine id="23" parent="3" name="get_all_members_of_the_event">
+      <ObjectId>44090</ObjectId>
+      <StateNumber>1740</StateNumber>
+      <ArgumentsDefinition>numeric</ArgumentsDefinition>
+      <ResultsDefinition>bigint</ResultsDefinition>
+      <LanguageName>sql</LanguageName>
+      <RoutineKind>function</RoutineKind>
+    </routine>
+    <routine id="24" parent="3" name="get_all_talks_count">
+      <ObjectId>46063</ObjectId>
+      <StateNumber>3237</StateNumber>
+      <ArgumentsDefinition>text</ArgumentsDefinition>
+      <ResultsDefinition>bigint</ResultsDefinition>
+      <LanguageName>sql</LanguageName>
+      <RoutineKind>function</RoutineKind>
+    </routine>
+    <routine id="25" parent="3" name="update_all_events_members">
+      <ObjectId>44201</ObjectId>
+      <StateNumber>3235</StateNumber>
+      <ResultsDefinition>trigger</ResultsDefinition>
+      <LanguageName>plpgsql</LanguageName>
+      <RoutineKind>function</RoutineKind>
+    </routine>
+    <routine id="26" parent="3" name="update_talks_count">
+      <ObjectId>46064</ObjectId>
+      <StateNumber>3238</StateNumber>
+      <ResultsDefinition>trigger</ResultsDefinition>
+      <LanguageName>plpgsql</LanguageName>
+      <RoutineKind>function</RoutineKind>
+    </routine>
+    <column id="27" parent="12" name="login">
+      <Position>1</Position>
+      <DataType>text|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>3218</StateNumber>
+    </column>
+    <column id="28" parent="12" name="talk_id">
+      <Position>2</Position>
+      <DataType>integer|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>3218</StateNumber>
+    </column>
+    <index id="29" parent="12" name="attendance_on_talks_pkey">
+      <ObjectId>51048</ObjectId>
+      <ColNames>login
+talk_id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="30" parent="12" name="attendance_on_talks_pkey">
+      <ObjectId>51049</ObjectId>
+      <ColNames>login
+talk_id</ColNames>
+      <UnderlyingIndexName>attendance_on_talks_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="31" parent="12" name="fk_aon_login">
+      <ObjectId>51102</ObjectId>
+      <ColNames>login</ColNames>
+      <RefTableName>member</RefTableName>
+      <RefKeyName>member_pkey</RefKeyName>
+      <RefColNames>login</RefColNames>
+    </foreign-key>
+    <foreign-key id="32" parent="12" name="fk_aon_talk">
+      <ObjectId>51107</ObjectId>
+      <ColNames>talk_id</ColNames>
+      <RefTableName>talk</RefTableName>
+      <RefKeyName>talk_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <trigger id="33" parent="12" name="update_talk_after_insert">
+      <ObjectId>51137</ObjectId>
+      <StateNumber>3236</StateNumber>
+      <Turn>after-row</Turn>
+      <Events>IUD</Events>
+      <FireMode>origin</FireMode>
+      <CallRoutineId>44201</CallRoutineId>
+    </trigger>
+    <column id="34" parent="13" name="name">
+      <Position>1</Position>
+      <DataType>text|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>3215</StateNumber>
+    </column>
+    <column id="35" parent="13" name="date_start">
+      <Position>2</Position>
+      <DataType>timestamp|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>3215</StateNumber>
+    </column>
+    <column id="36" parent="13" name="date_end">
+      <Position>3</Position>
+      <DataType>timestamp|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>3215</StateNumber>
+    </column>
+    <column id="37" parent="13" name="talks">
+      <Position>4</Position>
+      <DataType>integer|0</DataType>
+      <StateNumber>3215</StateNumber>
+      <DefaultExpression>0</DefaultExpression>
+    </column>
+    <index id="38" parent="13" name="event_pkey">
+      <ObjectId>51020</ObjectId>
+      <ColNames>name</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="39" parent="13" name="event_pkey">
+      <ObjectId>51021</ObjectId>
+      <ColNames>name</ColNames>
+      <UnderlyingIndexName>event_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <check id="40" parent="13" name="event_check">
+      <ObjectId>51016</ObjectId>
+      <ColNames>date_start
+date_end</ColNames>
+      <Predicate>date_start &lt; date_end</Predicate>
+    </check>
+    <column id="41" parent="14" name="first_user">
+      <Position>1</Position>
+      <DataType>text|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>3219</StateNumber>
+    </column>
+    <column id="42" parent="14" name="second_user">
+      <Position>2</Position>
+      <DataType>text|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>3219</StateNumber>
+    </column>
+    <foreign-key id="43" parent="14" name="fk_friendship_fu">
+      <ObjectId>51112</ObjectId>
+      <ColNames>first_user</ColNames>
+      <RefTableName>member</RefTableName>
+      <RefKeyName>member_pkey</RefKeyName>
+      <RefColNames>login</RefColNames>
+    </foreign-key>
+    <foreign-key id="44" parent="14" name="fk_friendship_su">
+      <ObjectId>51117</ObjectId>
+      <ColNames>second_user</ColNames>
+      <RefTableName>member</RefTableName>
+      <RefKeyName>member_pkey</RefKeyName>
+      <RefColNames>login</RefColNames>
+    </foreign-key>
+    <check id="45" parent="14" name="friendship_check">
+      <ObjectId>51053</ObjectId>
+      <ColNames>second_user
+first_user</ColNames>
+      <Predicate>second_user &lt;&gt; first_user</Predicate>
+    </check>
+    <column id="46" parent="15" name="id">
+      <Position>1</Position>
+      <DataType>integer|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>3221</StateNumber>
+      <SequenceName>logs_id_seq</SequenceName>
+      <DefaultExpression>nextval(&apos;logs_id_seq&apos;::regclass)</DefaultExpression>
+    </column>
+    <column id="47" parent="15" name="content">
+      <Position>2</Position>
+      <DataType>text|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>3221</StateNumber>
+    </column>
+    <column id="48" parent="15" name="date">
+      <Position>3</Position>
+      <DataType>timestamp|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>3221</StateNumber>
+    </column>
+    <column id="49" parent="15" name="login">
+      <Position>4</Position>
+      <DataType>text|0</DataType>
+      <StateNumber>3221</StateNumber>
+    </column>
+    <index id="50" parent="15" name="logs_pkey">
+      <ObjectId>51075</ObjectId>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="51" parent="15" name="logs_pkey">
+      <ObjectId>51076</ObjectId>
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>logs_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="52" parent="15" name="fk_logs_login">
+      <ObjectId>51132</ObjectId>
+      <ColNames>login</ColNames>
+      <RefTableName>member</RefTableName>
+      <RefKeyName>member_pkey</RefKeyName>
+      <RefColNames>login</RefColNames>
+    </foreign-key>
+    <column id="53" parent="16" name="login">
+      <Position>1</Position>
+      <DataType>text|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>3213</StateNumber>
+    </column>
+    <column id="54" parent="16" name="password">
+      <Position>2</Position>
+      <DataType>text|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>3213</StateNumber>
+    </column>
+    <column id="55" parent="16" name="admin">
+      <Position>3</Position>
+      <DataType>boolean|0</DataType>
+      <StateNumber>3213</StateNumber>
+      <DefaultExpression>false</DefaultExpression>
+    </column>
+    <index id="56" parent="16" name="member_pkey">
+      <ObjectId>50999</ObjectId>
+      <ColNames>login</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="57" parent="16" name="member_pkey">
+      <ObjectId>51000</ObjectId>
+      <ColNames>login</ColNames>
+      <UnderlyingIndexName>member_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <column id="58" parent="17" name="talk_id">
+      <Position>1</Position>
+      <DataType>integer|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>3220</StateNumber>
+    </column>
+    <column id="59" parent="17" name="login">
+      <Position>2</Position>
+      <DataType>text|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>3220</StateNumber>
+    </column>
+    <column id="60" parent="17" name="rate">
+      <Position>3</Position>
+      <DataType>integer|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>3220</StateNumber>
+    </column>
+    <index id="61" parent="17" name="rate_pkey">
+      <ObjectId>51064</ObjectId>
+      <ColNames>talk_id
+login</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="62" parent="17" name="rate_pkey">
+      <ObjectId>51065</ObjectId>
+      <ColNames>talk_id
+login</ColNames>
+      <UnderlyingIndexName>rate_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="63" parent="17" name="fk_rate_talk_id">
+      <ObjectId>51127</ObjectId>
+      <ColNames>talk_id</ColNames>
+      <RefTableName>talk</RefTableName>
+      <RefKeyName>talk_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="64" parent="17" name="fk_rate_login">
+      <ObjectId>51122</ObjectId>
+      <ColNames>login</ColNames>
+      <RefTableName>member</RefTableName>
+      <RefKeyName>member_pkey</RefKeyName>
+      <RefColNames>login</RefColNames>
+    </foreign-key>
+    <check id="65" parent="17" name="rate_rate_check">
+      <ObjectId>51060</ObjectId>
+      <ColNames>rate</ColNames>
+      <Predicate>(rate &gt;= 0) AND (rate &lt;= 10)</Predicate>
+    </check>
+    <column id="66" parent="18" name="login">
+      <Position>1</Position>
+      <DataType>text|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>3217</StateNumber>
+    </column>
+    <column id="67" parent="18" name="event_name">
+      <Position>2</Position>
+      <DataType>text|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>3217</StateNumber>
+    </column>
+    <index id="68" parent="18" name="registrations_on_events_pkey">
+      <ObjectId>51040</ObjectId>
+      <ColNames>login
+event_name</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="69" parent="18" name="registrations_on_events_pkey">
+      <ObjectId>51041</ObjectId>
+      <ColNames>login
+event_name</ColNames>
+      <UnderlyingIndexName>registrations_on_events_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="70" parent="18" name="fk_ron_login">
+      <ObjectId>51092</ObjectId>
+      <ColNames>login</ColNames>
+      <RefTableName>member</RefTableName>
+      <RefKeyName>member_pkey</RefKeyName>
+      <RefColNames>login</RefColNames>
+    </foreign-key>
+    <foreign-key id="71" parent="18" name="fk_ron_event">
+      <ObjectId>51097</ObjectId>
+      <ColNames>event_name</ColNames>
+      <RefTableName>event</RefTableName>
+      <RefKeyName>event_pkey</RefKeyName>
+      <RefColNames>name</RefColNames>
+    </foreign-key>
+    <column id="72" parent="19" name="id">
+      <Position>1</Position>
+      <DataType>integer|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>3216</StateNumber>
+      <SequenceName>talk_id_seq</SequenceName>
+      <DefaultExpression>nextval(&apos;talk_id_seq&apos;::regclass)</DefaultExpression>
+    </column>
+    <column id="73" parent="19" name="title">
+      <Position>2</Position>
+      <DataType>text|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>3216</StateNumber>
+    </column>
+    <column id="74" parent="19" name="login">
+      <Position>3</Position>
+      <DataType>text|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>3216</StateNumber>
+    </column>
+    <column id="75" parent="19" name="members">
+      <Position>4</Position>
+      <DataType>integer|0</DataType>
+      <StateNumber>3216</StateNumber>
+      <DefaultExpression>0</DefaultExpression>
+    </column>
+    <column id="76" parent="19" name="date_start">
+      <Position>5</Position>
+      <DataType>timestamp|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>3216</StateNumber>
+    </column>
+    <column id="77" parent="19" name="room">
+      <Position>6</Position>
+      <DataType>integer|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>3216</StateNumber>
+    </column>
+    <column id="78" parent="19" name="event_name">
+      <Position>7</Position>
+      <DataType>text|0</DataType>
+      <StateNumber>3216</StateNumber>
+    </column>
+    <index id="79" parent="19" name="talk_pkey">
+      <ObjectId>51032</ObjectId>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="80" parent="19" name="talk_pkey">
+      <ObjectId>51033</ObjectId>
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>talk_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="81" parent="19" name="fk_talk_login">
+      <ObjectId>51082</ObjectId>
+      <ColNames>login</ColNames>
+      <RefTableName>member</RefTableName>
+      <RefKeyName>member_pkey</RefKeyName>
+      <RefColNames>login</RefColNames>
+    </foreign-key>
+    <foreign-key id="82" parent="19" name="fk_talk_event">
+      <ObjectId>51087</ObjectId>
+      <ColNames>event_name</ColNames>
+      <RefTableName>event</RefTableName>
+      <RefKeyName>event_pkey</RefKeyName>
+      <RefColNames>name</RefColNames>
+    </foreign-key>
+    <trigger id="83" parent="19" name="update_event_after_insert">
+      <ObjectId>51138</ObjectId>
+      <StateNumber>3239</StateNumber>
+      <Turn>after-row</Turn>
+      <Events>IUD</Events>
+      <FireMode>origin</FireMode>
+      <CallRoutineId>46064</CallRoutineId>
+    </trigger>
+    <column id="84" parent="20" name="id">
+      <Position>1</Position>
+      <DataType>integer|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>3214</StateNumber>
+      <SequenceName>talk_proposal_id_seq</SequenceName>
+      <DefaultExpression>nextval(&apos;talk_proposal_id_seq&apos;::regclass)</DefaultExpression>
+    </column>
+    <column id="85" parent="20" name="title">
+      <Position>2</Position>
+      <DataType>text|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>3214</StateNumber>
+    </column>
+    <column id="86" parent="20" name="login">
+      <Position>3</Position>
+      <DataType>text|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>3214</StateNumber>
+    </column>
+    <column id="87" parent="20" name="date_start">
+      <Position>4</Position>
+      <DataType>timestamp|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>3214</StateNumber>
+    </column>
+    <index id="88" parent="20" name="talk_proposal_pkey">
+      <ObjectId>51010</ObjectId>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="89" parent="20" name="talk_proposal_pkey">
+      <ObjectId>51011</ObjectId>
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>talk_proposal_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="90" parent="20" name="fk_talk_proposal_login">
+      <ObjectId>51077</ObjectId>
+      <ColNames>login</ColNames>
+      <RefTableName>member</RefTableName>
+      <RefKeyName>member_pkey</RefKeyName>
+      <RefColNames>login</RefColNames>
+    </foreign-key>
+    <argument id="91" parent="21">
+      <Position>1</Position>
+      <DataType>numeric|0</DataType>
+    </argument>
+    <argument id="92" parent="21">
+      <ArgumentDirection>R</ArgumentDirection>
+      <DataType>bigint|0</DataType>
+    </argument>
+    <argument id="93" parent="22">
+      <Position>1</Position>
+      <DataType>numeric|0</DataType>
+    </argument>
+    <argument id="94" parent="22">
+      <ArgumentDirection>R</ArgumentDirection>
+      <DataType>bigint|0</DataType>
+    </argument>
+    <argument id="95" parent="23">
+      <Position>1</Position>
+      <DataType>numeric|0</DataType>
+    </argument>
+    <argument id="96" parent="23">
+      <ArgumentDirection>R</ArgumentDirection>
+      <DataType>bigint|0</DataType>
+    </argument>
+    <argument id="97" parent="24">
+      <Position>1</Position>
+      <DataType>text|0</DataType>
+    </argument>
+    <argument id="98" parent="24">
+      <ArgumentDirection>R</ArgumentDirection>
+      <DataType>bigint|0</DataType>
+    </argument>
+    <argument id="99" parent="25">
+      <ArgumentDirection>R</ArgumentDirection>
+      <DataType>trigger|0</DataType>
+    </argument>
+    <argument id="100" parent="26">
+      <ArgumentDirection>R</ArgumentDirection>
+      <DataType>trigger|0</DataType>
+    </argument>
+  </database-model>
+</dataSource>
