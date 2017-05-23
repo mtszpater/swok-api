@@ -19,13 +19,15 @@ class AdminService
     }
 
     public function createTalk($user_login, $talk_id, $title, $start_timestamp, $room, $initial_evaluation, $event_name){
-//        TODO: Zabezpieczenia
+//        TODO: Zabezpieczenia (uzytkownik nie istnieje, id zajęte, ogolnie wszystko xd)
+//        TODO: rating
+
 
         if (! $this->database->isAdmin($this->user_login, $this->user_password)) {
             return false;
         }
 
-        if($this->database->createTalk($user_login, $talk_id, $title, $start_timestamp, $room, $initial_evaluation, $event_name))
+        if($this->database->createTalk($user_login, intval($talk_id), $title, $start_timestamp, intval($room), intval($initial_evaluation), $event_name))
             return true;
 
         return false;

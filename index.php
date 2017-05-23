@@ -4,29 +4,35 @@ include "config.php";
 
 while(true) {
 
+    try {
+        $stdin = fopen('php://stdin', 'r');
 
-    $stdin = fopen('php://stdin', 'r');
+        $fg = fgets($stdin, 1024);
 
-    $fg =  fgets($stdin, 1024);
+        $jsonIterator = new RecursiveIteratorIterator(
+            new RecursiveArrayIterator(json_decode($fg, TRUE)),
+            RecursiveIteratorIterator::SELF_FIRST);
 
-    $jsonIterator = new RecursiveIteratorIterator(
-        new RecursiveArrayIterator(json_decode($fg, TRUE)),
-        RecursiveIteratorIterator::SELF_FIRST);
+        $operator = new OperationManager();
 
-    $operator = new OperationManager();
+        foreach ($jsonIterator as $key => $val) {
+            if (is_array($val)) {
+                echo "$key\n";
+                $operator->functionName = $key;
 
-    foreach ($jsonIterator as $key => $val) {
-        if(is_array($val)) {
-            echo "$key\n";
-            $operator->functionName = $key;
-
-        } else {
-            $operator->args[$key]= $val;
+            } else {
+                $operator->args[$key] = $val;
+            }
         }
-    }
 
-    $operator->execute();
-    echo "\n";
+        $operator->execute();
+        echo "\n";
+    }
+    catch(Exception $exception)
+    {
+        echo "program exit\n";
+        exit;
+    }
 
 }
 

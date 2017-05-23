@@ -55,7 +55,6 @@ class DatabaseManager implements DatabaseOperation {
         return pg_query($this->connection, "insert into rate (talk_id, login, rate) VALUES ('$talk_id', '$user_login', '$rate')") ? true : false;
     }
 
-
     public function rejectTalk($talk_id)
     {
         // TODO: Implement rejectTalk() method.

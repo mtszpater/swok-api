@@ -26,6 +26,7 @@ class OperationManager
     private function _createUser()
     {
         if($this->adm->registerUser($this->args['newlogin'], $this->args['newpassword']))
+
             $this->_setStatusSuccess();
         else
             $this->_setStatusError();
@@ -33,7 +34,8 @@ class OperationManager
 
     private function _createOrganizer()
     {
-        if($this->adm->createOrganizer($this->args['login'], $this->args['password'], $this->args['secret']))
+        if($this->adm->createOrganizer( $this->args['login'], $this->args['password'], $this->args['secret']))
+
             $this->_setStatusSuccess();
         else
             $this->_setStatusError();
@@ -41,15 +43,30 @@ class OperationManager
 
     private function _createEvent()
     {
-        if($this->adm->createEvent($this->args['eventname'], $this->args['start_timestamp'], $this->args['end_timestamp']))
+        if($this->adm->createEvent( $this->args['eventname'], $this->args['start_timestamp'], $this->args['end_timestamp']))
+
             $this->_setStatusSuccess();
         else
             $this->_setStatusError();
     }
 
+    private function _createTalk()
+    {
+
+        if($this->adm->createTalk( $this->args['speakerlogin'], $this->args['talk'], $this->args['title'], $this->args['start_timestamp'],
+            $this->args['room'], $this->args['initial_evaluation'], $this->args['eventname']))
+
+            $this->_setStatusSuccess();
+        else
+            $this->_setStatusError();
+    }
 
     public function execute(){
         switch($this->functionName){
+
+            /*
+             * ORGANIZER METHODS
+             */
 
             case "organizer":
 
@@ -87,6 +104,17 @@ class OperationManager
 
                 break;
 
+            case "talk":
+
+                if($this->_checkPerm()) {
+                    $this->_createTalk();
+                }
+                else {
+                    $this->_setStatusError();
+                    exit;
+                }
+
+                break;
 
 
 
@@ -122,14 +150,12 @@ class OperationManager
         $this->status = array('status' => 'OK', 'data' => $this->args);
     }
 
+
 }
 
 
-
-
-
-
-
+// { "talk": { "login": "dupa", "password": "haslo", "speakerlogin": "dupa244", "talk": "5", "title": "tytualsdasd", "start_timestamp": "2004-10-19 10:23:54.000000", "room": "244", "initial_evaluation": "5", "eventname": "jakis22ev3ent23" }}
+//{ "talk": { "login": "dupa", "password": "haslo", "speakerlogin": "dupa2445", "talk": "6", "title": "tytualsdasd", "start_timestamp": "2004-10-19 10:23:54.000000", "room": "244", "initial_evaluation": "5", "eventname": "jakis22ev3ent23" }}
 
 //{ "organizer": { "login": "dupa244", "password": "haslo", "secret": "d8578edf8458ce06fbc5bb76a58c5ca4" }}
 
