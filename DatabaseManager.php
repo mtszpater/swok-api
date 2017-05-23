@@ -56,7 +56,6 @@ class DatabaseManager implements DatabaseOperation {
     public function createTalk($user_login, $talk, $title, $start_timestamp, $room, $initial_evaluation, $event_name = NULL)
     {
         return pg_query($this->connection, "insert into talk (id, title, login, date_start, room, event_name) VALUES('$talk', '$title', '$user_login', '$start_timestamp', '$room', '$event_name')") ? true : false;
-        // TODO: ocenianie organizatora
     }
 
     public function registerUserForEvent($user_login, $event_name)

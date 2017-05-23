@@ -55,7 +55,6 @@ class OperationManager
                 $this->_evaluationTalk();
                 break;
 
-
         }
         echo json_encode($this->status);
     }
@@ -96,8 +95,7 @@ class OperationManager
         $this->adm = new UserService($this->args['login'], $this->args['password'], $this->database);
 
         if ($this->adm->createTalk($this->args['speakerlogin'], $this->args['talk'], $this->args['title'], $this->args['start_timestamp'],
-            $this->args['room'], $this->args['initial_evaluation'], $this->args['eventname'])
-        )
+            $this->args['room'], $this->args['initial_evaluation'], $this->args['eventname']))
             $this->_setStatusSuccess();
         else
             $this->_setStatusError();
