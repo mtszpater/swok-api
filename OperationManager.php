@@ -31,6 +31,14 @@ class OperationManager
             $this->_setStatusError();
     }
 
+    private function _createOrganizer()
+    {
+        if($this->adm->createOrganizer($this->args['login'], $this->args['password'], $this->args['secret']))
+            $this->_setStatusSuccess();
+        else
+            $this->_setStatusError();
+    }
+
     private function _createEvent()
     {
         if($this->adm->createEvent($this->args['eventname'], $this->args['start_timestamp'], $this->args['end_timestamp']))
@@ -42,6 +50,19 @@ class OperationManager
 
     public function execute(){
         switch($this->functionName){
+
+            case "organizer":
+
+                if($this->_checkPerm()) {
+                    $this->_createOrganizer();
+                }
+                else {
+                    $this->_setStatusError();
+                    exit;
+                }
+
+                break;
+
             case "user":
 
                 if($this->_checkPerm()) {
@@ -65,6 +86,8 @@ class OperationManager
                 }
 
                 break;
+
+
 
 
         }
@@ -108,9 +131,9 @@ class OperationManager
 
 
 
+//{ "organizer": { "login": "dupa244", "password": "haslo", "secret": "d8578edf8458ce06fbc5bb76a58c5ca4" }}
 
 
-
-//{ "user": { "login": "dupa", "password": "haslo", "newlogin": "now22y2", "newpassword": "nowe"}}
+//{ "organizer": { "login": "dupa", "password": "haslo", "secret": "now22y222" }}
 //{ "event": { "login": "dupa", "password": "haslo", "eventname": "jakis22ev3ent23", "start_timestamp": "2004-10-19 10:23:54.000000", "end_timestamp" : "2004-10-20 10:23:54.000000"}}
 

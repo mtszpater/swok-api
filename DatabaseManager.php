@@ -34,5 +34,41 @@ class DatabaseManager implements DatabaseOperation {
         return pg_num_rows($query) == 1 ? true : false;
     }
 
+    public function createTalk($user_login, $talk, $title, $start_timestamp, $room, $initial_evaluation, $event_name = NULL)
+    {
+        return pg_query($this->connection, "insert into talk (id, title, login, date_start, room, event_name) VALUES('$talk', '$title', '$user_login', '$start_timestamp', '$room', '$event_name')") ? true : false;
+        // TODO: ocenianie organizatora
+    }
+
+    public function registerUserForEvent($user_login, $event_name)
+    {
+        return pg_query($this->connection, "insert into registrations_on_events (login, event_name) VALUES ('$user_login', '$event_name')") ? true : false;
+    }
+
+    public function checkAttendance($user_login, $talk_id)
+    {
+        return pg_query($this->connection, "insert into attendance_on_talks (login, talk_id) VALUES ('$user_login', '$talk_id')") ? true : false;
+    }
+
+    public function evaluationTalk($user_login, $talk_id, $rate)
+    {
+        return pg_query($this->connection, "insert into rate (talk_id, login, rate) VALUES ('$talk_id', '$user_login', '$rate')") ? true : false;
+    }
+
+
+    public function rejectTalk($talk_id)
+    {
+        // TODO: Implement rejectTalk() method.
+    }
+
+    public function proposalTalk($user_login, $talk_id, $title, $start_timestamp)
+    {
+        return pg_query($this->connection, "insert into talk_proposal (id, title, login, date_start) VALUES ('$talk_id', '$title', '$user_login', '$start_timestamp')") ? true : false;
+    }
+
+    public function registerOrganizer($user_login, $user_password)
+    {
+        return pg_query($this->connection, "insert into member (login, password, admin) VALUES ('$user_login', '$user_password', true)") ? true : false;
+    }
 }
 ?>
