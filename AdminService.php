@@ -12,14 +12,6 @@ class AdminService
     public function __construct($user_login, $user_password, DatabaseOperation $database)
     {
         $this->database = $database;
-
-        if( ! $this->database->isAdmin($user_login, $user_password) ){
-            echo "Nie masz uprawnień";
-            return false;
-
-            //TODO WYWALIĆ JAKIŚ BŁĄD TUTAJ JAK NIE MA PRAWNIEN
-        }
-
         $this->user_login = $user_login;
         $this->user_password = $user_password;
 
@@ -28,27 +20,43 @@ class AdminService
 
     public function registerUser($user_login, $user_password){
 
+        //TODO sql injection
+        if (! $this->database->isAdmin($this->user_login, $this->user_password)) {
+            return false;
+        }
+
         if( empty($user_password) || empty($user_login)){
-            echo "Puste pola";
             return false;
         }
 
         if( $this->database->isLoginBusy($user_login) ){
-            echo "Login zajęty";
             return false;
         }
 
 
         if($this->database->registerUser($user_login, $user_password)) {
-            echo "Zarejestrowalem uzytkownika";
             return true;
         }
 
+        return false;
+    }
 
-        echo "Nie moglem go zarejestrowac";
+    public function createEvent($event_name, $start, $end){
+
+        if (! $this->database->isAdmin($this->user_login, $this->user_password)) {
+            return false;
+        }
+
+        if($this->database->createEvent($event_name, $start, $end)){
+            return true;
+        }
+
         return false;
 
     }
+
+
+
 
 
 
