@@ -16,26 +16,55 @@ class OperationManager
     private $adm;
     private $status;
 
-
     public function __construct()
     {
         $this->database = new DatabaseManager();
     }
 
+    public function execute(){
+        switch($this->functionName){
+            case "organizer":
+                $this->_createOrganizer();
+                break;
 
-    private function _createUser()
+            case "user":
+                $this->_createUser();
+                break;
+
+            case "event":
+                $this->_createEvent();
+                break;
+
+            case "talk":
+                $this->_createTalk();
+                break;
+
+            case "reject":
+                $this->_rejectTalk();
+                break;
+
+            case "register_user_for_event":
+                $this->_registerUserForEvent();
+                break;
+        }
+        echo json_encode($this->status);
+    }
+
+    private function _createOrganizer()
     {
-        if($this->adm->registerUser($this->args['newlogin'], $this->args['newpassword']))
+        $this->adm = new UserService('', '', $this->database);
 
+        if ($this->adm->createOrganizer($this->args['newlogin'], $this->args['newpassword'], $this->args['secret']))
             $this->_setStatusSuccess();
         else
             $this->_setStatusError();
     }
 
-    private function _createOrganizer()
+    private function _createUser()
     {
-        if($this->adm->createOrganizer( $this->args['login'], $this->args['password'], $this->args['secret']))
+        $this->adm = new UserService($this->args['login'], $this->args['password'], $this->database);
 
+        if ($this->adm->registerUser($this->args['newlogin'], $this->args['newpassword']))
             $this->_setStatusSuccess();
         else
             $this->_setStatusError();
@@ -43,101 +72,57 @@ class OperationManager
 
     private function _createEvent()
     {
-        if($this->adm->createEvent( $this->args['eventname'], $this->args['start_timestamp'], $this->args['end_timestamp']))
+        $this->adm = new UserService($this->args['login'], $this->args['password'], $this->database);
 
+        if ($this->adm->createEvent($this->args['eventname'], $this->args['start_timestamp'], $this->args['end_timestamp']))
             $this->_setStatusSuccess();
         else
             $this->_setStatusError();
+
     }
 
     private function _createTalk()
     {
+        $this->adm = new UserService($this->args['login'], $this->args['password'], $this->database);
 
-        if($this->adm->createTalk( $this->args['speakerlogin'], $this->args['talk'], $this->args['title'], $this->args['start_timestamp'],
-            $this->args['room'], $this->args['initial_evaluation'], $this->args['eventname']))
+        if ($this->adm->createTalk($this->args['speakerlogin'], $this->args['talk'], $this->args['title'], $this->args['start_timestamp'],
+            $this->args['room'], $this->args['initial_evaluation'], $this->args['eventname'])
+        )
+            $this->_setStatusSuccess();
+        else
+            $this->_setStatusError();
 
+    }
+
+    private function _rejectTalk()
+    {
+        $this->adm = new UserService($this->args['login'], $this->args['password'], $this->database);
+
+        if ($this->adm->rejectTalk($this->args['talk']))
             $this->_setStatusSuccess();
         else
             $this->_setStatusError();
     }
 
-    public function execute(){
-        switch($this->functionName){
+    private function _registerUserForEvent()
+    {
+        $this->adm = new UserService($this->args['login'], $this->args['password'], $this->database);
 
-            /*
-             * ORGANIZER METHODS
-             */
-
-            case "organizer":
-
-                if($this->_checkPerm()) {
-                    $this->_createOrganizer();
-                }
-                else {
-                    $this->_setStatusError();
-                    exit;
-                }
-
-                break;
-
-            case "user":
-
-                if($this->_checkPerm()) {
-                    $this->_createUser();
-                }
-                else {
-                    $this->_setStatusError();
-                    exit;
-                }
-
-                break;
-
-            case "event":
-
-                if($this->_checkPerm()) {
-                    $this->_createEvent();
-                }
-                else {
-                    $this->_setStatusError();
-                    exit;
-                }
-
-                break;
-
-            case "talk":
-
-                if($this->_checkPerm()) {
-                    $this->_createTalk();
-                }
-                else {
-                    $this->_setStatusError();
-                    exit;
-                }
-
-                break;
-
-
-
-        }
-        echo json_encode($this->status);
+        if($this->adm->registerUserForEvent($this->args['login'], $this->args['password'], $this->args['eventname']))
+            $this->_setStatusSuccess();
+        else
+            $this->_setStatusError();
     }
 
-    private function _checkPerm()
+
+    private function _setStatusSuccess()
     {
-        if($this->adm = new AdminService($this->args['login'], $this->args['password'], $this->database)) return true;
-
-        return false;
-
+        $this->status = array('status' => 'OK');
     }
 
     private function _setStatusError()
     {
         $this->status = array('status' => 'ERROR');
-    }
-
-    private function _setStatusSuccess()
-    {
-        $this->status = array('status' => 'OK');
     }
 
     private function _setStatusErrorWithArgs()
@@ -151,13 +136,15 @@ class OperationManager
     }
 
 
+
 }
 
+// { "reject": { "login": "dupa", "password": "haslo", "talk" : "0" }}
 
 // { "talk": { "login": "dupa", "password": "haslo", "speakerlogin": "dupa244", "talk": "5", "title": "tytualsdasd", "start_timestamp": "2004-10-19 10:23:54.000000", "room": "244", "initial_evaluation": "5", "eventname": "jakis22ev3ent23" }}
 //{ "talk": { "login": "dupa", "password": "haslo", "speakerlogin": "dupa2445", "talk": "6", "title": "tytualsdasd", "start_timestamp": "2004-10-19 10:23:54.000000", "room": "244", "initial_evaluation": "5", "eventname": "jakis22ev3ent23" }}
 
-//{ "organizer": { "login": "dupa244", "password": "haslo", "secret": "d8578edf8458ce06fbc5bb76a58c5ca4" }}
+//{ "organizer": { "login": "", "password": "haslo", "secret": "d8578edf8458ce06fbc5bb76a58c5ca4" }}
 
 
 //{ "organizer": { "login": "dupa", "password": "haslo", "secret": "now22y222" }}

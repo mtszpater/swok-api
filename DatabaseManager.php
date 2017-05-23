@@ -34,6 +34,25 @@ class DatabaseManager implements DatabaseOperation {
         return pg_num_rows($query) == 1 ? true : false;
     }
 
+    public function isEventNameBusy($event_name){
+        $query = pg_query($this->connection, "select * from event WHERE name='$event_name'");
+
+        return pg_num_rows($query) == 1 ? true : false;
+    }
+
+    public function existsProposalTalk($talk_id){
+        $query = pg_query($this->connection, "select * from talk_proposal WHERE id='$talk_id'");
+
+        return pg_num_rows($query) == 1 ? true : false;
+    }
+
+    public function existsTalk($talk_id)
+    {
+        $query = pg_query($this->connection, "select * from talk WHERE id='$talk_id'");
+
+        return pg_num_rows($query) == 1 ? true : false;
+    }
+
     public function createTalk($user_login, $talk, $title, $start_timestamp, $room, $initial_evaluation, $event_name = NULL)
     {
         return pg_query($this->connection, "insert into talk (id, title, login, date_start, room, event_name) VALUES('$talk', '$title', '$user_login', '$start_timestamp', '$room', '$event_name')") ? true : false;
@@ -57,7 +76,7 @@ class DatabaseManager implements DatabaseOperation {
 
     public function rejectTalk($talk_id)
     {
-        // TODO: Implement rejectTalk() method.
+        return pg_query($this->connection, "delete from talk_proposal where id = '$talk_id'") ? true : false;
     }
 
     public function proposalTalk($user_login, $talk_id, $title, $start_timestamp)
@@ -69,5 +88,6 @@ class DatabaseManager implements DatabaseOperation {
     {
         return pg_query($this->connection, "insert into member (login, password, admin) VALUES ('$user_login', '$user_password', true)") ? true : false;
     }
+
 }
 ?>
