@@ -22,6 +22,15 @@
 {"talk": {"login": "admin1","password": "password1", "speakerlogin": "newlogin123", "talk": "6", "title": "title talk #1", "start_timestamp": "2004-10-19 10:23:54.000000", "room": "255", "initial_evaluation": "10", "eventname": "Nazwa eventu2" }}
 {"talk": {"login": "admin1","password": "password1", "speakerlogin": "newlogin", "talk": "6", "title": "title talk #1", "start_timestamp": "2004-10-19 10:23:54.000000", "room": "255", "initial_evaluation": "10", "eventname": "Nazwa eventu2" }}
 
-{"register_user_for_event": {"login": "admin2", "password": "password1", "eventname": "Nazwa eventu2"}}
+{"register_user_for_event": {"login": "admin1", "password": "password1", "eventname": "Nazwa eventu2"}}
+{"register_user_for_event": {"login": "admin2", "password": "password1", "eventname": "Nazwa eventu10"}}
 {"register_user_for_event": {"login": "admin1", "password": "password1", "eventname": "Nazwa eventu11"}}
-{"register_user_for_event": {"login": "admin1", "password": "password1", "eventname": "Nazwa eventu11"}}
+
+
+{"attendance": {"login": "admin1", "password": "password1", "talk": "5"}}
+{"attendance": {"login": "admin1", "password": "password1", "talk": "6"}}
+{"attendance": {"login": "admin10", "password": "password1", "talk": "6"}}
+
+{"evaluation": {"login": "admin1", "password": "password1", "talk": "1", "rating": "10"}}
+{"evaluation": {"login": "admin1", "password": "password1", "talk": "9", "rating": "5"}}
+{"evaluation": {"login": "admin2", "password": "password1", "talk": "5", "rating": "100"}}

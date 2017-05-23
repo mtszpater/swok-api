@@ -46,6 +46,16 @@ class OperationManager
             case "register_user_for_event":
                 $this->_registerUserForEvent();
                 break;
+
+            case "attendance":
+                $this->_checkAttendance();
+                break;
+
+            case "evaluation":
+                $this->_evaluationTalk();
+                break;
+
+
         }
         echo json_encode($this->status);
     }
@@ -108,12 +118,31 @@ class OperationManager
     {
         $this->adm = new UserService($this->args['login'], $this->args['password'], $this->database);
 
-        if($this->adm->registerUserForEvent($this->args['login'], $this->args['password'], $this->args['eventname']))
+        if($this->adm->registerUserForEvent($this->args['eventname']))
             $this->_setStatusSuccess();
         else
             $this->_setStatusError();
     }
 
+    private function _checkAttendance()
+    {
+        $this->adm = new UserService($this->args['login'], $this->args['password'], $this->database);
+
+        if($this->adm->checkAttendance($this->args['talk']))
+            $this->_setStatusSuccess();
+        else
+            $this->_setStatusError();
+    }
+
+    private function _evaluationTalk()
+    {
+        $this->adm = new UserService($this->args['login'], $this->args['password'], $this->database);
+
+        if($this->adm->evaluationTalk($this->args['talk'], $this->args['rating']))
+            $this->_setStatusSuccess();
+        else
+            $this->_setStatusError();
+    }
 
     private function _setStatusSuccess()
     {

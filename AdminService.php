@@ -87,14 +87,40 @@ class UserService
         return false;
     }
 
-    public function registerUserForEvent($user_login, $user_password, $event_name)
+    public function registerUserForEvent($event_name)
     {
-        if( ! $this->database->userExists($user_login, $user_password) )
+        if( ! $this->database->userExists($this->user_login, $this->user_password) )
             return false;
 
-        if($this->database->registerUserForEvent($user_login, $event_name))
+        if($this->database->registerUserForEvent($this->user_login, $event_name))
             return true;
 
         return false;
     }
+
+    public function checkAttendance($talk_id)
+    {
+        if( ! $this->database->userExists($this->user_login, $this->user_password) )
+            return false;
+
+        if($this->database->checkAttendance($this->user_login, $talk_id))
+            return true;
+
+        return false;
+    }
+
+    public function evaluationTalk($talk_id, $rate){
+        if( ! $this->database->userExists($this->user_login, $this->user_password) )
+            return false;
+
+        if( ! $this->database->existsTalk($talk_id) )
+            return false;
+
+        if($this->database->evaluationTalk($this->user_login, $talk_id, $rate))
+            return true;
+
+        return false;
+
+    }
+
 }
