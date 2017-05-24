@@ -27,5 +27,8 @@ interface DatabaseOperation
     public function addFriend($user_login, $user_login2);
     public function getStartTimeStampOfEvent($event_name);
     public function getUserPlan($user_login, $limit);
+    public function getDayPlan($timestamp);
+    public function getBestTalks($start_timestamp, $end_timestamp, $limit, $all);
+    public function getMostPopularTalks($start_timestamp, $end_timestamp, $limit);
 
 }

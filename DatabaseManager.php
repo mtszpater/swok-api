@@ -128,8 +128,59 @@ class DatabaseManager implements DatabaseOperation {
 
     }
 
+    public function getDayPlan($timestamp)
+    {
+        $query = pg_query($this->connection,
+            "SELECT id as talk, date_start as start_timestamp, title, room FROM talk where date_trunc('day', talk.date_start) =  date_trunc('day', TIMESTAMP '$timestamp') ORDER BY room, start_timestamp ASC;");
+
+        return pg_fetch_all($query);
+    }
 
 
+    public function getBestTalks($start_timestamp, $end_timestamp, $limit, $all)
+    {
+//        TODO: ALL
 
+        if($limit == 0) {
+            $query = pg_query($this->connection,
+                "SELECT rate.talk_id as talk, talk.date_start as start_timestamp, talk.room, talk.title FROM talk
+                    JOIN rate on talk.id = rate.talk_id
+                    WHERE talk.date_start >= '$start_timestamp' AND talk.date_start <= '$end_timestamp'
+                    GROUP BY rate.talk_id, talk.date_start, talk.room, talk.title
+                    ORDER BY avg(rate) DESC;");
+        }
+        else {
+            $query = pg_query($this->connection,
+                    "SELECT rate.talk_id as talk, talk.date_start as start_timestamp, talk.room, talk.title FROM talk
+                    JOIN rate on talk.id = rate.talk_id
+                    WHERE talk.date_start >= '$start_timestamp' AND talk.date_start <= '$end_timestamp'
+                    GROUP BY rate.talk_id, talk.date_start, talk.room, talk.title
+                    ORDER BY avg(rate) DESC
+                    LIMIT '$limit';");
+        }
+
+        return pg_fetch_all($query);
+    }
+
+    public function getMostPopularTalks($start_timestamp, $end_timestamp, $limit){
+
+        if($limit == 0){
+            $query = pg_query($this->connection, "
+            SELECT id as talk, date_start as start_timestamp, title, room FROM talk 
+            WHERE talk.date_start >= '$start_timestamp' AND talk.date_start <= '$end_timestamp'
+            ORDER BY members DESC; ");
+        }
+        else
+        {
+            $query = pg_query($this->connection, "
+            SELECT id as talk, date_start as start_timestamp, title, room FROM talk 
+            WHERE talk.date_start >= '$start_timestamp' AND talk.date_start <= '$end_timestamp'
+            ORDER BY members DESC
+            LIMIT '$limit';");
+        }
+
+        return pg_fetch_all($query);
+
+    }
 }
 ?>

@@ -30,7 +30,7 @@
 {"register_user_for_event": {"login": "admin1", "password": "password1", "eventname": "Nazwa eventu11"}}
 
 
-{"attendance": {"login": "admin", "password": "password1", "talk": "1"}}
+{"attendance": {"login": "admin", "password": "password1", "talk": "2"}}
 {"attendance": {"login": "admin1", "password": "password1", "talk": "6"}}
 {"attendance": {"login": "admin102", "password": "password1", "talk": "6"}}
 
@@ -50,10 +50,25 @@
 {"user_plan": {"login": "newlogin", "limit": "0"}}
 
 
-SELECT registrations_on_events.login, id as talk, date_start as start_timestamp, title, room FROM registrations_on_events
-JOIN talk ON registrations_on_events.event_name=talk.event_name
-WHERE registrations_on_events.login = 'newlogin'
-ORDER BY talk.date_start ASC
-LIMIT 1;
+{"day_plan": {"timestamp": "2004-10-19 10:23:54.000000"}}
+{"day_plan": {"timestamp": "2004-10-29 10:23:54.000000"}}
 
 
+{"best_talks": {"start_timestamp": "2004-10-19 10:23:54.000000", "end_timestamp": "2004-10-19 10:23:54.000000", "limit": "10", "all": "1"}}
+{"best_talks": {"start_timestamp": "2003-10-19 10:23:54.000000", "end_timestamp": "2005-10-19 10:23:54.000000", "limit": "0", "all": "1"}}
+{"best_talks": {"start_timestamp": "2003-10-19 10:23:54.000000", "end_timestamp": "2005-10-19 10:23:54.000000", "limit": "1", "all": "1"}}
+{"best_talks": {"start_timestamp": "2033-10-19 10:23:54.000000", "end_timestamp": "2005-10-19 10:23:54.000000", "limit": "1", "all": "1"}}
+
+
+{"most_popular_talks": {"start_timestamp": "2000-10-19 10:23:54.000000", "end_timestamp": "2010-10-19 10:23:54.000000", "limit": "0" }}
+
+SELECT rate.talk_id as talk, talk.date_start as start_timestamp, talk.room, talk.title FROM talk
+JOIN rate on talk.id = rate.talk_id
+WHERE talk.date_start >= '2004-10-19 10:23:50.000000' AND talk.date_start <= '2005-10-19 10:23:53.000000'
+GROUP BY rate.talk_id, talk.date_start, talk.room, talk.title
+ORDER BY avg(rate) DESC
+LIMIT 0;
+
+SELECT id as talk, date_start as start_timestamp, title, room FROM talk
+WHERE talk.date_start >= '2004-10-19 10:23:50.000000' AND talk.date_start <= '2005-10-19 10:23:53.000000'
+ORDER BY members DESC;

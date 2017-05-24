@@ -16,6 +16,7 @@ class OperationManager
     private $adm;
     private $status;
 
+
     public function __construct()
     {
         $this->database = new DatabaseManager();
@@ -67,6 +68,20 @@ class OperationManager
 
             case "user_plan":
                 $this->_userPlan();
+                break;
+
+            case "day_plan":
+                $this->_dayPlan();
+                break;
+
+            case "best_talks":
+                $this->_bestTalks();
+                break;
+
+            case "most_popular_talks":
+                $this->_mostPopularTalks();
+                break;
+
         }
         echo json_encode($this->status);
     }
@@ -144,6 +159,21 @@ class OperationManager
 
     private function _userPlan(){
         $this->status = $this->adm->getUserPlan($this->args['limit']);
+    }
+
+    private function _dayPlan()
+    {
+        $this->status = $this->adm->getDayPlan($this->args['timestamp']);
+    }
+
+    private function _bestTalks()
+    {
+        $this->status = $this->adm->getBestTalks($this->args['start_timestamp'], $this->args['end_timestamp'], $this->args['limit'], $this->args['all']);
+    }
+
+    private function _mostPopularTalks()
+    {
+        $this->status = $this->adm->getMostPopularTalks($this->args['start_timestamp'], $this->args['end_timestamp'], $this->args['limit']);
     }
 
 }
