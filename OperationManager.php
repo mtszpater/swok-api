@@ -75,77 +75,55 @@ class OperationManager
 
     private function _createOrganizer()
     {
-        if ($this->adm->createOrganizer($this->args['newlogin'], $this->args['newpassword'], $this->args['secret']))
-            $this->_setStatusSuccess();
-        else
-            $this->_setStatusError();
+        $this->_setStatus($this->adm->createOrganizer($this->args['newlogin'], $this->args['newpassword'], $this->args['secret']));
     }
 
     private function _createUser()
     {
-        if ($this->adm->registerUser($this->args['newlogin'], $this->args['newpassword']))
-            $this->_setStatusSuccess();
-        else
-            $this->_setStatusError();
+        $this->_setStatus($this->adm->registerUser($this->args['newlogin'], $this->args['newpassword']));
     }
 
     private function _createEvent()
     {
-        if ($this->adm->createEvent($this->args['eventname'], $this->args['start_timestamp'], $this->args['end_timestamp']))
-            $this->_setStatusSuccess();
-        else
-            $this->_setStatusError();
-
+        $this->_setStatus($this->adm->createEvent($this->args['eventname'], $this->args['start_timestamp'], $this->args['end_timestamp']));
     }
 
     private function _createTalk()
     {
-        if ($this->adm->createTalk($this->args['speakerlogin'], $this->args['talk'], $this->args['title'], $this->args['start_timestamp'],
-            $this->args['room'], $this->args['initial_evaluation'], $this->args['eventname']))
-            $this->_setStatusSuccess();
-        else
-            $this->_setStatusError();
-
+        $this->_setStatus($this->adm->createTalk($this->args['speakerlogin'], $this->args['talk'], $this->args['title'], $this->args['start_timestamp'], $this->args['room'], $this->args['initial_evaluation'], $this->args['eventname']));
     }
 
     private function _rejectTalk()
     {
-        if ($this->adm->rejectTalk($this->args['talk']))
-            $this->_setStatusSuccess();
-        else
-            $this->_setStatusError();
+        $this->_setStatus($this->adm->rejectTalk($this->args['talk']));
     }
 
     private function _registerUserForEvent()
     {
-        if($this->adm->registerUserForEvent($this->args['eventname']))
-            $this->_setStatusSuccess();
-        else
-            $this->_setStatusError();
+        $this->_setStatus($this->adm->registerUserForEvent($this->args['eventname']));
+
     }
 
     private function _checkAttendance()
     {
-        if($this->adm->checkAttendance($this->args['talk']))
-            $this->_setStatusSuccess();
-        else
-            $this->_setStatusError();
+        $this->_setStatus($this->adm->checkAttendance($this->args['talk']));
     }
 
     private function _evaluationTalk()
     {
-        if($this->adm->evaluationTalk($this->args['talk'], $this->args['rating']))
-            $this->_setStatusSuccess();
-        else
-            $this->_setStatusError();
+        $this->_setStatus($this->adm->evaluationTalk($this->args['talk'], $this->args['rating']));
     }
 
     private function _createProposalTalk()
     {
-        if ($this->adm->createProposalTalk($this->args['login'], $this->args['talk'], $this->args['title']))
+        $this->_setStatus($this->adm->createProposalTalk($this->args['login'], $this->args['talk'], $this->args['title']));
+    }
+
+    private function _setStatus($ask){
+        if ($ask === "OK")
             $this->_setStatusSuccess();
         else
-            $this->_setStatusError();
+            $this->_setStatusError($ask);
     }
 
     private function _setStatusSuccess()
@@ -153,9 +131,9 @@ class OperationManager
         $this->status = array('status' => 'OK');
     }
 
-    private function _setStatusError()
+    private function _setStatusError($arg)
     {
-        $this->status = array('status' => 'ERROR');
+        $this->status = array('status' => 'ERROR', 'data' => $arg);
     }
 
     private function _setStatusErrorWithArgs()
