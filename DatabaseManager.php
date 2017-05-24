@@ -53,7 +53,7 @@ class DatabaseManager implements DatabaseOperation {
         return pg_num_rows($query) == 1 ? true : false;
     }
 
-    public function createTalk($user_login, $talk, $title, $start_timestamp, $room, $initial_evaluation, $event_name = NULL)
+    public function createTalk($user_login, $talk, $title, $start_timestamp, $room, $event_name = NULL)
     {
         return pg_query($this->connection, "insert into talk (id, title, login, date_start, room, event_name) VALUES('$talk', '$title', '$user_login', '$start_timestamp', '$room', '$event_name')") ? true : false;
     }
@@ -92,5 +92,44 @@ class DatabaseManager implements DatabaseOperation {
     {
         return pg_query($this->connection, "insert into talk_proposal (id, title, login, date_start) VALUES ('$talk', '$title', '$user_login', '$start_timestamp')") ? true : false;
     }
+
+    public function addFriend($user_login, $user_login2)
+    {
+        return pg_query($this->connection, "insert into friendship (first_user, second_user) VALUES ('$user_login', '$user_login2')") ? true : false;
+    }
+
+    public function getStartTimeStampOfEvent($event_name)
+    {
+        $query = pg_query($this->connection, "select date_start from event where name = '$event_name'");
+
+        return pg_fetch_result($query, 0, 0);
+    }
+
+    public function getUserPlan($user_login, $limit)
+    {
+
+        if($limit <= 0) {
+            $query = pg_query($this->connection, "
+                  SELECT registrations_on_events.login, id as talk, date_start as start_timestamp, title, room FROM registrations_on_events
+                  JOIN talk ON registrations_on_events.event_name=talk.event_name
+                  WHERE registrations_on_events.login = '$user_login'
+                  ORDER BY talk.date_start ASC;");
+        }
+        else {
+            $query = pg_query($this->connection, "
+                  SELECT registrations_on_events.login, id as talk, date_start as start_timestamp, title, room FROM registrations_on_events
+                  JOIN talk ON registrations_on_events.event_name=talk.event_name
+                  WHERE registrations_on_events.login = '$user_login'
+                  ORDER BY talk.date_start ASC
+                  LIMIT $limit;");
+        }
+
+        return pg_fetch_all($query);
+
+    }
+
+
+
+
 }
 ?>

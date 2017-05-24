@@ -60,6 +60,13 @@ class OperationManager
             case "proposal":
                 $this->_createProposalTalk();
                 break;
+
+            case "friends":
+                $this->_addFriend();
+                break;
+
+            case "user_plan":
+                $this->_userPlan();
         }
         echo json_encode($this->status);
     }
@@ -69,95 +76,74 @@ class OperationManager
         if (isset($this->args['login']) && isset($this->args['password'])) {
             $this->adm = new UserService($this->args['login'], $this->args['password'], $this->database);
         } else {
-            $this->adm = new UserService('', '', $this->database);
+
+            if(isset($this->args['login1']))
+                $this->adm = new UserService($this->args['login1'], $this->args['password'], $this->database);
+
+            elseif(isset($this->args['login']) && ! isset($this->args['password']))
+                $this->adm = new UserService($this->args['login'], '', $this->database);
+
+            else
+                $this->adm = new UserService('', '', $this->database);
         }
     }
 
     private function _createOrganizer()
     {
-        $this->_setStatus($this->adm->createOrganizer($this->args['newlogin'], $this->args['newpassword'], $this->args['secret']));
+        $this->status = $this->adm->createOrganizer($this->args['newlogin'], $this->args['newpassword'], $this->args['secret']);
     }
 
     private function _createUser()
     {
-        $this->_setStatus($this->adm->registerUser($this->args['newlogin'], $this->args['newpassword']));
+        $this->status = $this->adm->registerUser($this->args['newlogin'], $this->args['newpassword']);
     }
 
     private function _createEvent()
     {
-        $this->_setStatus($this->adm->createEvent($this->args['eventname'], $this->args['start_timestamp'], $this->args['end_timestamp']));
+        $this->status = $this->adm->createEvent($this->args['eventname'], $this->args['start_timestamp'], $this->args['end_timestamp']);
     }
 
     private function _createTalk()
     {
-        $this->_setStatus($this->adm->createTalk($this->args['speakerlogin'], $this->args['talk'], $this->args['title'], $this->args['start_timestamp'], $this->args['room'], $this->args['initial_evaluation'], $this->args['eventname']));
+        // TODO:
+//        if($this->args['eventname'] === ' ')
+//            $this->args['eventname'] = NULL;
+
+        $this->status = $this->adm->createTalk($this->args['speakerlogin'], $this->args['talk'], $this->args['title'], $this->args['start_timestamp'], $this->args['room'], $this->args['initial_evaluation'], $this->args['eventname']);
     }
 
     private function _rejectTalk()
     {
-        $this->_setStatus($this->adm->rejectTalk($this->args['talk']));
+        $this->status = $this->adm->rejectTalk($this->args['talk']);
     }
 
     private function _registerUserForEvent()
     {
-        $this->_setStatus($this->adm->registerUserForEvent($this->args['eventname']));
-
+        $this->status = $this->adm->registerUserForEvent($this->args['eventname']);
     }
 
     private function _checkAttendance()
     {
-        $this->_setStatus($this->adm->checkAttendance($this->args['talk']));
+        $this->status = $this->adm->checkAttendance($this->args['talk']);
     }
 
     private function _evaluationTalk()
     {
-        $this->_setStatus($this->adm->evaluationTalk($this->args['talk'], $this->args['rating']));
+        $this->status = $this->adm->evaluationTalk($this->args['talk'], $this->args['rating']);
     }
 
     private function _createProposalTalk()
     {
-        $this->_setStatus($this->adm->createProposalTalk($this->args['login'], $this->args['talk'], $this->args['title']));
+        $this->status = $this->adm->createProposalTalk($this->args['talk'], $this->args['title'], $this->args['start_timestamp']);
     }
 
-    private function _setStatus($ask){
-        if ($ask === "OK")
-            $this->_setStatusSuccess();
-        else
-            $this->_setStatusError($ask);
-    }
-
-    private function _setStatusSuccess()
+    private function _addFriend()
     {
-        $this->status = array('status' => 'OK');
+        $this->status = $this->adm->addFriend($this->args['login2']);
     }
 
-    private function _setStatusError($arg)
-    {
-        $this->status = array('status' => 'ERROR', 'data' => $arg);
+    private function _userPlan(){
+        $this->status = $this->adm->getUserPlan($this->args['limit']);
     }
-
-    private function _setStatusErrorWithArgs()
-    {
-        $this->status = array('status' => 'ERROR', 'data' => $this->args);
-    }
-
-    private function _setStatusSuccessWithArgs()
-    {
-        $this->status = array('status' => 'OK', 'data' => $this->args);
-    }
-
-
 
 }
-
-// { "reject": { "login": "dupa", "password": "haslo", "talk" : "0" }}
-
-// { "talk": { "login": "dupa", "password": "haslo", "speakerlogin": "dupa244", "talk": "5", "title": "tytualsdasd", "start_timestamp": "2004-10-19 10:23:54.000000", "room": "244", "initial_evaluation": "5", "eventname": "jakis22ev3ent23" }}
-//{ "talk": { "login": "dupa", "password": "haslo", "speakerlogin": "dupa2445", "talk": "6", "title": "tytualsdasd", "start_timestamp": "2004-10-19 10:23:54.000000", "room": "244", "initial_evaluation": "5", "eventname": "jakis22ev3ent23" }}
-
-//{ "organizer": { "login": "", "password": "haslo", "secret": "d8578edf8458ce06fbc5bb76a58c5ca4" }}
-
-
-//{ "organizer": { "login": "dupa", "password": "haslo", "secret": "now22y222" }}
-//{ "event": { "login": "dupa", "password": "haslo", "eventname": "jakis22ev3ent23", "start_timestamp": "2004-10-19 10:23:54.000000", "end_timestamp" : "2004-10-20 10:23:54.000000"}}
-
