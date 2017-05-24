@@ -22,6 +22,8 @@ class OperationManager
     }
 
     public function execute(){
+        $this->_loginUser();
+
         switch($this->functionName){
             case "organizer":
                 $this->_createOrganizer();
@@ -55,14 +57,24 @@ class OperationManager
                 $this->_evaluationTalk();
                 break;
 
+            case "proposal":
+                $this->_createProposalTalk();
+                break;
         }
         echo json_encode($this->status);
     }
 
+    public function _loginUser()
+    {
+        if (isset($this->args['login']) && isset($this->args['password'])) {
+            $this->adm = new UserService($this->args['login'], $this->args['password'], $this->database);
+        } else {
+            $this->adm = new UserService('', '', $this->database);
+        }
+    }
+
     private function _createOrganizer()
     {
-        $this->adm = new UserService('', '', $this->database);
-
         if ($this->adm->createOrganizer($this->args['newlogin'], $this->args['newpassword'], $this->args['secret']))
             $this->_setStatusSuccess();
         else
@@ -71,8 +83,6 @@ class OperationManager
 
     private function _createUser()
     {
-        $this->adm = new UserService($this->args['login'], $this->args['password'], $this->database);
-
         if ($this->adm->registerUser($this->args['newlogin'], $this->args['newpassword']))
             $this->_setStatusSuccess();
         else
@@ -81,8 +91,6 @@ class OperationManager
 
     private function _createEvent()
     {
-        $this->adm = new UserService($this->args['login'], $this->args['password'], $this->database);
-
         if ($this->adm->createEvent($this->args['eventname'], $this->args['start_timestamp'], $this->args['end_timestamp']))
             $this->_setStatusSuccess();
         else
@@ -92,8 +100,6 @@ class OperationManager
 
     private function _createTalk()
     {
-        $this->adm = new UserService($this->args['login'], $this->args['password'], $this->database);
-
         if ($this->adm->createTalk($this->args['speakerlogin'], $this->args['talk'], $this->args['title'], $this->args['start_timestamp'],
             $this->args['room'], $this->args['initial_evaluation'], $this->args['eventname']))
             $this->_setStatusSuccess();
@@ -104,8 +110,6 @@ class OperationManager
 
     private function _rejectTalk()
     {
-        $this->adm = new UserService($this->args['login'], $this->args['password'], $this->database);
-
         if ($this->adm->rejectTalk($this->args['talk']))
             $this->_setStatusSuccess();
         else
@@ -114,8 +118,6 @@ class OperationManager
 
     private function _registerUserForEvent()
     {
-        $this->adm = new UserService($this->args['login'], $this->args['password'], $this->database);
-
         if($this->adm->registerUserForEvent($this->args['eventname']))
             $this->_setStatusSuccess();
         else
@@ -124,8 +126,6 @@ class OperationManager
 
     private function _checkAttendance()
     {
-        $this->adm = new UserService($this->args['login'], $this->args['password'], $this->database);
-
         if($this->adm->checkAttendance($this->args['talk']))
             $this->_setStatusSuccess();
         else
@@ -134,9 +134,15 @@ class OperationManager
 
     private function _evaluationTalk()
     {
-        $this->adm = new UserService($this->args['login'], $this->args['password'], $this->database);
-
         if($this->adm->evaluationTalk($this->args['talk'], $this->args['rating']))
+            $this->_setStatusSuccess();
+        else
+            $this->_setStatusError();
+    }
+
+    private function _createProposalTalk()
+    {
+        if ($this->adm->createProposalTalk($this->args['login'], $this->args['talk'], $this->args['title']))
             $this->_setStatusSuccess();
         else
             $this->_setStatusError();

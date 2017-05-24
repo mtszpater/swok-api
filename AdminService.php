@@ -123,4 +123,18 @@ class UserService
 
     }
 
+    public function createProposalTalk($talk_id, $title, $start_timestamp){
+        if( ! $this->database->userExists($this->user_login, $this->user_password) )
+            return false;
+
+        if( $this->database->existsProposalTalk($talk_id) )
+            return false;
+
+        if($this->database->createProposalTalk($this->user_login, intval($talk_id), $title, $start_timestamp)) {
+            return true;
+        }
+
+        return false;
+    }
+
 }

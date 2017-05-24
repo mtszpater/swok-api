@@ -88,5 +88,9 @@ class DatabaseManager implements DatabaseOperation {
         return pg_query($this->connection, "insert into member (login, password, admin) VALUES ('$user_login', '$user_password', true)") ? true : false;
     }
 
+    public function createProposalTalk($user_login, $talk, $title, $start_timestamp)
+    {
+        return pg_query($this->connection, "insert into talk_proposal (id, title, login, date_start) VALUES ('$talk', '$title', '$user_login', '$start_timestamp')") ? true : false;
+    }
 }
 ?>
