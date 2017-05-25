@@ -1,11 +1,4 @@
 <?php
-
-/**
- * Created by PhpStorm.
- * User: pater
- * Date: 25.05.2017
- * Time: 10:41
- */
 class StatusHandler
 {
     public static function error($msg){
