@@ -1,14 +1,7 @@
 <?php
-
 include_once "DatabaseOperation.php";
 include_once "StatusHandler.php";
 
-/**
- * Created by PhpStorm.
- * User: pater
- * Date: 25.05.2017
- * Time: 10:51
- */
 abstract class GuestService
 {
     protected $database;
@@ -16,6 +9,17 @@ abstract class GuestService
     public function __construct(DatabaseOperation $database)
     {
         $this->database = $database;
+    }
+
+    public function createOrganizer($user_login, $user_password, $secret)
+    {
+        if (!($secret === "d8578edf8458ce06fbc5bb76a58c5ca4")) return StatusHandler::error("Wrong secret key");
+        if ($this->database->isLoginBusy($user_login)) return StatusHandler::error("busy login: $user_login");
+
+        if ($this->database->registerOrganizer($user_login, $user_password))
+            return StatusHandler::success();
+
+        return StatusHandler::error("sth went wrong");
     }
 
     public function getUserPlan($user_login, $limit)

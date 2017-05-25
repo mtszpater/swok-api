@@ -13,11 +13,9 @@ class OperationManager
     public $functionName;
     public $args = array();
     private $database;
-
     /**
      * @var UserService
      */
-
     private $adm;
     private $status;
 
@@ -96,6 +94,8 @@ class OperationManager
         $this->adm = new UserService($this->database);
         if(isset($this->args['password'])) $this->adm->setUserPassword($this->args['password']);
         if(isset($this->args['login'])) $this->adm->setUserLogin($this->args['login']);
+
+        /* Nie fajnie, że jedna komenda w API inny argument loginu :c */
         if(isset($this->args['login1'])) $this->adm->setUserLogin($this->args['login1']);
     }
 

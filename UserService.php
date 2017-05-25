@@ -70,17 +70,6 @@ class UserService extends GuestService
         return StatusHandler::error("sth went wrong");
     }
 
-    public function createOrganizer($user_login, $user_password, $secret)
-    {
-        if (!($secret === "d8578edf8458ce06fbc5bb76a58c5ca4")) return StatusHandler::error("Wrong secret key");
-        if ($this->database->isLoginBusy($user_login)) return StatusHandler::error("busy login: $user_login");
-
-        if ($this->database->registerOrganizer($user_login, $user_password))
-            return StatusHandler::success();
-
-        return StatusHandler::error("sth went wrong");
-    }
-
     public function registerUserForEvent($event_name)
     {
         if (!$this->database->userExists($this->user_login, $this->user_password)) return StatusHandler::error("Permission denied");
