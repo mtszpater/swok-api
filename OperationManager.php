@@ -24,13 +24,13 @@ class OperationManager
 
         switch($this->functionName){
             case "organizer":
-                $this->_createOrganizer();
+                $this->_organizer();
                 break;
 
             case "user":
-                $this->_createUser();
+                $this->_user();
                 break;
-
+//TODO: pozmeniac te nazwy
             case "event":
                 $this->_createEvent();
                 break;
@@ -79,6 +79,34 @@ class OperationManager
                 $this->_mostPopularTalks();
                 break;
 
+            case "attended_talks":
+                $this->_attendedTalks();
+                break;
+
+            case "abandoned_talks":
+                $this->_abandonedTalks();
+                break;
+
+            case "recently_added_talks":
+                $this->_recentlyAddedTalks();
+                break;
+
+            case "rejected_talks":
+                $this->_rejectedTalks();
+                break;
+
+            case "friends_talks":
+                $this->_friendsTalks();
+                break;
+
+            case "friends_events";
+                $this->_friendsEvents();
+                break;
+
+            case "recommended_talks";
+                $this->_recommendedTalks();
+                break;
+
         }
         echo json_encode($this->status);
     }
@@ -93,12 +121,12 @@ class OperationManager
         if(isset($this->args['login1'])) $this->adm->setUserLogin($this->args['login1']);
     }
 
-    private function _createOrganizer()
+    private function _organizer()
     {
         $this->status = $this->adm->createOrganizer($this->args['newlogin'], $this->args['newpassword'], $this->args['secret']);
     }
 
-    private function _createUser()
+    private function _user()
     {
         $this->status = $this->adm->registerUser($this->args['newlogin'], $this->args['newpassword']);
     }
@@ -139,7 +167,11 @@ class OperationManager
 
     private function _createProposalTalk()
     {
-        $this->status = $this->adm->createProposalTalk($this->args['talk'], $this->args['title'], $this->args['start_timestamp']);
+        // metoda "proposal" działa na dwa sposoby :c
+        if(isset($this->args['talk']))
+            $this->status = $this->adm->createProposalTalk($this->args['talk'], $this->args['title'], $this->args['start_timestamp']);
+        else
+            $this->status = $this->adm->proposal();
     }
 
     private function _addFriend()
@@ -165,5 +197,41 @@ class OperationManager
     {
         $this->status = $this->adm->getMostPopularTalks($this->args['start_timestamp'], $this->args['end_timestamp'], $this->args['limit']);
     }
+
+    private function _attendedTalks()
+    {
+        $this->status = $this->adm->attendedTalks();
+    }
+
+    private function _abandonedTalks()
+    {
+        $this->status = $this->adm->abandonedTalks($this->args['limit']);
+    }
+
+    private function _recentlyAddedTalks()
+    {
+        $this->status = $this->adm->getRecentlAddedTalks($this->args['limit']);
+    }
+
+    private function _rejectedTalks()
+    {
+        $this->status = $this->adm->rejectedTalks();
+    }
+
+    private function _friendsTalks()
+    {
+        $this->status = $this->adm->friendsTalks($this->args['start_timestamp'], $this->args['end_timestamp'], $this->args['limit']);
+    }
+
+    private function _friendsEvents()
+    {
+        $this->status = $this->adm->friendsEvents($this->args['event']);
+    }
+
+    private function _recommendedTalks()
+    {
+        $this->status = $this->adm->recommendedTalks($this->args['start_timestamp'], $this->args['end_timestamp'], $this->args['limit']);
+    }
+
 
 }

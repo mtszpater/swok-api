@@ -11,4 +11,8 @@ class StatusHandler
         else
             return array('status' => 'OK', 'data' => $msg);
     }
+
+    public static function not_implemented(){
+        return array('status' => 'NOT IMPLEMENTED');
+    }
 }

@@ -132,42 +132,49 @@ class UserService extends GuestService
     {
 // (*U) attended_talks <login> <password> // zwraca dla danego uczestnika referaty, na których był obecny
 //  <talk> <start_timestamp> <title> <room>
+        return StatusHandler::not_implemented();
     }
 
     public function abandonedTalks($limit)
     {
 // (*O) abandoned_talks <login> <password>  <limit> // zwraca listę referatów posortowaną malejąco wg liczby uczestników <number> zarejestrowanych na wydarzenie obejmujące referat, którzy nie byli na tym referacie obecni, wypisuje pierwsze <limit> referatów, przy czym 0 oznacza, że należy wypisać wszystkie
 //  <talk> <start_timestamp> <title> <room> <number>
+        return StatusHandler::not_implemented();
     }
 
     public function rejectedTalks()
     {
 // (U/O) rejected_talks <login> <password> // jeśli wywołujący ma uprawnienia organizatora zwraca listę wszystkich odrzuconych referatów spontanicznych, w przeciwnym przypadku listę odrzuconych referatów wywołującego ją uczestnika
 //  <talk> <speakerlogin> <start_timestamp> <title>
+        return StatusHandler::not_implemented();
     }
 
     public function proposal()
     {
 //  (O) proposals <login> <password> // zwraca listę propozycji referatów spontanicznych do zatwierdzenia lub odrzucenia, zatwierdzenie lub odrzucenie referatu polega na wywołaniu przez organizatora funkcji talk lub reject z odpowiednimi parametrami
 //  <talk> <speakerlogin> <start_timestamp> <title>
+        return StatusHandler::not_implemented();
     }
 
     public function friendsTalks($start_timestamp, $end_timestamp, $limit)
     {
 //  (U) friends_talks <login> <password> <start_timestamp> <end_timestamp> <limit> // lista referatów  rozpoczynających się w podanym przedziale czasowym wygłaszanych przez znajomych danego uczestnika posortowana wg czasu rozpoczęcia, wypisuje pierwsze <limit> referatów, przy czym 0 oznacza, że należy wypisać wszystkie
 //  <talk> <speakerlogin> <start_timestamp> <title> <room>
+        return StatusHandler::not_implemented();
     }
 
     public function friendsEvents($event)
     {
 //  (U) friends_events <login> <password> <event> // lista znajomych uczestniczących w danym wydarzeniu
 //  <login> <event> <friendlogin>
+        return StatusHandler::not_implemented();
     }
 
     public function recommendedTalks($start_timestamp, $end_timestamp, $limit)
     {
 //  (U) recommended_talks <login> <password> <start_timestamp> <end_timestamp> <limit> // zwraca referaty rozpoczynające się w podanym przedziale czasowym, które mogą zainteresować danego uczestnika (zaproponuj parametr <score> obliczany na podstawie dostępnych danych – ocen, obecności, znajomości itp.), wypisuje pierwsze <limit> referatów wg nalepszego <score>, przy czym 0 oznacza, że należy wypisać wszystkie
 //  <talk> <speakerlogin> <start_timestamp> <title> <room> <score>
+        return StatusHandler::not_implemented();
     }
 
     public function setUserPassword($user_password)
