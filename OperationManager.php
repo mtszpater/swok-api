@@ -1,6 +1,6 @@
 <?php
 require_once "DatabaseManager.php";
-require_once "AdminService.php";
+require_once "UserService.php";
 
 /**
  * Created by PhpStorm.
@@ -13,6 +13,11 @@ class OperationManager
     public $functionName;
     public $args = array();
     private $database;
+
+    /**
+     * @var UserService
+     */
+
     private $adm;
     private $status;
 
@@ -88,19 +93,10 @@ class OperationManager
 
     public function _loginUser()
     {
-        if (isset($this->args['login']) && isset($this->args['password'])) {
-            $this->adm = new UserService($this->args['login'], $this->args['password'], $this->database);
-        } else {
-
-            if(isset($this->args['login1']))
-                $this->adm = new UserService($this->args['login1'], $this->args['password'], $this->database);
-
-            elseif(isset($this->args['login']) && ! isset($this->args['password']))
-                $this->adm = new UserService($this->args['login'], '', $this->database);
-
-            else
-                $this->adm = new UserService('', '', $this->database);
-        }
+        $this->adm = new UserService($this->database);
+        if(isset($this->args['password'])) $this->adm->setUserPassword($this->args['password']);
+        if(isset($this->args['login'])) $this->adm->setUserLogin($this->args['login']);
+        if(isset($this->args['login1'])) $this->adm->setUserLogin($this->args['login1']);
     }
 
     private function _createOrganizer()
@@ -158,7 +154,7 @@ class OperationManager
     }
 
     private function _userPlan(){
-        $this->status = $this->adm->getUserPlan($this->args['limit']);
+        $this->status = $this->adm->getUserPlan($this->args['login'], $this->args['limit']);
     }
 
     private function _dayPlan()

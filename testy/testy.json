@@ -36,14 +36,14 @@
 
 {"evaluation": {"login": "admin1", "password": "password1", "talk": "1", "rating": "10"}}
 {"evaluation": {"login": "admin1", "password": "password1", "talk": "9", "rating": "5"}}
-{"evaluation": {"login": "admin2", "password": "password1", "talk": "5", "rating": "100"}}
+{"evaluation": {"login": "admin", "password": "password1", "talk": "1", "rating": "10"}}
 
 
 {"proposal": {"login": "admin","password": "password1", "talk": "1", "title": "title talk #3", "start_timestamp": "2004-10-19 10:23:54.000000" }}
 
 
 
-{"friends": {"login1": "admin", "password": "password1", "login2": "admin1"}}
+{"friends": {"login1": "admin", "password": "password1", "login2": "admin"}}
 
 
 {"user_plan": {"login": "admin2", "limit": "19"}}
