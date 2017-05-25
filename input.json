@@ -1,0 +1,31 @@
+{ "organizer": { "secret": "d8578edf8458ce06fbc5bb76a58c5ca4", "newlogin": "org", "newpassword": "orgpass"}}
+{ "event": { "login": "org", "password": "orgpass", "eventname": "millennium", "start_timestamp": "2000-1-1", "end_timestamp": "2000-1-2"}}
+{ "event": { "login": "org2", "password": "orgpass2", "eventname": "millennium2", "start_timestamp": "3000-1-1", "end_timestamp": "3000-1-2"}}
+{ "event": { "login": "org", "password": "orgpass", "eventname": "newBegining", "start_timestamp": "2001-1-1", "end_timestamp": "2001-1-2"}}
+{ "user": { "login": "org", "password": "orgpass", "newlogin": "mem3", "newpassword": "mempass"}}
+{ "user": { "login": "org", "password": "orgpass", "newlogin": "mem1", "newpassword": "mempass"}}
+{ "event": { "login": "mem1", "password": "mempass", "eventname": "millennium2", "start_timestamp": "3000-1-1", "end_timestamp": "3000-1-2"}}
+{ "talk": { "login": "org", "password": "orgpass", "speakerlogin": "mem3", "talk": "1", "title": "apocalypse", "start_timestamp": "2000-1-1 00:30", "room": "666", "initial_evaluation": "7", "eventname": "millennium"}}
+{ "talk": { "login": "org", "password": "orgpass", "speakerlogin": "mem3", "talk": "2", "title": "newWorldOrder", "start_timestamp": "2000-1-1 03:33", "room": "777", "initial_evaluation": "9", "eventname": "millennium"}}
+{ "register_user_for_event": { "login": "mem1", "password": "mempass", "eventname": "millennium"}}
+{ "register_user_for_event": { "login": "mem1", "password": "mempass", "eventname": "newBegining"}}
+{ "attendance": { "login": "mem1", "password": "mempass", "talk": "1"}}
+{ "evaluation": { "login": "mem1", "password": "mempass", "talk": "1", "rating": "10"}}
+
+{ "reject": { "login": "org", "password": "orgpass", "talk": "2"}} // reject dziala tylko dla talk_proposal
+{ "proposal": { "login": "mem1", "password": "mempass", "talk": "2", "title": "newWorldOrder", "start_timestamp": "2000-1-1 03:00"}}
+// nie stworzy tej propozycji, bo istnieje
+// taki rekord w talk o tym id. Przeciez pozniej tego nie zatwierdzisz, bo id jest juz zajte
+
+{ "reject": { "login": "org", "password": "orgpass", "talk": "2"}} //dlatego tez to nie zadziala, bo nie mam zadnego rekordu w talk_proposal o tym id (ten u gory sie nie dodal)
+{ "friends": { "login1": "mem1", "password": "mempass", "login2": "mem3"}}
+{ "friends": { "login1": "mem3", "password": "mempass", "login2": "mem1"}}
+{ "user_plan": { "login": "mem3", "limit": "5"}}
+{ "user_plan": { "login": "mem1", "limit": "0"}}
+{ "day_plan": { "timestamp": "2000-1-1"}}
+{ "best_talks": { "start_timestamp": "1000-1-1", "end_timestamp": "3000-1-1 4:00", "limit": "0", "all": "1"}}
+{ "most_popular_talks": { "start_timestamp": "1000-1-1", "end_timestamp": "3000-1-1 4:00", "limit": "0"}}
+{ "attended_talks": { "login": "mem1", "password": "mempass"}}
+{ "attended_talks": { "login": "mem3", "password": "mempass"}}
+{ "attended_talks": { "login": "org",  "password": "orgpass"}}
+{ "abandoned_talks": { "login": "org",  "password": "orgpass", "limit": "0"}}

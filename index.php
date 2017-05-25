@@ -17,7 +17,6 @@ while(true) {
 
         foreach ($jsonIterator as $key => $val) {
             if (is_array($val)) {
-                echo "$key\n";
                 $operator->functionName = $key;
 
             } else {
@@ -37,19 +36,3 @@ while(true) {
 }
 
 ?>
-
-
-<!--$connection = pg_connect("host=localhost port=5432 dbname=springbootdb user=ja password=");-->
-<!---->
-<!---->
-<!---->
-<!--$query = pg_query($connection, "-->
-<!--SELECT registrations_on_events.login, id as talk, date_start as start_timestamp, title, room FROM registrations_on_events-->
-<!--JOIN talk ON registrations_on_events.event_name=talk.event_name-->
-<!--WHERE registrations_on_events.login = 'admin'-->
-<!--ORDER BY talk.date_start ASC;");-->
-<!---->
-<!---->
-<!--echo json_encode(pg_fetch_all($query));-->
-<!---->
-<!--var_dump(pg_fetch_all($query));-->

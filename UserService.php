@@ -18,7 +18,7 @@ class UserService extends GuestService
         if (!$this->database->isAdmin($this->user_login, $this->user_password)) return StatusHandler::error("Permission denied");
         if (!$this->database->isLoginBusy($user_login)) return StatusHandler::error("User doesnt exist");
         if (!$this->database->isEventNameBusy($event_name)) return StatusHandler::error("event doesnt exist: $event_name");
-        if ($this->database->existsTalk($talk_id)) return StatusHandler::error("busy talk_id: $talk_id");
+        if ($this->database->existsTalk(intval($talk_id))) return StatusHandler::error("busy talk_id: $talk_id");
 
         $event_start = $this->database->getStartTimeStampOfEvent($event_name);
         if ($event_start >= $start_timestamp) return StatusHandler::error("bad timestamp: $start_timestamp ");
@@ -26,8 +26,9 @@ class UserService extends GuestService
         if ($this->database->createTalk($user_login, intval($talk_id), $title, $start_timestamp, intval($room), $event_name)) {
 
             $this->evaluationTalk($talk_id, $initial_evaluation);
+            $this->checkAttendance($talk_id);
 
-            if ($this->database->existsProposalTalk($talk_id)) {
+            if ($this->database->existsProposalTalk(intval($talk_id))) {
                 $this->rejectTalk($talk_id);
             }
 
@@ -42,7 +43,7 @@ class UserService extends GuestService
         if (!$this->database->isAdmin($this->user_login, $this->user_password)) return StatusHandler::error("Permission denied");
         if (!$this->database->existsProposalTalk($talk_id)) return StatusHandler::error("didnt found talk_id: $talk_id");
 
-        if ($this->database->rejectTalk($talk_id))
+        if ($this->database->rejectTalk(intval($talk_id)))
             return StatusHandler::success();
 
         return StatusHandler::error("sth went wrong");
@@ -85,7 +86,7 @@ class UserService extends GuestService
     {
         if (!$this->database->userExists($this->user_login, $this->user_password)) return StatusHandler::error("Permission denied");
 
-        if ($this->database->checkAttendance($this->user_login, $talk_id))
+        if ($this->database->checkAttendance($this->user_login, intval($talk_id)))
             return StatusHandler::success();
 
         return StatusHandler::error("sth went wrong");
@@ -96,7 +97,7 @@ class UserService extends GuestService
         if (!$this->database->userExists($this->user_login, $this->user_password)) return StatusHandler::error("Permission denied");
         if (!$this->database->existsTalk($talk_id)) return StatusHandler::error("talk doesnt exist: $talk_id");
 
-        if ($this->database->evaluationTalk($this->user_login, $talk_id, $rate))
+        if ($this->database->evaluationTalk($this->user_login, intval($talk_id), intval($rate)))
             return StatusHandler::success();
 
         return StatusHandler::error("sth went wrong");
