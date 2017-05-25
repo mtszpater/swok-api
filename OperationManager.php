@@ -2,12 +2,6 @@
 require_once "DatabaseManager.php";
 require_once "UserService.php";
 
-/**
- * Created by PhpStorm.
- * User: pater
- * Date: 23.05.2017
- * Time: 15:59
- */
 class OperationManager
 {
     public $functionName;

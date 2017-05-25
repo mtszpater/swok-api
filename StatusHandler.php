@@ -12,12 +12,10 @@ class StatusHandler
         return array('status' => 'ERROR', 'msg' => $msg);
     }
 
-    public static function success($with_data = false, $msg = array()){
-        if(!$msg) $msg = array();
-
-        if($with_data)
-            return array('status' => 'OK', 'data' => $msg);
-        else
+    public static function success($msg = false){
+        if(!$msg)
             return array('status' => 'OK');
+        else
+            return array('status' => 'OK', 'data' => $msg);
     }
 }

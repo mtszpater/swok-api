@@ -27,7 +27,7 @@
 
 {"register_user_for_event": {"login": "admin", "password": "password1", "eventname": "Nazwa eventu2"}}
 {"register_user_for_event": {"login": "newlogin", "password": "password1", "eventname": "Nazwa eventu10"}}
-{"register_user_for_event": {"login": "admin1", "password": "password1", "eventname": "Nazwa eventu11"}}
+{"register_user_for_event": {"login": "newlogin", "password": "password1", "eventname": "Nazwa eventu2"}}
 
 
 {"attendance": {"login": "admin", "password": "password1", "talk": "2"}}
@@ -43,7 +43,7 @@
 
 
 
-{"friends": {"login1": "admin", "password": "password1", "login2": "admin"}}
+{"friends": {"login1": "admin", "password": "password1", "login2": "newlogin"}}
 
 
 {"user_plan": {"login": "admin2", "limit": "19"}}
