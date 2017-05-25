@@ -200,5 +200,11 @@ WHERE attendance_on_talks.login = '$user_login';");
 
         return pg_fetch_all($query) ? pg_fetch_all($query) : array();
     }
+
+    public function getProposalTalks()
+    {
+        $query = pg_query($this->connection, "SELECT id as talk, title, login as speakerlogin, date_start as start_timestamp FROM talk_proposal;");
+        return pg_fetch_all($query) ? pg_fetch_all($query) : array();
+    }
 }
 ?>

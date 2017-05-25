@@ -64,11 +64,11 @@ class OperationManager
                 break;
 
             case "proposal":
-                // metoda "proposal" działa na dwa sposoby :c
-                if(isset($this->args['talk']))
-                    $this->status = $this->adm->createProposalTalk($this->args['talk'], $this->args['title'], $this->args['start_timestamp']);
-                else
-                    $this->status = $this->adm->proposal();
+                $this->status = $this->adm->createProposalTalk($this->args['talk'], $this->args['title'], $this->args['start_timestamp']);
+                break;
+
+            case "proposals":
+                $this->status = $this->adm->proposal();
                 break;
 
             case "friends":

@@ -26,6 +26,7 @@ class UserService extends GuestService
         if ($this->database->createTalk($user_login, intval($talk_id), $title, $start_timestamp, intval($room), $event_name)) {
 
             $this->evaluationTalk($talk_id, $initial_evaluation);
+//            $this->checkAttendance($talk_id);
 
             if ($this->database->existsProposalTalk(intval($talk_id))) {
                 $this->rejectTalk($talk_id);
@@ -151,9 +152,8 @@ class UserService extends GuestService
 
     public function proposal()
     {
-//  (O) proposals <login> <password> // zwraca listę propozycji referatów spontanicznych do zatwierdzenia lub odrzucenia, zatwierdzenie lub odrzucenie referatu polega na wywołaniu przez organizatora funkcji talk lub reject z odpowiednimi parametrami
-//  <talk> <speakerlogin> <start_timestamp> <title>
-        return StatusHandler::not_implemented();
+        if (!$this->database->isAdmin($this->user_login, $this->user_password)) return StatusHandler::error("Permission denied");
+        return StatusHandler::success($this->database->getProposalTalks());
     }
 
     public function friendsTalks($start_timestamp, $end_timestamp, $limit)
