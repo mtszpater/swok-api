@@ -11,13 +11,9 @@
 { "register_user_for_event": { "login": "mem1", "password": "mempass", "eventname": "newBegining"}}
 { "attendance": { "login": "mem1", "password": "mempass", "talk": "1"}}
 { "evaluation": { "login": "mem1", "password": "mempass", "talk": "1", "rating": "10"}}
-
-{ "reject": { "login": "org", "password": "orgpass", "talk": "2"}} // reject dziala tylko dla talk_proposal
+{ "reject": { "login": "org", "password": "orgpass", "talk": "2"}}
 { "proposal": { "login": "mem1", "password": "mempass", "talk": "2", "title": "newWorldOrder", "start_timestamp": "2000-1-1 03:00"}}
-// nie stworzy tej propozycji, bo istnieje
-// taki rekord w talk o tym id. Przeciez pozniej tego nie zatwierdzisz, bo id jest juz zajte
-
-{ "reject": { "login": "org", "password": "orgpass", "talk": "2"}} //dlatego tez to nie zadziala, bo nie mam zadnego rekordu w talk_proposal o tym id (ten u gory sie nie dodal)
+{ "reject": { "login": "org", "password": "orgpass", "talk": "2"}}
 { "friends": { "login1": "mem1", "password": "mempass", "login2": "mem3"}}
 { "friends": { "login1": "mem3", "password": "mempass", "login2": "mem1"}}
 { "user_plan": { "login": "mem3", "limit": "5"}}

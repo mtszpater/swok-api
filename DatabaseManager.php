@@ -132,7 +132,7 @@ class DatabaseManager implements DatabaseOperation {
                   LIMIT $limit;");
         }
 
-        return pg_fetch_all($query);
+        return pg_fetch_all($query) ? pg_fetch_all($query) : array();
 
     }
 
@@ -141,7 +141,7 @@ class DatabaseManager implements DatabaseOperation {
         $query = pg_query($this->connection,
             "SELECT id as talk, date_start as start_timestamp, title, room FROM talk where date_trunc('day', talk.date_start) =  date_trunc('day', TIMESTAMP '$timestamp') ORDER BY room, start_timestamp ASC;");
 
-        return pg_fetch_all($query);
+        return pg_fetch_all($query) ? pg_fetch_all($query) : array();
     }
 
 
@@ -167,7 +167,7 @@ class DatabaseManager implements DatabaseOperation {
                     LIMIT '$limit';");
         }
 
-        return pg_fetch_all($query);
+        return pg_fetch_all($query) ? pg_fetch_all($query) : array();
     }
 
     public function getMostPopularTalks($start_timestamp, $end_timestamp, $limit)
@@ -188,8 +188,17 @@ class DatabaseManager implements DatabaseOperation {
             LIMIT '$limit';");
         }
 
-        return pg_fetch_all($query);
+        return pg_fetch_all($query) ? pg_fetch_all($query) : array();
 
+    }
+
+    public function getAttendedTalks($user_login)
+    {
+        $query = pg_query($this->connection, "SELECT attendance_on_talks.talk_id as talk, talk.date_start as start_timestamp, title, room  FROM talk
+JOIN attendance_on_talks on talk.id=attendance_on_talks.talk_id
+WHERE attendance_on_talks.login = '$user_login';");
+
+        return pg_fetch_all($query) ? pg_fetch_all($query) : array();
     }
 }
 ?>

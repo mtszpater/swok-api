@@ -45,3 +45,8 @@ LIMIT 0;
 SELECT id as talk, date_start as start_timestamp, title, room FROM talk
 WHERE talk.date_start >= '2004-10-19 10:23:50.000000' AND talk.date_start <= '2005-10-19 10:23:53.000000'
 ORDER BY members DESC;
+
+
+SELECT attendance_on_talks.talk_id as talk, talk.date_start as start_timestamp, title, room  FROM talk
+JOIN attendance_on_talks on talk.id=attendance_on_talks.talk_id
+WHERE attendance_on_talks.login = 'org';

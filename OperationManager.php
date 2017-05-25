@@ -23,6 +23,11 @@ class OperationManager
         $this->_loginUser();
 
         switch($this->functionName){
+            case "open":
+                $this->database = new DatabaseManager(null, null, $this->args['baza'], $this->args['login'], $this->args['password']);
+                $this->status = array('status' => 'OK');
+                break;
+
             case "organizer":
                 $this->status = $this->adm->createOrganizer($this->args['newlogin'], $this->args['newpassword'], $this->args['secret']);
                 break;

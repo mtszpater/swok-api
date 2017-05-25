@@ -5,8 +5,8 @@ class StatusHandler
         return array('status' => 'ERROR', 'msg' => $msg);
     }
 
-    public static function success($msg = false){
-        if(!$msg)
+    public static function success($msg = null){
+        if(is_null($msg))
             return array('status' => 'OK');
         else
             return array('status' => 'OK', 'data' => $msg);

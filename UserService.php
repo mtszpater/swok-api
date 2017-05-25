@@ -26,7 +26,6 @@ class UserService extends GuestService
         if ($this->database->createTalk($user_login, intval($talk_id), $title, $start_timestamp, intval($room), $event_name)) {
 
             $this->evaluationTalk($talk_id, $initial_evaluation);
-            $this->checkAttendance($talk_id);
 
             if ($this->database->existsProposalTalk(intval($talk_id))) {
                 $this->rejectTalk($talk_id);
@@ -131,9 +130,9 @@ class UserService extends GuestService
 
     public function attendedTalks()
     {
-// (*U) attended_talks <login> <password> // zwraca dla danego uczestnika referaty, na których był obecny
-//  <talk> <start_timestamp> <title> <room>
-        return StatusHandler::not_implemented();
+        if (!$this->database->userExists($this->user_login, $this->user_password)) return StatusHandler::error("Permission denied");
+
+        return StatusHandler::success($this->database->getAttendedTalks($this->user_login));
     }
 
     public function abandonedTalks($limit)
