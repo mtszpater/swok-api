@@ -1,5 +1,5 @@
 <?php
-include_once "DatabaseOperation.php";
+include_once "DatabaseManagerInterface.php";
 include_once "StatusHandler.php";
 require_once "GuestService.php";
 
@@ -8,7 +8,7 @@ class UserService extends GuestService
     private $user_login;
     private $user_password;
 
-    public function __construct(DatabaseOperation $database)
+    public function __construct(DatabaseManagerInterface $database)
     {
         parent::__construct($database);
     }

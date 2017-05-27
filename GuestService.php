@@ -1,12 +1,12 @@
 <?php
-include_once "DatabaseOperation.php";
+include_once "DatabaseManagerInterface.php";
 include_once "StatusHandler.php";
 
 abstract class GuestService
 {
     protected $database;
 
-    public function __construct(DatabaseOperation $database)
+    public function __construct(DatabaseManagerInterface $database)
     {
         $this->database = $database;
     }

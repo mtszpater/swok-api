@@ -1,5 +1,5 @@
 <?php
-interface DatabaseOperation
+interface DatabaseManagerInterface
 {
     public function userExists($user_login, $user_password);
     public function isAdmin($user_login, $user_password);

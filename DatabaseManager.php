@@ -1,7 +1,7 @@
 <?php
-include_once "DatabaseOperation.php";
+include_once "DatabaseManagerInterface.php";
 
-class DatabaseManager implements DatabaseOperation {
+class DatabaseManager implements DatabaseManagerInterface {
 	private $connection = null;
 
 	public function __construct($host = 'localhost', $port = '5432', $dbname = 'springbootdb', $user = 'ja', $password = '' )
