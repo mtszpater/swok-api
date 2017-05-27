@@ -76,7 +76,6 @@ class DatabaseManager implements DatabaseManagerInterface {
         return @pg_query($this->connection, "insert into attendance_on_talks (login, talk_id) VALUES ('$user_login', '$talk_id')") ? true : false;
     }
 
-
     public function evaluationTalk($user_login, $talk_id, $rate, $initial_evaluation = false)
     {
         if( $initial_evaluation )
@@ -142,7 +141,6 @@ class DatabaseManager implements DatabaseManagerInterface {
 
         return pg_fetch_all($query) ? pg_fetch_all($query) : array();
     }
-
 
     public function getBestTalks($start_timestamp, $end_timestamp, $limit, $all)
     {

@@ -25,18 +25,17 @@ class OperationManager
      * @var EventService
      */
     private $event;
-
     private $status;
 
 
     public function __construct()
     {
         $this->database = new DatabaseManager();
-
     }
 
     public function execute(){
-        $this->_initialClasses();
+        $this->_prepareArguments();
+        $this->_init();
 
         switch($this->functionName){
             case "open":
@@ -135,7 +134,14 @@ class OperationManager
         echo json_encode($this->status);
     }
 
-    private function _initialClasses()
+    private function _prepareArguments()
+    {
+        foreach ($this->args as $key => $value) {
+            $this->args['key'] = pg_escape_literal($value);
+        }
+    }
+
+    private function _init()
     {
         $user_password = '';
         $user_login = '';
@@ -152,6 +158,21 @@ class OperationManager
         $this->event = new EventService($this->database);
     }
 
+    private function _open()
+    {
+//        TODO: ma wywalac blad przy zlym polaczeniu
+        $this->database = new DatabaseManager($this->args['baza'], $this->args['login'], $this->args['password']);
+        $this->status = StatusHandler::success();
+    }
+
+    private function _organizer()
+    {
+        if($this->auth->createOrganizer($this->args['newlogin'], $this->args['newpassword'], $this->args['secret']))
+            $this->status = StatusHandler::success();
+        else
+            $this->status = StatusHandler::error();
+    }
+
     private function _user()
     {
         if (!$this->auth->isAdmin()) {
@@ -161,6 +182,19 @@ class OperationManager
 
         if ($this->auth->registerUser($this->args['newlogin'], $this->args['newpassword']))
             $this->status = StatusHandler::success();
+    }
+
+    private function _event()
+    {
+        if (!$this->auth->isAdmin()) {
+            $this->status = StatusHandler::error();
+            return;
+        }
+
+        if ($this->event->createEvent($this->args['eventname'], $this->args['start_timestamp'], $this->args['end_timestamp']))
+            $this->status = StatusHandler::success();
+        else
+            $this->status = StatusHandler::error();
     }
 
     private function _talk()
@@ -195,6 +229,19 @@ class OperationManager
         else
             $this->status = StatusHandler::error();
 
+    }
+
+    private function _registerUserForEvent()
+    {
+        if (!$this->auth->isLogged()) {
+            $this->status = StatusHandler::error();
+            return;
+        }
+
+        if ($this->event->registerUserForEvent($this->auth->getUserLogin(), $this->args['eventname']))
+            $this->status = StatusHandler::success();
+        else
+            $this->status = StatusHandler::error();
     }
 
     private function _attendance()
@@ -236,36 +283,6 @@ class OperationManager
             $this->status = StatusHandler::error();
     }
 
-    private function _attendedTalks()
-    {
-        if (!$this->auth->isLogged()) {
-            $this->status = StatusHandler::error();
-            return;
-        }
-
-        $this->status = StatusHandler::success($this->talk->attendedTalks($this->auth->getUserLogin()));
-    }
-
-    private function _abandonedTalks()
-    {
-        if (!$this->auth->isAdmin()) {
-            $this->status = StatusHandler::error();
-            return;
-        }
-
-        $this->status = StatusHandler::success($this->talk->abandonedTalks($this->args['limit']));
-    }
-
-    private function _rejectedTalks()
-    {
-        if ($this->auth->isAdmin())
-            $this->status = StatusHandler::success($this->talk->getAllRejectedTalks());
-        elseif ($this->auth->isLogged())
-            $this->status = StatusHandler::success($this->talk->getAllRejectedTalksForUser($this->auth->getUserLogin()));
-        else
-            $this->status = StatusHandler::error();
-    }
-
     private function _proposals()
     {
         if (!$this->auth->isAdmin()) {
@@ -274,52 +291,6 @@ class OperationManager
         }
 
         $this->status = StatusHandler::success($this->talk->proposal());
-    }
-
-    private function _friendsTalks()
-    {
-        if (!$this->auth->isLogged()) {
-            $this->status = StatusHandler::error();
-            return;
-        }
-
-        $this->status = StatusHandler::success($this->talk->friendsTalks($this->auth->getUserLogin(), $this->args['start_timestamp'], $this->args['end_timestamp'], $this->args['limit']));
-    }
-
-    private function _registerUserForEvent()
-    {
-        if (!$this->auth->isLogged()) {
-            $this->status = StatusHandler::error();
-            return;
-        }
-
-        if ($this->event->registerUserForEvent($this->auth->getUserLogin(), $this->args['eventname']))
-            $this->status = StatusHandler::success();
-        else
-            $this->status = StatusHandler::error();
-    }
-
-    private function _event()
-    {
-        if (!$this->auth->isAdmin()) {
-            $this->status = StatusHandler::error();
-            return;
-        }
-
-        if ($this->event->createEvent($this->args['eventname'], $this->args['start_timestamp'], $this->args['end_timestamp']))
-            $this->status = StatusHandler::success();
-        else
-            $this->status = StatusHandler::error();
-    }
-
-    private function _friendsEvents()
-    {
-        if (!$this->auth->isLogged()) {
-            $this->status = StatusHandler::error();
-            return;
-        }
-
-        $this->status = StatusHandler::success($this->adm->friendsEvents($this->args['event']));
     }
 
     private function _friends()
@@ -334,21 +305,6 @@ class OperationManager
         else
             $this->status = StatusHandler::error();
 
-    }
-
-    private function _organizer()
-    {
-        if($this->auth->createOrganizer($this->args['newlogin'], $this->args['newpassword'], $this->args['secret']))
-            $this->status = StatusHandler::success();
-        else
-            $this->status = StatusHandler::error();
-    }
-
-    private function _open()
-    {
-//        TODO: ma wywalac blad przy zlym polaczeniu
-        $this->database = new DatabaseManager($this->args['baza'], $this->args['login'], $this->args['password']);
-        $this->status = StatusHandler::success();
     }
 
     private function _userPlan()
@@ -371,10 +327,61 @@ class OperationManager
         $this->status = StatusHandler::success($this->adm->getMostPopularTalks($this->args['start_timestamp'], $this->args['end_timestamp'], $this->args['limit']));
     }
 
+    private function _attendedTalks()
+    {
+        if (!$this->auth->isLogged()) {
+            $this->status = StatusHandler::error();
+            return;
+        }
+
+        $this->status = StatusHandler::success($this->talk->attendedTalks($this->auth->getUserLogin()));
+    }
+
+    private function _abandonedTalks()
+    {
+        if (!$this->auth->isAdmin()) {
+            $this->status = StatusHandler::error();
+            return;
+        }
+
+        $this->status = StatusHandler::success($this->talk->abandonedTalks($this->args['limit']));
+    }
+
     private function _recentlyAddedTalks()
     {
         $this->status = $this->adm->getRecentlAddedTalks($this->args['limit']);
     }
+
+    private function _rejectedTalks()
+    {
+        if ($this->auth->isAdmin())
+            $this->status = StatusHandler::success($this->talk->getAllRejectedTalks());
+        elseif ($this->auth->isLogged())
+            $this->status = StatusHandler::success($this->talk->getAllRejectedTalksForUser($this->auth->getUserLogin()));
+        else
+            $this->status = StatusHandler::error();
+    }
+
+    private function _friendsTalks()
+    {
+        if (!$this->auth->isLogged()) {
+            $this->status = StatusHandler::error();
+            return;
+        }
+
+        $this->status = StatusHandler::success($this->talk->friendsTalks($this->auth->getUserLogin(), $this->args['start_timestamp'], $this->args['end_timestamp'], $this->args['limit']));
+    }
+
+    private function _friendsEvents()
+    {
+        if (!$this->auth->isLogged()) {
+            $this->status = StatusHandler::error();
+            return;
+        }
+
+        $this->status = StatusHandler::success($this->adm->friendsEvents($this->args['event']));
+    }
+
 
 
 }
