@@ -20,21 +20,14 @@
 {"status":"ERROR"}
 {"status":"ERROR"}
 {"status":"OK","data":[]}
-
-
 {"status":"OK","data":[{"login":"mem1","talk":"1","start_timestamp":"2000-01-01 00:30:00","title":"apocalypse","room":"666"},{"login":"mem1","talk":"2","start_timestamp":"2000-01-01 03:33:00","title":"newWorldOrder","room":"777"}]}
-
-
-
 {"status":"OK","data":[{"talk":"1","start_timestamp":"2000-01-01 00:30:00","title":"apocalypse","room":"666"},{"talk":"2","start_timestamp":"2000-01-01 03:33:00","title":"newWorldOrder","room":"777"}]}
 {"status":"OK","data":[{"talk":"2","start_timestamp":"2000-01-01 03:33:00","room":"777","title":"newWorldOrder"},{"talk":"1","start_timestamp":"2000-01-01 00:30:00","room":"666","title":"apocalypse"}]}
 {"status":"OK","data":[{"talk":"1","start_timestamp":"2000-01-01 00:30:00","title":"apocalypse","room":"666"},{"talk":"2","start_timestamp":"2000-01-01 03:33:00","title":"newWorldOrder","room":"777"}]}
 {"status":"OK","data":[{"talk":"1","start_timestamp":"2000-01-01 00:30:00","title":"apocalypse","room":"666"}]}
 {"status":"OK","data":[]}
 {"status":"OK","data":[]}
-
 {"status":"OK","data":[{"talk":"2","title":"newWorldOrder","number":"1","room":"777","start_timestamp":"2000-01-01 03:33:00"},{"talk":"1","title":"apocalypse","number":"0","room":"666","start_timestamp":"2000-01-01 00:30:00"}]}
-
 {"status":"OK"}
 {"status":"OK"}
 {"status":"ERROR"}
@@ -62,11 +55,7 @@
 {"status":"ERROR"}
 {"status":"OK"}
 {"status":"OK","data":[]}
-
-
 {"status":"OK","data":[{"login":"newlogin","talk":"6","start_timestamp":"2004-10-19 10:23:54","title":"title talk #1","room":"255"},{"login":"newlogin","talk":"3","start_timestamp":"2005-10-19 10:23:55","title":"title talk #1","room":"255"}]}
-
-
 {"status":"OK","data":[{"talk":"6","start_timestamp":"2004-10-19 10:23:54","title":"title talk #1","room":"255"}]}
 {"status":"OK","data":[]}
 {"status":"OK","data":[{"talk":"6","start_timestamp":"2004-10-19 10:23:54","room":"255","title":"title talk #1"}]}

@@ -137,7 +137,7 @@ class OperationManager
     private function _prepareArguments()
     {
         foreach ($this->args as $key => $value) {
-            $this->args['key'] = pg_escape_literal($value);
+            $this->args['key'] = $value;
         }
     }
 

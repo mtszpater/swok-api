@@ -71,12 +71,6 @@
 {"abandoned_talks": {"login": "admin", "password": "password1", "limit": "1"}}
 {"abandoned_talks": {"login": "admin", "password": "password1", "limit": "0"}}
 
-
-
-
-
-
-
 { "open": { "baza": "springbootdb", "login": "ja", "password": ""}}
 { "organizer": { "secret": "d8578edf8458ce06fbc5bb76a58c5ca4", "newlogin": "org", "newpassword": "orgpass"}}
 { "event": { "login": "org", "password": "orgpass", "eventname": "millennium", "start_timestamp": "2000-1-1", "end_timestamp": "2000-1-2"}}
