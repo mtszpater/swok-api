@@ -137,11 +137,8 @@ class UserService extends GuestService
 
     public function abandonedTalks($limit)
     {
-// (*O) abandoned_talks <login> <password>  <limit> // zwraca listę referatów posortowaną malejąco wg liczby uczestników <number> zarejestrowanych na wydarzenie obejmujące referat, którzy nie byli na tym referacie obecni, wypisuje pierwsze <limit> referatów, przy czym 0 oznacza, że należy wypisać wszystkie
-//  <talk> <start_timestamp> <title> <room> <number>
-
-
-        return StatusHandler::not_implemented();
+        if (!$this->database->isAdmin($this->user_login, $this->user_password)) return StatusHandler::error("Permission denied");
+        return StatusHandler::success($this->database->getAbandonedTalks($limit));
     }
 
     public function rejectedTalks()

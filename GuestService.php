@@ -48,7 +48,6 @@ abstract class GuestService
     {
 //  (N) recently_added_talks <limit> // zwraca listę ostatnio zarejestrowanych referatów, wypisuje ostatnie <limit> referatów wg daty zarejestrowania, przy czym 0 oznacza, że należy wypisać wszystkie
 //  <talk> <speakerlogin> <start_timestamp> <title> <room>
-
         return StatusHandler::not_implemented();
     }
 

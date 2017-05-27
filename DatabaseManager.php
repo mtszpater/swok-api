@@ -239,7 +239,7 @@ class DatabaseManager implements DatabaseOperation {
                                                     JOIN registrations_on_events r on f1.second_user = r.login
                                                     WHERE f1.first_user = '$user_login'
                                                     AND f1.second_user = f2.first_user
-                                                            AND r.event_name = '$event_name';");
+                                                    AND r.event_name = '$event_name';");
 
         return pg_fetch_all($query) ? pg_fetch_all($query) : array();
     }
@@ -253,6 +253,24 @@ class DatabaseManager implements DatabaseOperation {
     public function getAllRejectedTalksForUser($user_login)
     {
         $query = pg_query($this->connection, "Select t.id as talk, t.login as speakerlogin, t.date_start as start_timestamp, t.title FROM talk_proposal t WHERE t.rejected = 't' AND t.login = '$user_login';");
+        return pg_fetch_all($query) ? pg_fetch_all($query) : array();
+    }
+
+    public function getAbandonedTalks($limit)
+    {
+        if($limit == 0) {
+            $query = pg_query($this->connection, "SELECT t.id as talk, t.title, count(r.*) - t.members as number, t.room, t.date_start as start_timestamp from registrations_on_events r
+                                                        JOIN talk t on r.event_name = t.event_name
+                                                        GROUP by r.event_name, t.id, t.title, t.members
+                                                        ORDER by number DESC;");
+        }
+        else{
+            $query = pg_query($this->connection, "SELECT t.id as talk, t.title, count(r.*) - t.members as number, t.room, t.date_start as start_timestamp from registrations_on_events r
+                                                        JOIN talk t on r.event_name = t.event_name
+                                                        GROUP by r.event_name, t.id, t.title, t.members
+                                                        ORDER by number DESC
+                                                        LIMIT '$limit';");
+        }
         return pg_fetch_all($query) ? pg_fetch_all($query) : array();
     }
 }

@@ -29,4 +29,5 @@ interface DatabaseOperation
     public function getFriendsEvents($user_login, $event_name);
     public function getAllRejectedTalks();
     public function getAllRejectedTalksForUser($user_login);
+    public function getAbandonedTalks($limit);
 }
