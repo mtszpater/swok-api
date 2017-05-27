@@ -4,7 +4,7 @@ include_once "DatabaseManagerInterface.php";
 class DatabaseManager implements DatabaseManagerInterface {
 	private $connection = null;
 
-	public function __construct($host = 'localhost', $port = '5432', $dbname = 'springbootdb', $user = 'ja', $password = '' )
+	public function __construct($dbname = 'springbootdb', $user = 'ja', $password = '', $host = 'localhost', $port = '5432')
     {
 		$this->connection = pg_connect("host=".$host." port=".$port." dbname=".$dbname." user=".$user." password=".$password."");
 	}
