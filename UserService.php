@@ -132,7 +132,6 @@ class UserService extends GuestService
     public function attendedTalks()
     {
         if (!$this->database->userExists($this->user_login, $this->user_password)) return StatusHandler::error("Permission denied");
-
         return StatusHandler::success($this->database->getAttendedTalks($this->user_login));
     }
 
@@ -140,14 +139,19 @@ class UserService extends GuestService
     {
 // (*O) abandoned_talks <login> <password>  <limit> // zwraca listę referatów posortowaną malejąco wg liczby uczestników <number> zarejestrowanych na wydarzenie obejmujące referat, którzy nie byli na tym referacie obecni, wypisuje pierwsze <limit> referatów, przy czym 0 oznacza, że należy wypisać wszystkie
 //  <talk> <start_timestamp> <title> <room> <number>
+
+
         return StatusHandler::not_implemented();
     }
 
     public function rejectedTalks()
     {
-// (U/O) rejected_talks <login> <password> // jeśli wywołujący ma uprawnienia organizatora zwraca listę wszystkich odrzuconych referatów spontanicznych, w przeciwnym przypadku listę odrzuconych referatów wywołującego ją uczestnika
-//  <talk> <speakerlogin> <start_timestamp> <title>
-        return StatusHandler::not_implemented();
+        if (!$this->database->userExists($this->user_login, $this->user_password)) return StatusHandler::error("Permission denied");
+
+        if ($this->database->isAdmin($this->user_login, $this->user_password))
+            return StatusHandler::success($this->database->getAllRejectedTalks());
+
+        return StatusHandler::success($this->database->getAllRejectedTalksForUser($this->user_login));
     }
 
     public function proposal()
@@ -158,16 +162,14 @@ class UserService extends GuestService
 
     public function friendsTalks($start_timestamp, $end_timestamp, $limit)
     {
-//  (U) friends_talks <login> <password> <start_timestamp> <end_timestamp> <limit> // lista referatów  rozpoczynających się w podanym przedziale czasowym wygłaszanych przez znajomych danego uczestnika posortowana wg czasu rozpoczęcia, wypisuje pierwsze <limit> referatów, przy czym 0 oznacza, że należy wypisać wszystkie
-//  <talk> <speakerlogin> <start_timestamp> <title> <room>
-        return StatusHandler::not_implemented();
+        if (!$this->database->userExists($this->user_login, $this->user_password)) return StatusHandler::error("Permission denied");
+        return StatusHandler::success($this->database->getFriendsTalks($this->user_login, $start_timestamp, $end_timestamp, $limit));
     }
 
     public function friendsEvents($event)
     {
-//  (U) friends_events <login> <password> <event> // lista znajomych uczestniczących w danym wydarzeniu
-//  <login> <event> <friendlogin>
-        return StatusHandler::not_implemented();
+        if (!$this->database->userExists($this->user_login, $this->user_password)) return StatusHandler::error("Permission denied");
+        return StatusHandler::success($this->database->getFriendsEvents($this->user_login, $event));
     }
 
     public function recommendedTalks($start_timestamp, $end_timestamp, $limit)

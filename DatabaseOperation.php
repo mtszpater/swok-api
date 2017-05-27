@@ -25,4 +25,8 @@ interface DatabaseOperation
     public function getMostPopularTalks($start_timestamp, $end_timestamp, $limit);
     public function getAttendedTalks($user_login);
     public function getProposalTalks();
+    public function getFriendsTalks($user_login, $start_timestamp, $end_timestamp, $limit);
+    public function getFriendsEvents($user_login, $event_name);
+    public function getAllRejectedTalks();
+    public function getAllRejectedTalksForUser($user_login);
 }

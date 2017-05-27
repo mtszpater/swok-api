@@ -83,7 +83,7 @@ class DatabaseManager implements DatabaseOperation {
 
     public function rejectTalk($talk_id)
     {
-        return pg_query($this->connection, "delete from talk_proposal where id = '$talk_id'") ? true : false;
+        return pg_query($this->connection, "update talk_proposal SET rejected = TRUE where id = '$talk_id'") ? true : false;
     }
 
     public function proposalTalk($user_login, $talk_id, $title, $start_timestamp)
@@ -195,8 +195,8 @@ class DatabaseManager implements DatabaseOperation {
     public function getAttendedTalks($user_login)
     {
         $query = pg_query($this->connection, "SELECT attendance_on_talks.talk_id as talk, talk.date_start as start_timestamp, title, room  FROM talk
-JOIN attendance_on_talks on talk.id=attendance_on_talks.talk_id
-WHERE attendance_on_talks.login = '$user_login';");
+                                                    JOIN attendance_on_talks on talk.id=attendance_on_talks.talk_id
+                                                    WHERE attendance_on_talks.login = '$user_login';");
 
         return pg_fetch_all($query) ? pg_fetch_all($query) : array();
     }
@@ -204,6 +204,55 @@ WHERE attendance_on_talks.login = '$user_login';");
     public function getProposalTalks()
     {
         $query = pg_query($this->connection, "SELECT id as talk, title, login as speakerlogin, date_start as start_timestamp FROM talk_proposal;");
+        return pg_fetch_all($query) ? pg_fetch_all($query) : array();
+    }
+
+    public function getFriendsTalks($user_login, $start_timestamp, $end_timestamp, $limit)
+    {
+        if($limit == 0) {
+            $query = pg_query($this->connection, "Select talk.id as talk, talk.login as speakerlogin, talk.date_start as start_timestamp, title, room from friendship f1
+                                                    JOIN friendship f2 on f1.first_user = f2.second_user
+                                                    JOIN talk on f1.second_user = talk.login
+                                                    WHERE f1.first_user = '$user_login'
+                                                    AND f1.second_user = f2.first_user
+                                                    AND talk.date_start >= '$start_timestamp' AND talk.date_start <= '$end_timestamp'
+                                                    ORDER BY date_start ASC;");
+        }
+        else{
+            $query = pg_query($this->connection, "Select talk.id as talk, talk.login as speakerlogin, talk.date_start as start_timestamp, title, room from friendship f1
+                                                    JOIN friendship f2 on f1.first_user = f2.second_user
+                                                    JOIN talk on f1.second_user = talk.login
+                                                    WHERE f1.first_user = '$user_login'
+                                                    AND f1.second_user = f2.first_user
+                                                    AND talk.date_start >= '$start_timestamp' AND talk.date_start <= '$end_timestamp'
+                                                    ORDER BY date_start ASC
+                                                    LIMIT '$limit';");
+        }
+        return pg_fetch_all($query) ? pg_fetch_all($query) : array();
+
+    }
+
+    public function getFriendsEvents($user_login, $event_name)
+    {
+        $query = pg_query($this->connection, "Select f1.first_user as login, r.event_name as event, r.login as friendlogin from friendship f1
+                                                    JOIN friendship f2 on f1.first_user = f2.second_user
+                                                    JOIN registrations_on_events r on f1.second_user = r.login
+                                                    WHERE f1.first_user = '$user_login'
+                                                    AND f1.second_user = f2.first_user
+                                                            AND r.event_name = '$event_name';");
+
+        return pg_fetch_all($query) ? pg_fetch_all($query) : array();
+    }
+
+    public function getAllRejectedTalks()
+    {
+        $query = pg_query($this->connection, "Select t.id as talk, t.login as speakerlogin, t.date_start as start_timestamp, t.title FROM talk_proposal t WHERE t.rejected = 't';");
+        return pg_fetch_all($query) ? pg_fetch_all($query) : array();
+    }
+
+    public function getAllRejectedTalksForUser($user_login)
+    {
+        $query = pg_query($this->connection, "Select t.id as talk, t.login as speakerlogin, t.date_start as start_timestamp, t.title FROM talk_proposal t WHERE t.rejected = 't' AND t.login = '$user_login';");
         return pg_fetch_all($query) ? pg_fetch_all($query) : array();
     }
 }

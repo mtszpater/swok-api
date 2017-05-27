@@ -1,2 +1,0 @@
-{"status":"OK","data":[{"talk":"0","title":"","speakerlogin":"admin","start_timestamp":"2004-10-19 10:23:54"},{"talk":"10","title":"dasdasd","speakerlogin":"admin","start_timestamp":"2004-10-19 10:23:54"}]}
-{"status":"ERROR","msg":"Permission denied"}

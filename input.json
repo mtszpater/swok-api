@@ -16,6 +16,8 @@
 { "reject": { "login": "org", "password": "orgpass", "talk": "2"}}
 { "friends": { "login1": "mem1", "password": "mempass", "login2": "mem3"}}
 { "friends": { "login1": "mem3", "password": "mempass", "login2": "mem1"}}
+{ "friends": { "login1": "mem3", "password": "mempass", "login2": "admin"}}
+{ "friends": { "login1": "admin", "password": "password1", "login2": "mem3"}}
 { "user_plan": { "login": "mem3", "limit": "5"}}
 { "user_plan": { "login": "mem1", "limit": "0"}}
 { "day_plan": { "timestamp": "2000-1-1"}}
@@ -25,3 +27,8 @@
 { "attended_talks": { "login": "mem3", "password": "mempass"}}
 { "attended_talks": { "login": "org",  "password": "orgpass"}}
 { "abandoned_talks": { "login": "org",  "password": "orgpass", "limit": "0"}}
+
+//  (U) friends_talks <login> <password> <start_timestamp> <end_timestamp> <limit> // lista referatów  rozpoczynających się w podanym przedziale czasowym wygłaszanych przez znajomych danego uczestnika posortowana wg czasu rozpoczęcia, wypisuje pierwsze <limit> referatów, przy czym 0 oznacza, że należy wypisać wszystkie
+//  <talk> <speakerlogin> <start_timestamp> <title> <room>
+
+
