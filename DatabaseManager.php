@@ -76,9 +76,13 @@ class DatabaseManager implements DatabaseOperation {
         return pg_query($this->connection, "insert into attendance_on_talks (login, talk_id) VALUES ('$user_login', '$talk_id')") ? true : false;
     }
 
-    public function evaluationTalk($user_login, $talk_id, $rate)
+
+    public function evaluationTalk($user_login, $talk_id, $rate, $initial_evaluation = false)
     {
-        return pg_query($this->connection, "insert into rate (talk_id, login, rate) VALUES ('$talk_id', '$user_login', '$rate')") ? true : false;
+        if( $initial_evaluation )
+            return pg_query($this->connection, "insert into rate (talk_id, login, rate, initial_evaluation) VALUES ('$talk_id', '$user_login', '$rate', 'TRUE')") ? true : false;
+        else
+            return pg_query($this->connection, "insert into rate (talk_id, login, rate, initial_evaluation) VALUES ('$talk_id', '$user_login', '$rate', 'FALSE')") ? true : false;
     }
 
     public function rejectTalk($talk_id)
@@ -147,25 +151,50 @@ class DatabaseManager implements DatabaseOperation {
 
     public function getBestTalks($start_timestamp, $end_timestamp, $limit, $all)
     {
-//        TODO: ALL
-
-        if($limit == 0) {
-            $query = pg_query($this->connection,
-                "SELECT rate.talk_id as talk, talk.date_start as start_timestamp, talk.room, talk.title FROM talk
+        if($all == 1)
+        {
+            if($limit == 0) {
+                $query = pg_query($this->connection,
+                    "SELECT rate.talk_id as talk, talk.date_start as start_timestamp, talk.room, talk.title FROM talk
                     JOIN rate on talk.id = rate.talk_id
                     WHERE talk.date_start >= '$start_timestamp' AND talk.date_start <= '$end_timestamp'
                     GROUP BY rate.talk_id, talk.date_start, talk.room, talk.title
                     ORDER BY avg(rate) DESC;");
-        }
-        else {
-            $query = pg_query($this->connection,
+            }
+            else {
+                $query = pg_query($this->connection,
                     "SELECT rate.talk_id as talk, talk.date_start as start_timestamp, talk.room, talk.title FROM talk
                     JOIN rate on talk.id = rate.talk_id
                     WHERE talk.date_start >= '$start_timestamp' AND talk.date_start <= '$end_timestamp'
                     GROUP BY rate.talk_id, talk.date_start, talk.room, talk.title
                     ORDER BY avg(rate) DESC
                     LIMIT '$limit';");
+            }
         }
+        else
+        {
+            if( $limit == 0 )
+            {
+                $query = pg_query($this->connection, " SELECT avg(rate), rate.talk_id as talk, talk.date_start as start_timestamp, talk.room, talk.title  from attendance_on_talks p
+                                                        JOIN rate on rate.talk_id = p.talk_id
+                                                        JOIN talk on p.talk_id = talk.id
+                                                        WHERE talk.date_start >= '$start_timestamp' AND talk.date_start <= '$end_timestamp'
+                                                        GROUP BY rate.talk_id, talk.date_start, talk.room, talk.title
+                                                        ORDER BY avg(rate) DESC;");
+            }
+            else
+            {
+                $query = pg_query($this->connection, " SELECT avg(rate), rate.talk_id as talk, talk.date_start as start_timestamp, talk.room, talk.title  from attendance_on_talks p
+                                                        JOIN rate on rate.talk_id = p.talk_id
+                                                        JOIN talk on p.talk_id = talk.id
+                                                        WHERE talk.date_start >= '$start_timestamp' AND talk.date_start <= '$end_timestamp'
+                                                        GROUP BY rate.talk_id, talk.date_start, talk.room, talk.title
+                                                        ORDER BY avg(rate) DESC
+                                                        LIMIT '$limit';");
+            }
+
+        }
+
 
         return pg_fetch_all($query) ? pg_fetch_all($query) : array();
     }

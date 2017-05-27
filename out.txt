@@ -1,0 +1,33 @@
+{"status":"OK"}
+{"status":"OK"}
+{"status":"OK"}
+{"status":"ERROR","msg":"Permission denied"}
+{"status":"OK"}
+{"status":"OK"}
+{"status":"OK"}
+{"status":"ERROR","msg":"Permission denied"}
+{"status":"OK"}
+{"status":"OK"}
+{"status":"OK"}
+{"status":"OK"}
+{"status":"OK"}
+{"status":"OK"}
+{"status":"ERROR","msg":"didnt found talk_id: 2"}
+{"status":"ERROR","msg":"busy talk_id ( in column talk ): 2"}
+{"status":"ERROR","msg":"didnt found talk_id: 2"}
+{"status":"OK"}
+{"status":"OK"}
+{"status":"ERROR","msg":"your friend doesnt exist : admin"}
+{"status":"ERROR","msg":"Permission denied"}
+{"status":"OK","data":[]}
+{"status":"OK","data":[{"login":"mem1","talk":"1","start_timestamp":"2000-01-01 00:30:00","title":"apocalypse","room":"666"},{"login":"mem1","talk":"2","start_timestamp":"2000-01-01 03:33:00","title":"newWorldOrder","room":"777"}]}
+{"status":"OK","data":[{"talk":"1","start_timestamp":"2000-01-01 00:30:00","title":"apocalypse","room":"666"},{"talk":"2","start_timestamp":"2000-01-01 03:33:00","title":"newWorldOrder","room":"777"}]}
+{"status":"OK","data":[{"talk":"2","start_timestamp":"2000-01-01 03:33:00","room":"777","title":"newWorldOrder"},{"talk":"1","start_timestamp":"2000-01-01 00:30:00","room":"666","title":"apocalypse"}]}
+{"status":"OK","data":[{"talk":"1","start_timestamp":"2000-01-01 00:30:00","title":"apocalypse","room":"666"},{"talk":"2","start_timestamp":"2000-01-01 03:33:00","title":"newWorldOrder","room":"777"}]}
+{"status":"OK","data":[{"talk":"1","start_timestamp":"2000-01-01 00:30:00","title":"apocalypse","room":"666"}]}
+{"status":"OK","data":[]}
+{"status":"OK","data":[]}
+{"status":"OK","data":
+[{"talk":"2","title":"newWorldOrder","number":"1","room":"777","start_timestamp":"2000-01-01 03:33:00"},
+{"talk":"1","title":"apocalypse","number":"0","room":"666","start_timestamp":"2000-01-01 00:30:00"}]}
+program exit

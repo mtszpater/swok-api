@@ -27,20 +27,3 @@
 { "attended_talks": { "login": "mem3", "password": "mempass"}}
 { "attended_talks": { "login": "org",  "password": "orgpass"}}
 { "abandoned_talks": { "login": "org",  "password": "orgpass", "limit": "0"}}
-
-//  (U) friends_talks <login> <password> <start_timestamp> <end_timestamp> <limit> // lista referatów  rozpoczynających się w podanym przedziale czasowym wygłaszanych przez znajomych danego uczestnika posortowana wg czasu rozpoczęcia, wypisuje pierwsze <limit> referatów, przy czym 0 oznacza, że należy wypisać wszystkie
-//  <talk> <speakerlogin> <start_timestamp> <title> <room>
-
-
-
-// (*O) abandoned_talks <login> <password>  <limit> // zwraca listę referatów posortowaną malejąco wg liczby uczestników <number> zarejestrowanych na wydarzenie obejmujące referat, którzy nie byli na tym referacie obecni, wypisuje pierwsze <limit> referatów, przy czym 0 oznacza, że należy wypisać wszystkie
-//  <talk> <start_timestamp> <title> <room> <number>
-
-
-SELECT t.id as talk, t.title, count(r.*) - t.members as number, t.room, t.date_start as start_timestamp from registrations_on_events r
-JOIN talk t on r.event_name = t.event_name
-GROUP by r.event_name, t.id, t.title, t.members
-ORDER by number DESC;
-
-
-

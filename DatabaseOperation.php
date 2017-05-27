@@ -14,7 +14,7 @@ interface DatabaseOperation
     public function createProposalTalk($user_login, $talk, $title, $start_timestamp);
     public function registerUserForEvent($user_login, $event_name);
     public function checkAttendance($user_login, $talk_id);
-    public function evaluationTalk($user_login, $talk_id, $rate);
+    public function evaluationTalk($user_login, $talk_id, $rate, $initial_evaluation = false);
     public function rejectTalk($talk_id);
     public function proposalTalk($user_login, $talk_id, $title, $start_timestamp);
     public function addFriend($user_login, $user_login2);
