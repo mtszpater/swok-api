@@ -15,7 +15,7 @@ Uczestnicy korzystają z systemu poprzez aplikację na urządzeniu mobilnym, kt�
 
 Organizator konferencji może definiować wydarzenia i ich zawartość, przeglądać wszystkie zbierane dane, w tym również rozmaite statystyki dotyczące aktywności uczestników.
 
-### O – wymaga autoryzacji jako organizator, U – wymaga autoryzacji jako zwykły uczestnik, N – nie wymaga autoryzacji, * - wymagane
+##### O – wymaga autoryzacji jako organizator, U – wymaga autoryzacji jako zwykły uczestnik, N – nie wymaga autoryzacji, * - wymagane
 
 Metoda | Argumenty | Opis 
 ------- | ---------- | ---------------- 
