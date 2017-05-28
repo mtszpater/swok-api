@@ -182,6 +182,9 @@ class OperationManager
 
         if ($this->auth->registerUser($this->args['newlogin'], $this->args['newpassword']))
             $this->status = StatusHandler::success();
+
+        $this->status = StatusHandler::error();
+
     }
 
     private function _event()
@@ -199,7 +202,6 @@ class OperationManager
 
     private function _talk()
     {
-//TODO: event_name może byc pusty
         if (!$this->auth->isAdmin()) {
             $this->status = StatusHandler::error();
             return;

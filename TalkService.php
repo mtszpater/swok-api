@@ -1,11 +1,5 @@
 <?php
 include_once "DatabaseManagerInterface.php";
-/**
- * Created by PhpStorm.
- * User: pater
- * Date: 27.05.2017
- * Time: 21:25
- */
 class TalkService
 {
     /**
@@ -24,11 +18,15 @@ class TalkService
 
     public function createTalk($user_login, $talk_id, $title, $start_timestamp, $room, $initial_evaluation, $event_name)
     {
-        if (!$this->database->isEventNameBusy($event_name)) return false;
-        if ($this->database->existsTalk(intval($talk_id))) return false;
+        if( ! ($event_name === "") ) {
+            if (!$this->database->isEventNameBusy($event_name)) return false;
+            if ($this->database->existsTalk(intval($talk_id))) return false;
 
-        $event_start = $this->database->getStartTimeStampOfEvent($event_name);
-        if ($event_start >= $start_timestamp) return false;
+            $event_start = $this->database->getStartTimeStampOfEvent($event_name);
+            if ($event_start >= $start_timestamp) return false;
+        }else{
+            $event_name = NULL;
+        }
 
         if ($this->database->createTalk($user_login, intval($talk_id), $title, $start_timestamp, intval($room), $event_name)) {
 

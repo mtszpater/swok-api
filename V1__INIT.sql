@@ -8,13 +8,13 @@ drop table if exists event;
 drop table if exists logs;
 drop table if exists member;
 
-CREATE TABLE member (
+CREATE TABLE IF NOT EXISTS member (
   login text UNIQUE PRIMARY KEY,
   password text NOT NULL,
   admin bool default false
 );
 
-CREATE TABLE talk_proposal (
+CREATE TABLE IF NOT EXISTS talk_proposal (
   id serial PRIMARY KEY,
   title text NOT NULL,
   login text NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE talk_proposal (
   date_start TIMESTAMP NOT NULL
 );
 
-CREATE TABLE event (
+CREATE TABLE IF NOT EXISTS event (
   name text PRIMARY KEY,
   date_start TIMESTAMP NOT NULL,
   date_end TIMESTAMP NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE event (
   UNIQUE (name)
 );
 
-CREATE TABLE talk (
+CREATE TABLE IF NOT EXISTS talk (
   id serial PRIMARY KEY,
   title text NOT NULL,
   login text NOT NULL,
@@ -41,26 +41,26 @@ CREATE TABLE talk (
   event_name text NULL
 );
 
-CREATE TABLE registrations_on_events(
+CREATE TABLE IF NOT EXISTS registrations_on_events(
   login text NOT NULL,
   event_name text,
   PRIMARY KEY (login, event_name)
 );
 
-CREATE TABLE attendance_on_talks(
+CREATE TABLE IF NOT EXISTS attendance_on_talks(
   login text NOT NULL,
   talk_id int NOT NULL,
   PRIMARY KEY (login, talk_id)
 );
 
-CREATE TABLE friendship (
+CREATE TABLE IF NOT EXISTS friendship (
   first_user TEXT NOT NULL,
   second_user TEXT NOT NULL,
   PRIMARY KEY (first_user, second_user),
   check ( second_user != first_user )
 );
 
-CREATE TABLE rate (
+CREATE TABLE IF NOT EXISTS rate (
   talk_id int NOT NULL,
   login text NOT NULL,
   rate int NOT NULL,
@@ -70,7 +70,7 @@ CREATE TABLE rate (
 
 );
 
-CREATE TABLE logs (
+CREATE TABLE IF NOT EXISTS logs (
   id serial PRIMARY KEY,
   content text NOT NULL,
   date TIMESTAMP NOT NULL,

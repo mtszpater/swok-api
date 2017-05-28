@@ -1,3 +1,70 @@
+{ "open": { "baza": "springbootdb", "login": "ja", "password": ""}}
+{ "organizer": { "secret": "d8578edf8458ce06fbc5bb76a58c5ca4", "newlogin": "org", "newpassword": "orgpass"}}
+{ "event": { "login": "org", "password": "orgpass", "eventname": "millennium", "start_timestamp": "2000-1-1", "end_timestamp": "2000-1-2"}}
+{ "event": { "login": "org2", "password": "orgpass2", "eventname": "millennium2", "start_timestamp": "3000-1-1", "end_timestamp": "3000-1-2"}}
+{ "event": { "login": "org", "password": "orgpass", "eventname": "newBegining", "start_timestamp": "2001-1-1", "end_timestamp": "2001-1-2"}}
+{ "user": { "login": "org", "password": "orgpass", "newlogin": "mem3", "newpassword": "mempass"}}
+{ "user": { "login": "org", "password": "orgpass", "newlogin": "mem1", "newpassword": "mempass"}}
+{ "event": { "login": "mem1", "password": "mempass", "eventname": "millennium2", "start_timestamp": "3000-1-1", "end_timestamp": "3000-1-2"}}
+{ "talk": { "login": "org", "password": "orgpass", "speakerlogin": "mem3", "talk": "1", "title": "apocalypse", "start_timestamp": "2000-1-1 00:30", "room": "666", "initial_evaluation": "7", "eventname": "millennium"}}
+{ "talk": { "login": "org", "password": "orgpass", "speakerlogin": "mem3", "talk": "2", "title": "newWorldOrder", "start_timestamp": "2000-1-1 03:33", "room": "777", "initial_evaluation": "9", "eventname": "millennium"}}
+{ "register_user_for_event": { "login": "mem1", "password": "mempass", "eventname": "millennium"}}
+{ "register_user_for_event": { "login": "mem1", "password": "mempass", "eventname": "newBegining"}}
+{ "attendance": { "login": "mem1", "password": "mempass", "talk": "1"}}
+{ "evaluation": { "login": "mem1", "password": "mempass", "talk": "1", "rating": "10"}}
+{ "reject": { "login": "org", "password": "orgpass", "talk": "2"}}
+{ "proposal": { "login": "mem1", "password": "mempass", "talk": "2", "title": "newWorldOrder", "start_timestamp": "2000-1-1 03:00"}}
+{ "reject": { "login": "org", "password": "orgpass", "talk": "2"}}
+{ "friends": { "login1": "mem1", "password": "mempass", "login2": "mem3"}}
+{ "friends": { "login1": "mem3", "password": "mempass", "login2": "mem1"}}
+{ "friends": { "login1": "mem3", "password": "mempass", "login2": "admin"}}
+{ "friends": { "login1": "admin", "password": "password1", "login2": "mem3"}}
+{ "user_plan": { "login": "mem3", "limit": "5"}}
+{ "user_plan": { "login": "mem1", "limit": "0"}}
+{ "day_plan": { "timestamp": "2000-1-1"}}
+{ "best_talks": { "start_timestamp": "1000-1-1", "end_timestamp": "3000-1-1 4:00", "limit": "0", "all": "1"}}
+{ "most_popular_talks": { "start_timestamp": "1000-1-1", "end_timestamp": "3000-1-1 4:00", "limit": "0"}}
+{ "attended_talks": { "login": "mem1", "password": "mempass"}}
+{ "attended_talks": { "login": "mem3", "password": "mempass"}}
+{ "attended_talks": { "login": "org",  "password": "orgpass"}}
+{ "abandoned_talks": { "login": "org",  "password": "orgpass", "limit": "0"}}
+{"organizer": { "secret": "d8578edf8458ce06fbc5bb76a58c5ca4", "newlogin": "admin", "newpassword": "password1"}}
+{"organizer": { "secret": "d8578edf8458ce06fbc5bb76a58c5ca4", "newlogin": "s", "newpassword": "password1"}}
+{"organizer": { "secret": "d8578edf8458ce06fbc5bb76a58c5ca5", "newlogin": "", "newpassword": "password1"}}
+{"organizer": { "secret": "d8578edf8458ce06fbc5bb76a58c5ca4", "newlogin": "", "newpassword": ""}}
+{"event": {"login": "admin","password": "password1", "eventname": "Nazwa eventu2", "start_timestamp": "2004-10-19 10:23:54.000000", "end_timestamp": "2004-10-19 10:23:56.000000"}}
+{"event": {"login": "admin3","password": "password1", "eventname": "Nazwa eventu4", "start_timestamp": "2004-10-19 10:23:54.000000", "end_timestamp": "2004-10-19 10:23:53.000000"}}
+{"event": {"login": "admin3","password": "password2", "eventname": "Nazwa eventu10", "start_timestamp": "2004-10-19 10:23:54.000000", "end_timestamp": "2004-10-19 10:23:56.000000"}}
+{"proposal": {"login": "admin","password": "password1", "talk": "10", "title": "dasdasd", "start_timestamp": "2004-10-19 10:23:54.000000"}}
+{ "user": { "login": "admin", "password": "password1", "newlogin": "newlogin", "newpassword": "password1"}}
+{ "user": { "login": "admin10", "password": "password1", "newlogin": "newlogin55", "newpassword": "password1"}}
+{ "user": { "login": "admin", "password": "password1", "newlogin": "admin5", "newpassword": "password1"}}
+{"talk": {"login": "admin","password": "password1", "speakerlogin": "admin", "talk": "3", "title": "title talk #1", "start_timestamp": "2005-10-19 10:23:55.000000", "room": "255", "initial_evaluation": "10", "eventname": "Nazwa eventu2" }}
+{"talk": {"login": "admin","password": "password1", "speakerlogin": "newlogin", "talk": "6", "title": "title talk #1", "start_timestamp": "2004-10-19 10:23:54.000000", "room": "255", "initial_evaluation": "10", "eventname": "Nazwa eventu2" }}
+{"talk": {"login": "admin1","password": "password1", "speakerlogin": "newlogin", "talk": "6", "title": "title talk #1", "start_timestamp": "2004-10-19 10:23:54.000000", "room": "255", "initial_evaluation": "10", "eventname": "Nazwa eventu2" }}
+{"talk": {"login": "admin","password": "password1", "speakerlogin": "", "talk": "2333232", "title": "title talk #3", "start_timestamp": "2004-10-19 10:23:52.000000", "room": "255", "initial_evaluation": "10", "eventname": "Nazwa eventu10" }}
+{"register_user_for_event": {"login": "admin", "password": "password1", "eventname": "Nazwa eventu2"}}
+{"register_user_for_event": {"login": "newlogin", "password": "password1", "eventname": "Nazwa eventu10"}}
+{"register_user_for_event": {"login": "newlogin", "password": "password1", "eventname": "Nazwa eventu2"}}
+{"attendance": {"login": "admin", "password": "password1", "talk": "2"}}
+{"attendance": {"login": "admin1", "password": "password1", "talk": "6"}}
+{"attendance": {"login": "admin102", "password": "password1", "talk": "6"}}
+{"evaluation": {"login": "admin1", "password": "password1", "talk": "1", "rating": "10"}}
+{"evaluation": {"login": "mem1", "password": "password1", "talk": "9", "rating": "5"}}
+{"evaluation": {"login": "admin", "password": "password1", "talk": "1", "rating": "10"}}
+{"proposal": {"login": "admin","password": "password1", "talk": "1", "title": "title talk #3", "start_timestamp": "2004-10-19 10:23:54.000000" }}
+{"friends": {"login1": "admin", "password": "password1", "login2": "newlogin"}}
+{"user_plan": {"login": "admin2", "limit": "19"}}
+{"user_plan": {"login": "newlogin", "limit": "0"}}
+{"day_plan": {"timestamp": "2004-10-19 10:23:54.000000"}}
+{"day_plan": {"timestamp": "2004-10-29 10:23:54.000000"}}
+{"best_talks": {"start_timestamp": "2004-10-19 10:23:54.000000", "end_timestamp": "2004-10-19 10:23:54.000000", "limit": "10", "all": "1"}}
+{"best_talks": {"start_timestamp": "2003-10-19 10:23:54.000000", "end_timestamp": "2005-10-19 10:23:54.000000", "limit": "0", "all": "1"}}
+{"best_talks": {"start_timestamp": "2003-10-19 10:23:54.000000", "end_timestamp": "2005-10-19 10:23:54.000000", "limit": "1", "all": "1"}}
+{"best_talks": {"start_timestamp": "2033-10-19 10:23:54.000000", "end_timestamp": "2005-10-19 10:23:54.000000", "limit": "1", "all": "1"}}
+{"most_popular_talks": {"start_timestamp": "2000-10-19 10:23:54.000000", "end_timestamp": "2010-10-19 10:23:54.000000", "limit": "0" }}
+{"abandoned_talks": {"login": "admin", "password": "password1", "limit": "1"}}
+{"abandoned_talks": {"login": "admin", "password": "password1", "limit": "0"}}
 { "organizer": { "secret": "d8578edf8458ce06fbc5bb76a58c5ca4", "newlogin": "org", "newpassword": "orgpass"}}
 { "event": { "login": "org", "password": "orgpass", "eventname": "millennium", "start_timestamp": "2000-1-1", "end_timestamp": "2000-1-2"}}
 { "event": { "login": "org2", "password": "orgpass2", "eventname": "millennium2", "start_timestamp": "3000-1-1", "end_timestamp": "3000-1-2"}}
@@ -70,71 +137,4 @@
 {"rejected_talks":  {"login": "org","password": "orgpass"} }
 {"abandoned_talks": {"login": "admin", "password": "password1", "limit": "1"}}
 {"abandoned_talks": {"login": "admin", "password": "password1", "limit": "0"}}
-
-{ "open": { "baza": "springbootdb", "login": "ja", "password": ""}}
-{ "organizer": { "secret": "d8578edf8458ce06fbc5bb76a58c5ca4", "newlogin": "org", "newpassword": "orgpass"}}
-{ "event": { "login": "org", "password": "orgpass", "eventname": "millennium", "start_timestamp": "2000-1-1", "end_timestamp": "2000-1-2"}}
-{ "event": { "login": "org2", "password": "orgpass2", "eventname": "millennium2", "start_timestamp": "3000-1-1", "end_timestamp": "3000-1-2"}}
-{ "event": { "login": "org", "password": "orgpass", "eventname": "newBegining", "start_timestamp": "2001-1-1", "end_timestamp": "2001-1-2"}}
-{ "user": { "login": "org", "password": "orgpass", "newlogin": "mem3", "newpassword": "mempass"}}
-{ "user": { "login": "org", "password": "orgpass", "newlogin": "mem1", "newpassword": "mempass"}}
-{ "event": { "login": "mem1", "password": "mempass", "eventname": "millennium2", "start_timestamp": "3000-1-1", "end_timestamp": "3000-1-2"}}
-{ "talk": { "login": "org", "password": "orgpass", "speakerlogin": "mem3", "talk": "1", "title": "apocalypse", "start_timestamp": "2000-1-1 00:30", "room": "666", "initial_evaluation": "7", "eventname": "millennium"}}
-{ "talk": { "login": "org", "password": "orgpass", "speakerlogin": "mem3", "talk": "2", "title": "newWorldOrder", "start_timestamp": "2000-1-1 03:33", "room": "777", "initial_evaluation": "9", "eventname": "millennium"}}
-{ "register_user_for_event": { "login": "mem1", "password": "mempass", "eventname": "millennium"}}
-{ "register_user_for_event": { "login": "mem1", "password": "mempass", "eventname": "newBegining"}}
-{ "attendance": { "login": "mem1", "password": "mempass", "talk": "1"}}
-{ "evaluation": { "login": "mem1", "password": "mempass", "talk": "1", "rating": "10"}}
-{ "reject": { "login": "org", "password": "orgpass", "talk": "2"}}
-{ "proposal": { "login": "mem1", "password": "mempass", "talk": "2", "title": "newWorldOrder", "start_timestamp": "2000-1-1 03:00"}}
-{ "reject": { "login": "org", "password": "orgpass", "talk": "2"}}
-{ "friends": { "login1": "mem1", "password": "mempass", "login2": "mem3"}}
-{ "friends": { "login1": "mem3", "password": "mempass", "login2": "mem1"}}
-{ "friends": { "login1": "mem3", "password": "mempass", "login2": "admin"}}
-{ "friends": { "login1": "admin", "password": "password1", "login2": "mem3"}}
-{ "user_plan": { "login": "mem3", "limit": "5"}}
-{ "user_plan": { "login": "mem1", "limit": "0"}}
-{ "day_plan": { "timestamp": "2000-1-1"}}
-{ "best_talks": { "start_timestamp": "1000-1-1", "end_timestamp": "3000-1-1 4:00", "limit": "0", "all": "1"}}
-{ "most_popular_talks": { "start_timestamp": "1000-1-1", "end_timestamp": "3000-1-1 4:00", "limit": "0"}}
-{ "attended_talks": { "login": "mem1", "password": "mempass"}}
-{ "attended_talks": { "login": "mem3", "password": "mempass"}}
-{ "attended_talks": { "login": "org",  "password": "orgpass"}}
-{ "abandoned_talks": { "login": "org",  "password": "orgpass", "limit": "0"}}
-{"organizer": { "secret": "d8578edf8458ce06fbc5bb76a58c5ca4", "newlogin": "admin", "newpassword": "password1"}}
-{"organizer": { "secret": "d8578edf8458ce06fbc5bb76a58c5ca4", "newlogin": "s", "newpassword": "password1"}}
-{"organizer": { "secret": "d8578edf8458ce06fbc5bb76a58c5ca5", "newlogin": "", "newpassword": "password1"}}
-{"organizer": { "secret": "d8578edf8458ce06fbc5bb76a58c5ca4", "newlogin": "", "newpassword": ""}}
-{"event": {"login": "admin","password": "password1", "eventname": "Nazwa eventu2", "start_timestamp": "2004-10-19 10:23:54.000000", "end_timestamp": "2004-10-19 10:23:56.000000"}}
-{"event": {"login": "admin3","password": "password1", "eventname": "Nazwa eventu4", "start_timestamp": "2004-10-19 10:23:54.000000", "end_timestamp": "2004-10-19 10:23:53.000000"}}
-{"event": {"login": "admin3","password": "password2", "eventname": "Nazwa eventu10", "start_timestamp": "2004-10-19 10:23:54.000000", "end_timestamp": "2004-10-19 10:23:56.000000"}}
-{"proposal": {"login": "admin","password": "password1", "talk": "10", "title": "dasdasd", "start_timestamp": "2004-10-19 10:23:54.000000"}}
-{ "user": { "login": "admin", "password": "password1", "newlogin": "newlogin", "newpassword": "password1"}}
-{ "user": { "login": "admin10", "password": "password1", "newlogin": "newlogin55", "newpassword": "password1"}}
-{ "user": { "login": "admin", "password": "password1", "newlogin": "admin5", "newpassword": "password1"}}
-{"talk": {"login": "admin","password": "password1", "speakerlogin": "admin", "talk": "3", "title": "title talk #1", "start_timestamp": "2005-10-19 10:23:55.000000", "room": "255", "initial_evaluation": "10", "eventname": "Nazwa eventu2" }}
-{"talk": {"login": "admin","password": "password1", "speakerlogin": "newlogin", "talk": "6", "title": "title talk #1", "start_timestamp": "2004-10-19 10:23:54.000000", "room": "255", "initial_evaluation": "10", "eventname": "Nazwa eventu2" }}
-{"talk": {"login": "admin1","password": "password1", "speakerlogin": "newlogin", "talk": "6", "title": "title talk #1", "start_timestamp": "2004-10-19 10:23:54.000000", "room": "255", "initial_evaluation": "10", "eventname": "Nazwa eventu2" }}
-{"talk": {"login": "admin","password": "password1", "speakerlogin": "", "talk": "2333232", "title": "title talk #3", "start_timestamp": "2004-10-19 10:23:52.000000", "room": "255", "initial_evaluation": "10", "eventname": "Nazwa eventu10" }}
-{"register_user_for_event": {"login": "admin", "password": "password1", "eventname": "Nazwa eventu2"}}
-{"register_user_for_event": {"login": "newlogin", "password": "password1", "eventname": "Nazwa eventu10"}}
-{"register_user_for_event": {"login": "newlogin", "password": "password1", "eventname": "Nazwa eventu2"}}
-{"attendance": {"login": "admin", "password": "password1", "talk": "2"}}
-{"attendance": {"login": "admin1", "password": "password1", "talk": "6"}}
-{"attendance": {"login": "admin102", "password": "password1", "talk": "6"}}
-{"evaluation": {"login": "admin1", "password": "password1", "talk": "1", "rating": "10"}}
-{"evaluation": {"login": "mem1", "password": "password1", "talk": "9", "rating": "5"}}
-{"evaluation": {"login": "admin", "password": "password1", "talk": "1", "rating": "10"}}
-{"proposal": {"login": "admin","password": "password1", "talk": "1", "title": "title talk #3", "start_timestamp": "2004-10-19 10:23:54.000000" }}
-{"friends": {"login1": "admin", "password": "password1", "login2": "newlogin"}}
-{"user_plan": {"login": "admin2", "limit": "19"}}
-{"user_plan": {"login": "newlogin", "limit": "0"}}
-{"day_plan": {"timestamp": "2004-10-19 10:23:54.000000"}}
-{"day_plan": {"timestamp": "2004-10-29 10:23:54.000000"}}
-{"best_talks": {"start_timestamp": "2004-10-19 10:23:54.000000", "end_timestamp": "2004-10-19 10:23:54.000000", "limit": "10", "all": "1"}}
-{"best_talks": {"start_timestamp": "2003-10-19 10:23:54.000000", "end_timestamp": "2005-10-19 10:23:54.000000", "limit": "0", "all": "1"}}
-{"best_talks": {"start_timestamp": "2003-10-19 10:23:54.000000", "end_timestamp": "2005-10-19 10:23:54.000000", "limit": "1", "all": "1"}}
-{"best_talks": {"start_timestamp": "2033-10-19 10:23:54.000000", "end_timestamp": "2005-10-19 10:23:54.000000", "limit": "1", "all": "1"}}
-{"most_popular_talks": {"start_timestamp": "2000-10-19 10:23:54.000000", "end_timestamp": "2010-10-19 10:23:54.000000", "limit": "0" }}
-{"abandoned_talks": {"login": "admin", "password": "password1", "limit": "1"}}
-{"abandoned_talks": {"login": "admin", "password": "password1", "limit": "0"}}
+{ "talk": { "login": "org", "password": "orgpass", "speakerlogin": "mem3", "talk": "5", "title": "asdasd", "start_timestamp": "2000-1-1 03:33", "room": "777", "initial_evaluation": "9", "eventname": ""}}

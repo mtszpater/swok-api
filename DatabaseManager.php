@@ -6,7 +6,7 @@ class DatabaseManager implements DatabaseManagerInterface {
 
 	public function __construct($dbname = 'springbootdb', $user = 'ja', $password = '', $host = 'localhost', $port = '5432')
     {
-		$this->connection = pg_connect("host=".$host." port=".$port." dbname=".$dbname." user=".$user." password=".$password."");
+		$this->connection = @pg_connect("host=".$host." port=".$port." dbname=".$dbname." user=".$user." password=".$password."") or die("Niepoprawne dane\n");
 	}
 
     public function loadDatabase(){
@@ -83,7 +83,10 @@ class DatabaseManager implements DatabaseManagerInterface {
 
     public function createTalk($user_login, $talk, $title, $start_timestamp, $room, $event_name = NULL)
     {
-        return @pg_query($this->connection, "insert into talk (id, title, login, date_start, room, event_name) VALUES('$talk', '$title', '$user_login', '$start_timestamp', '$room', '$event_name')") ? true : false;
+        if(is_null($event_name))
+            return @pg_query($this->connection, "insert into talk (id, title, login, date_start, room, event_name) VALUES('$talk', '$title', '$user_login', '$start_timestamp', '$room', NULL)") ? true : false;
+        else
+            return @pg_query($this->connection, "insert into talk (id, title, login, date_start, room, event_name) VALUES('$talk', '$title', '$user_login', '$start_timestamp', '$room', '$event_name')") ? true : false;
     }
 
     public function registerUserForEvent($user_login, $event_name)

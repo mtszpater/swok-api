@@ -1,11 +1,4 @@
 <?php
-
-/**
- * Created by PhpStorm.
- * User: pater
- * Date: 28.05.2017
- * Time: 17:05
- */
 class ConsoleReader
 {
     private $currentFunctionName;
@@ -25,17 +18,11 @@ class ConsoleReader
         }
     }
 
-    /**
-     * @return mixed
-     */
     public function getCurrentFunctionName()
     {
         return $this->currentFunctionName;
     }
 
-    /**
-     * @return mixed
-     */
     public function getCurrentArgs()
     {
         return $this->currentArgs;
