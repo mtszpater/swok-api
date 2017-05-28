@@ -123,7 +123,7 @@ class OperationManager
                 break;
 
             case "recommended_talks";
-                $this->status = StatusHandler::success($this->talk->recommendedTalks($this->args['start_timestamp'], $this->args['end_timestamp'], $this->args['limit']));
+                $this->status = StatusHandler::not_implemented();
                 break;
 
         }
@@ -310,17 +310,17 @@ class OperationManager
 
     private function _dayPlan()
     {
-        $this->status = StatusHandler::success($this->adm->getDayPlan($this->args['timestamp']));
+        $this->status = StatusHandler::success($this->talk->getDayPlan($this->args['timestamp']));
     }
 
     private function _bestTalks()
     {
-        $this->status = StatusHandler::success($this->adm->getBestTalks($this->args['start_timestamp'], $this->args['end_timestamp'], $this->args['limit'], $this->args['all']));
+        $this->status = StatusHandler::success($this->talk->getBestTalks($this->args['start_timestamp'], $this->args['end_timestamp'], $this->args['limit'], $this->args['all']));
     }
 
     private function _mostPopularTalks()
     {
-        $this->status = StatusHandler::success($this->adm->getMostPopularTalks($this->args['start_timestamp'], $this->args['end_timestamp'], $this->args['limit']));
+        $this->status = StatusHandler::success($this->talk->getMostPopularTalks($this->args['start_timestamp'], $this->args['end_timestamp'], $this->args['limit']));
     }
 
     private function _attendedTalks()

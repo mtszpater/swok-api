@@ -8,15 +8,8 @@ include_once "DatabaseManagerInterface.php";
  */
 class EventService
 {
-    /**
-     * @var DatabaseManagerInterface
-     */
     private $database;
 
-    /**
-     * TalkService constructor.
-     * @param DatabaseManagerInterface $database
-     */
     public function __construct(DatabaseManagerInterface $database)
     {
         $this->database = $database;

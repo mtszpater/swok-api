@@ -16,26 +16,6 @@ abstract class GuestService
         return $this->database->getUserPlan($user_login, $limit);
     }
 
-    public function getDayPlan($timestamp)
-    {
-        return $this->database->getDayPlan($timestamp);
-    }
-
-    public function getBestTalks($start_timestamp, $end_timestamp, $limit, $all)
-    {
-        return $this->database->getBestTalks($start_timestamp, $end_timestamp, $limit, $all);
-    }
-
-    public function getMostPopularTalks($start_timestamp, $end_timestamp, $limit)
-    {
-        return $this->database->getMostPopularTalks($start_timestamp, $end_timestamp, $limit);
-    }
-
-    public function getRecentlAddedTalks($limit)
-    {
-        return false;
-    }
-
     public function createOrganizer($user_login, $user_password, $secret)
     {
         if (!($secret === "d8578edf8458ce06fbc5bb76a58c5ca4")) return false;

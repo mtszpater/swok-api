@@ -2,15 +2,8 @@
 include_once "DatabaseManagerInterface.php";
 class TalkService
 {
-    /**
-     * @var DatabaseManagerInterface
-     */
     private $database;
 
-    /**
-     * TalkService constructor.
-     * @param DatabaseManagerInterface $database
-     */
     public function __construct(DatabaseManagerInterface $database)
     {
         $this->database = $database;
@@ -109,11 +102,30 @@ class TalkService
         return $this->database->getFriendsTalks($user_login, $start_timestamp, $end_timestamp, $limit);
     }
 
+    public function getDayPlan($timestamp)
+    {
+        return $this->database->getDayPlan($timestamp);
+    }
+
+    public function getBestTalks($start_timestamp, $end_timestamp, $limit, $all)
+    {
+        return $this->database->getBestTalks($start_timestamp, $end_timestamp, $limit, $all);
+    }
+
+    public function getMostPopularTalks($start_timestamp, $end_timestamp, $limit)
+    {
+        return $this->database->getMostPopularTalks($start_timestamp, $end_timestamp, $limit);
+    }
+
+    public function getRecentlyAddedTalks($limit)
+    {
+        return false;
+    }
+
     public function recommendedTalks($start_timestamp, $end_timestamp, $limit)
     {
-//  (U) recommended_talks <login> <password> <start_timestamp> <end_timestamp> <limit> // zwraca referaty rozpoczynające się w podanym przedziale czasowym, które mogą zainteresować danego uczestnika (zaproponuj parametr <score> obliczany na podstawie dostępnych danych – ocen, obecności, znajomości itp.), wypisuje pierwsze <limit> referatów wg nalepszego <score>, przy czym 0 oznacza, że należy wypisać wszystkie
-//  <talk> <speakerlogin> <start_timestamp> <title> <room> <score>
-        return StatusHandler::not_implemented();
+        return false;
     }
+
 
 }
