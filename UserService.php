@@ -31,5 +31,22 @@ class UserService extends GuestService
         return $this->database->getFriendsEvents($this->user_login, $event);
     }
 
+    public function isLogged()
+    {
+        if(!$this->database->userExists($this->user_login, $this->user_password)) return false;
+        return true;
+    }
+
+    public function isAdmin()
+    {
+        if (!$this->database->isAdmin($this->user_login, $this->user_password)) return false;
+        return true;
+    }
+
+    public function getUserLogin()
+    {
+        return $this->user_login;
+    }
+
 
 }

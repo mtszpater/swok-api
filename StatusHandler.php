@@ -1,8 +1,8 @@
 <?php
 class StatusHandler
 {
-    public static function error(){
-        return array('status' => 'ERROR');
+    public static function error($msg){
+        return array('status' => 'ERROR', 'info' => $msg);
     }
 
     public static function success($msg = null){

@@ -2,12 +2,12 @@
 include_once "OperationManager.php";
 include_once "ConsoleReader.php";
 
-$consoleReader = new ConsoleReader();
 
 $db_name = '';
 $db_user = '';
 $db_password = '';
 
+$consoleReader = new ConsoleReader();
 $consoleReader->_readLine();
 
 if($consoleReader->getCurrentFunctionName() === "open") {

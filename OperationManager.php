@@ -3,7 +3,6 @@ require_once "DatabaseManager.php";
 require_once "UserService.php";
 require_once "TalkService.php";
 require_once "EventService.php";
-require_once "AuthClass.php";
 
 class OperationManager
 {
@@ -14,10 +13,6 @@ class OperationManager
      * @var UserService
      */
     private $adm;
-    /**
-     * @var AuthClass
-     */
-    private $auth;
     /**
      * @var TalkService
      */
@@ -154,7 +149,6 @@ class OperationManager
         /** Nie fajnie, że jedna komenda w API inny argument loginu :c */
 
         $this->adm = new UserService($user_login, $user_password, $this->database);
-        $this->auth = new AuthClass($user_login, $user_password, $this->database);
         $this->talk = new TalkService($this->database);
         $this->event = new EventService($this->database);
     }
@@ -167,128 +161,128 @@ class OperationManager
 
     private function _organizer()
     {
-        if($this->auth->createOrganizer($this->args['newlogin'], $this->args['newpassword'], $this->args['secret']))
+        if($this->adm->createOrganizer($this->args['newlogin'], $this->args['newpassword'], $this->args['secret']))
             $this->status = StatusHandler::success();
         else
-            $this->status = StatusHandler::error();
+            $this->status = StatusHandler::error("sth went wrong");
     }
 
     private function _user()
     {
-        if (!$this->auth->isAdmin()) {
-            $this->status = StatusHandler::error();
+        if (!$this->adm->isAdmin()) {
+            $this->status = StatusHandler::error("not admin");
             return;
         }
 
-        if ($this->auth->registerUser($this->args['newlogin'], $this->args['newpassword']))
+        if ($this->adm->registerUser($this->args['newlogin'], $this->args['newpassword']))
             $this->status = StatusHandler::success();
-
-        $this->status = StatusHandler::error();
+        else
+            $this->status = StatusHandler::error("sth went wrong");
 
     }
 
     private function _event()
     {
-        if (!$this->auth->isAdmin()) {
-            $this->status = StatusHandler::error();
+        if (!$this->adm->isAdmin()) {
+            $this->status = StatusHandler::error("not admin");
             return;
         }
 
         if ($this->event->createEvent($this->args['eventname'], $this->args['start_timestamp'], $this->args['end_timestamp']))
             $this->status = StatusHandler::success();
         else
-            $this->status = StatusHandler::error();
+            $this->status = StatusHandler::error("sth went wrong");
     }
 
     private function _talk()
     {
-        if (!$this->auth->isAdmin()) {
-            $this->status = StatusHandler::error();
+        if (!$this->adm->isAdmin()) {
+            $this->status = StatusHandler::error("not admin");
             return;
         }
 
-        if(!$this->auth->userExists($this->args['speakerlogin'])){
-            $this->status = StatusHandler::error();
+        if(!$this->adm->userExists($this->args['speakerlogin'])){
+            $this->status = StatusHandler::error("speakerlogin nie istnieje");
             return;
         }
 
         if ($this->talk->createTalk($this->args['speakerlogin'], $this->args['talk'], $this->args['title'], $this->args['start_timestamp'], $this->args['room'], $this->args['initial_evaluation'], $this->args['eventname']))
             $this->status = StatusHandler::success();
         else
-            $this->status = StatusHandler::error();
+            $this->status = StatusHandler::error("sth went wrong");
 
     }
 
     private function _reject()
     {
-        if (!$this->auth->isAdmin()) {
-            $this->status = StatusHandler::error();
+        if (!$this->adm->isAdmin()) {
+            $this->status = StatusHandler::error("not admin");
             return;
         }
 
         if ($this->talk->rejectTalk($this->args['talk']))
                 $this->status = StatusHandler::success();
         else
-            $this->status = StatusHandler::error();
+            $this->status = StatusHandler::error("sth went wrong");
 
     }
 
     private function _registerUserForEvent()
     {
-        if (!$this->auth->isLogged()) {
-            $this->status = StatusHandler::error();
+        if (!$this->adm->isLogged()) {
+            $this->status = StatusHandler::error("not logged");
             return;
         }
 
-        if ($this->event->registerUserForEvent($this->auth->getUserLogin(), $this->args['eventname']))
+        if ($this->event->registerUserForEvent($this->adm->getUserLogin(), $this->args['eventname']))
             $this->status = StatusHandler::success();
         else
-            $this->status = StatusHandler::error();
+            $this->status = StatusHandler::error("sth went wrong");
     }
 
     private function _attendance()
     {
-        if (!$this->auth->isLogged()) {
-            $this->status = StatusHandler::error();
+        if (!$this->adm->isLogged()) {
+            $this->status = StatusHandler::error("not logged");
             return;
         }
 
-        if ($this->talk->checkAttendance($this->auth->getUserLogin(), $this->args['talk']))
+        if ($this->talk->checkAttendance($this->adm->getUserLogin(), $this->args['talk']))
             $this->status = StatusHandler::success();
         else
-            $this->status = StatusHandler::error();
+            $this->status = StatusHandler::error("sth went wrong");
     }
 
     private function _evaluation()
     {
-        if (!$this->auth->isLogged()) {
-            $this->status = StatusHandler::error();
+        if (!$this->adm->isLogged()) {
+            $this->status = StatusHandler::error("not logged");
             return;
         }
 
-        if ($this->talk->evaluationTalk($this->auth->getUserLogin(), $this->args['talk'], $this->args['rating']))
+        if ($this->talk->evaluationTalk($this->adm->getUserLogin(), $this->args['talk'], $this->args['rating']))
             $this->status = StatusHandler::success();
         else
-            $this->status = StatusHandler::error();
+            $this->status = StatusHandler::error("sth went wrong");
     }
 
     private function _proposal()
     {
-        if (!$this->auth->isLogged()) {
-            $this->status = StatusHandler::error();
+        if (!$this->adm->isLogged()) {
+            $this->status = StatusHandler::error("not logged");
             return;
         }
 
-        if ($this->talk->createProposalTalk($this->auth->getUserLogin(), $this->args['talk'], $this->args['title'], $this->args['start_timestamp']))
+        if ($this->talk->createProposalTalk($this->adm->getUserLogin(), $this->args['talk'], $this->args['title'], $this->args['start_timestamp']))
             $this->status = StatusHandler::success();
         else
-            $this->status = StatusHandler::error();
+            $this->status = StatusHandler::error("sth went wrong");
     }
 
     private function _proposals()
     {
-        if (!$this->auth->isAdmin()) {
-            $this->status = StatusHandler::error();
+        if (!$this->adm->isAdmin()) {
+            $this->status = StatusHandler::error("not admin");
             return;
         }
 
@@ -297,15 +291,15 @@ class OperationManager
 
     private function _friends()
     {
-        if (!$this->auth->isLogged()) {
-            $this->status = StatusHandler::error();
+        if (!$this->adm->isLogged()) {
+            $this->status = StatusHandler::error("not logged");
             return;
         }
 
         if ($this->adm->addFriend($this->args['login2']))
             $this->status = StatusHandler::success();
         else
-            $this->status = StatusHandler::error();
+            $this->status = StatusHandler::error("sth went wrong");
 
     }
 
@@ -331,18 +325,18 @@ class OperationManager
 
     private function _attendedTalks()
     {
-        if (!$this->auth->isLogged()) {
-            $this->status = StatusHandler::error();
+        if (!$this->adm->isLogged()) {
+            $this->status = StatusHandler::error("not logged");
             return;
         }
 
-        $this->status = StatusHandler::success($this->talk->attendedTalks($this->auth->getUserLogin()));
+        $this->status = StatusHandler::success($this->talk->attendedTalks($this->adm->getUserLogin()));
     }
 
     private function _abandonedTalks()
     {
-        if (!$this->auth->isAdmin()) {
-            $this->status = StatusHandler::error();
+        if (!$this->adm->isAdmin()) {
+            $this->status = StatusHandler::error("not admin");
             return;
         }
 
@@ -351,33 +345,33 @@ class OperationManager
 
     private function _recentlyAddedTalks()
     {
-        $this->status = $this->adm->getRecentlAddedTalks($this->args['limit']);
+        $this->status = StatusHandler::not_implemented();
     }
 
     private function _rejectedTalks()
     {
-        if ($this->auth->isAdmin())
+        if ($this->adm->isAdmin())
             $this->status = StatusHandler::success($this->talk->getAllRejectedTalks());
-        elseif ($this->auth->isLogged())
-            $this->status = StatusHandler::success($this->talk->getAllRejectedTalksForUser($this->auth->getUserLogin()));
+        elseif ($this->adm->isLogged())
+            $this->status = StatusHandler::success($this->talk->getAllRejectedTalksForUser($this->adm->getUserLogin()));
         else
-            $this->status = StatusHandler::error();
+            $this->status = StatusHandler::error("sth went wrong");
     }
 
     private function _friendsTalks()
     {
-        if (!$this->auth->isLogged()) {
-            $this->status = StatusHandler::error();
+        if (!$this->adm->isLogged()) {
+            $this->status = StatusHandler::error("not logged");
             return;
         }
 
-        $this->status = StatusHandler::success($this->talk->friendsTalks($this->auth->getUserLogin(), $this->args['start_timestamp'], $this->args['end_timestamp'], $this->args['limit']));
+        $this->status = StatusHandler::success($this->talk->friendsTalks($this->adm->getUserLogin(), $this->args['start_timestamp'], $this->args['end_timestamp'], $this->args['limit']));
     }
 
     private function _friendsEvents()
     {
-        if (!$this->auth->isLogged()) {
-            $this->status = StatusHandler::error();
+        if (!$this->adm->isLogged()) {
+            $this->status = StatusHandler::error("not logged");
             return;
         }
 
