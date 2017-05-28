@@ -3,6 +3,7 @@ require_once "DatabaseManager.php";
 require_once "UserService.php";
 require_once "TalkService.php";
 require_once "EventService.php";
+require_once "AuthClass.php";
 
 class OperationManager
 {
@@ -28,9 +29,9 @@ class OperationManager
     private $status;
 
 
-    public function __construct()
+    public function __construct($db_name, $db_user, $db_password)
     {
-        $this->database = new DatabaseManager();
+        $this->database = new DatabaseManager($db_name, $db_user, $db_password);
     }
 
     public function execute(){
@@ -160,8 +161,7 @@ class OperationManager
 
     private function _open()
     {
-//        TODO: ma wywalac blad przy zlym polaczeniu
-        $this->database = new DatabaseManager($this->args['baza'], $this->args['login'], $this->args['password']);
+        $this->database->loadDatabase();
         $this->status = StatusHandler::success();
     }
 

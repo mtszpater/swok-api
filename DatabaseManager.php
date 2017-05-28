@@ -9,6 +9,26 @@ class DatabaseManager implements DatabaseManagerInterface {
 		$this->connection = pg_connect("host=".$host." port=".$port." dbname=".$dbname." user=".$user." password=".$password."");
 	}
 
+    public function loadDatabase(){
+        $filename = 'V1__INIT.sql';
+
+        $templine = '';
+        $lines = file($filename);
+        foreach ($lines as $line)
+        {
+            if (substr($line, 0, 2) == '--' || $line == '')
+                continue;
+
+            $templine .= $line;
+
+            if (substr(trim($line), -1, 1) == ';')
+            {
+                @pg_query($this->connection, $templine);
+                $templine = '';
+            }
+        }
+    }
+
     public function userExists($user_login, $user_password)
     {
 		$query = @pg_query($this->connection, "select * from member WHERE login='$user_login' AND password='$user_password';");

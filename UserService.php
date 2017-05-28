@@ -1,8 +1,6 @@
 <?php
 include_once "DatabaseManagerInterface.php";
-include_once "StatusHandler.php";
 require_once "GuestService.php";
-include_once "AuthClass.php";
 
 class UserService extends GuestService
 {
