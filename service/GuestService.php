@@ -1,6 +1,6 @@
 <?php
-include_once "DatabaseManagerInterface.php";
-include_once "StatusHandler.php";
+include_once __DIR__ . "/../DatabaseManagerInterface.php";
+include_once __DIR__ . "/../StatusHandler.php";
 
 abstract class GuestService
 {

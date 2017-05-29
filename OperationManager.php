@@ -1,8 +1,8 @@
 <?php
 require_once "DatabaseManager.php";
-require_once "UserService.php";
-require_once "TalkService.php";
-require_once "EventService.php";
+require_once "service/UserService.php";
+require_once "service/TalkService.php";
+require_once "service/EventService.php";
 
 class OperationManager
 {

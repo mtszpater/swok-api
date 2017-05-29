@@ -1,7 +1,4 @@
 { "open": { "baza": "springbootdb", "login": "ja", "password": ""}}
-
-
-{ "open": { "baza": "springbootdb", "login": "ja", "password": ""}}
 { "organizer": { "secret": "d8578edf8458ce06fbc5bb76a58c5ca4", "newlogin": "org", "newpassword": "orgpass"}}
 { "user": { "login": "org", "password": "orgpass", "newlogin": "mem1", "newpassword": "mempass"}}
 { "user": { "login": "org", "password": "orgpass", "newlogin": "mem2", "newpassword": "mempass"}}
@@ -50,8 +47,6 @@
 { "attendance": { "login": "mem3", "password": "mempass", "talk": "7"}}
 { "attendance": { "login": "mem4", "password": "mempass", "talk": "7"}}
 { "abandoned_talks": { "login": "org",  "password": "orgpass", "limit": "0"}}
-
-
 { "organizer": { "secret": "d8578edf8458ce06fbc5bb76a58c5ca4", "newlogin": "org", "newpassword": "orgpass"}}
 { "event": { "login": "org", "password": "orgpass", "eventname": "millennium", "start_timestamp": "2000-1-1", "end_timestamp": "2000-1-2"}}
 { "event": { "login": "org2", "password": "orgpass2", "eventname": "millennium2", "start_timestamp": "3000-1-1", "end_timestamp": "3000-1-2"}}
