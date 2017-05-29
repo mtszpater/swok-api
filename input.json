@@ -1,4 +1,57 @@
 { "open": { "baza": "springbootdb", "login": "ja", "password": ""}}
+
+
+{ "open": { "baza": "springbootdb", "login": "ja", "password": ""}}
+{ "organizer": { "secret": "d8578edf8458ce06fbc5bb76a58c5ca4", "newlogin": "org", "newpassword": "orgpass"}}
+{ "user": { "login": "org", "password": "orgpass", "newlogin": "mem1", "newpassword": "mempass"}}
+{ "user": { "login": "org", "password": "orgpass", "newlogin": "mem2", "newpassword": "mempass"}}
+{ "user": { "login": "org", "password": "orgpass", "newlogin": "mem3", "newpassword": "mempass"}}
+{ "user": { "login": "org", "password": "orgpass", "newlogin": "mem4", "newpassword": "mempass"}}
+{ "event": { "login": "org", "password": "orgpass", "eventname": "no_one/no_one", "start_timestamp": "2000-1-1", "end_timestamp": "2000-1-2"}}
+{ "event": { "login": "org", "password": "orgpass", "eventname": "all/all", "start_timestamp": "2000-1-1", "end_timestamp": "2000-1-2"}}
+{ "event": { "login": "org", "password": "orgpass", "eventname": "no_one/all", "start_timestamp": "2000-1-1", "end_timestamp": "2000-1-2"}}
+{ "event": { "login": "org", "password": "orgpass", "eventname": "all/no_one", "start_timestamp": "2000-1-1", "end_timestamp": "2000-1-2"}}
+{ "event": { "login": "org", "password": "orgpass", "eventname": "two/two/same", "start_timestamp": "2000-1-1", "end_timestamp": "2000-1-2"}}
+{ "event": { "login": "org", "password": "orgpass", "eventname": "two/two/one", "start_timestamp": "2000-1-1", "end_timestamp": "2000-1-2"}}
+{ "event": { "login": "org", "password": "orgpass", "eventname": "two/two/no_one", "start_timestamp": "2000-1-1", "end_timestamp": "2000-1-2"}}
+{ "talk": { "login": "org", "password": "orgpass", "speakerlogin": "org", "talk": "1", "title": "a", "start_timestamp": "2000-1-1", "room": "1", "initial_evaluation": "1", "eventname": "no_one/no_one"}}
+{ "talk": { "login": "org", "password": "orgpass", "speakerlogin": "org", "talk": "2", "title": "a", "start_timestamp": "2000-1-1", "room": "1", "initial_evaluation": "1", "eventname": "all/all"}}
+{ "talk": { "login": "org", "password": "orgpass", "speakerlogin": "org", "talk": "3", "title": "a", "start_timestamp": "2000-1-1", "room": "1", "initial_evaluation": "1", "eventname": "no_one/all"}}
+{ "talk": { "login": "org", "password": "orgpass", "speakerlogin": "org", "talk": "4", "title": "a", "start_timestamp": "2000-1-1", "room": "1", "initial_evaluation": "1", "eventname": "all/no_one"}}
+{ "talk": { "login": "org", "password": "orgpass", "speakerlogin": "org", "talk": "5", "title": "a", "start_timestamp": "2000-1-1", "room": "1", "initial_evaluation": "1", "eventname": "two/two/same"}}
+{ "talk": { "login": "org", "password": "orgpass", "speakerlogin": "org", "talk": "6", "title": "a", "start_timestamp": "2000-1-1", "room": "1", "initial_evaluation": "1", "eventname": "two/two/one"}}
+{ "talk": { "login": "org", "password": "orgpass", "speakerlogin": "org", "talk": "7", "title": "a", "start_timestamp": "2000-1-1", "room": "1", "initial_evaluation": "1", "eventname": "two/two/no_one"}}
+{ "register_user_for_event": { "login": "mem1", "password": "mempass", "eventname": "all/all"}}
+{ "register_user_for_event": { "login": "mem2", "password": "mempass", "eventname": "all/all"}}
+{ "register_user_for_event": { "login": "mem3", "password": "mempass", "eventname": "all/all"}}
+{ "register_user_for_event": { "login": "mem4", "password": "mempass", "eventname": "all/all"}}
+{ "attendance": { "login": "mem1", "password": "mempass", "talk": "2"}}
+{ "attendance": { "login": "mem2", "password": "mempass", "talk": "2"}}
+{ "attendance": { "login": "mem3", "password": "mempass", "talk": "2"}}
+{ "attendance": { "login": "mem4", "password": "mempass", "talk": "2"}}
+{ "attendance": { "login": "mem1", "password": "mempass", "talk": "3"}}
+{ "attendance": { "login": "mem2", "password": "mempass", "talk": "3"}}
+{ "attendance": { "login": "mem3", "password": "mempass", "talk": "3"}}
+{ "attendance": { "login": "mem4", "password": "mempass", "talk": "3"}}
+{ "register_user_for_event": { "login": "mem1", "password": "mempass", "eventname": "all/no_one"}}
+{ "register_user_for_event": { "login": "mem2", "password": "mempass", "eventname": "all/no_one"}}
+{ "register_user_for_event": { "login": "mem3", "password": "mempass", "eventname": "all/no_one"}}
+{ "register_user_for_event": { "login": "mem4", "password": "mempass", "eventname": "all/no_one"}}
+{ "register_user_for_event": { "login": "mem1", "password": "mempass", "eventname": "two/two/same"}}
+{ "register_user_for_event": { "login": "mem2", "password": "mempass", "eventname": "two/two/same"}}
+{ "attendance": { "login": "mem1", "password": "mempass", "talk": "5"}}
+{ "attendance": { "login": "mem2", "password": "mempass", "talk": "5"}}
+{ "register_user_for_event": { "login": "mem1", "password": "mempass", "eventname": "two/two/one"}}
+{ "register_user_for_event": { "login": "mem2", "password": "mempass", "eventname": "two/two/one"}}
+{ "attendance": { "login": "mem2", "password": "mempass", "talk": "6"}}
+{ "attendance": { "login": "mem3", "password": "mempass", "talk": "6"}}
+{ "register_user_for_event": { "login": "mem1", "password": "mempass", "eventname": "two/two/no_one"}}
+{ "register_user_for_event": { "login": "mem2", "password": "mempass", "eventname": "two/two/no_one"}}
+{ "attendance": { "login": "mem3", "password": "mempass", "talk": "7"}}
+{ "attendance": { "login": "mem4", "password": "mempass", "talk": "7"}}
+{ "abandoned_talks": { "login": "org",  "password": "orgpass", "limit": "0"}}
+
+
 { "organizer": { "secret": "d8578edf8458ce06fbc5bb76a58c5ca4", "newlogin": "org", "newpassword": "orgpass"}}
 { "event": { "login": "org", "password": "orgpass", "eventname": "millennium", "start_timestamp": "2000-1-1", "end_timestamp": "2000-1-2"}}
 { "event": { "login": "org2", "password": "orgpass2", "eventname": "millennium2", "start_timestamp": "3000-1-1", "end_timestamp": "3000-1-2"}}

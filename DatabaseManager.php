@@ -269,10 +269,15 @@ class DatabaseManager implements DatabaseManagerInterface {
 
     public function getAbandonedTalks($limit)
     {
-        $query = "SELECT t.id as talk, t.title, count(r.*) - t.members as number, t.room, t.date_start as start_timestamp from registrations_on_events r
-                                                        JOIN talk t on r.event_name = t.event_name
-                                                        GROUP by r.event_name, t.id, t.title, t.members
-                                                        ORDER by number DESC";
+//        TODO: do poprawienia
+        $query = "SELECT t.id as talk, q2.s as number, t.title, t.date_start as start_timestamp, t.room from (
+                  SELECT count(*) as s, q1.talk_id from 
+                        (SELECT t.id as talk_id, s.login from talk t JOIN registrations_on_events s on s.event_name = t.event_name except SELECT b.talk_id, b.login from attendance_on_talks b) q1 
+                        group by q1.talk_id  
+                    UNION DISTINCT select 0 as s, g.id as talk_id from talk g
+                    WHERE g.id NOT IN ( SELECT q1.talk_id from (SELECT t.id as talk_id, s.login from talk t JOIN registrations_on_events s on s.event_name = t.event_name except SELECT b.talk_id, b.login from attendance_on_talks b) q1 )) q2
+                  JOIN talk t on q2.talk_id = t.id
+                  ORDER by number DESC";
 
         if($limit != 0)
             $query = $query . " LIMIT '$limit'";
