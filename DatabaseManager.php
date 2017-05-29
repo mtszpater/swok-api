@@ -167,6 +167,7 @@ class DatabaseManager implements DatabaseManagerInterface {
 
     public function getBestTalks($start_timestamp, $end_timestamp, $limit, $all)
     {
+//        TODO: to nie koniec :c
         if($all == 1)
         {
             $query = "SELECT rate.talk_id as talk, talk.date_start as start_timestamp, talk.room, talk.title FROM talk
