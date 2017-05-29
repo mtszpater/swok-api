@@ -187,8 +187,7 @@ class DatabaseManager implements DatabaseManagerInterface {
 
         }
 
-        if($limit != 0)
-            $query = $query . " LIMIT '$limit'";
+        $query = $this->addLimit($limit, $query);
 
         $query = @pg_query($this->connection, $query);
 
@@ -200,8 +199,7 @@ class DatabaseManager implements DatabaseManagerInterface {
 
         $query = " SELECT id as talk, date_start as start_timestamp, title, room FROM talk WHERE talk.date_start >= '$start_timestamp' AND talk.date_start <= '$end_timestamp' ORDER BY members DESC";
 
-        if($limit != 0)
-            $query = $query . " LIMIT '$limit'";
+        $query = $this->addLimit($limit, $query);
 
         $query = @pg_query($this->connection, $query);
 
@@ -234,8 +232,7 @@ class DatabaseManager implements DatabaseManagerInterface {
                                                     AND talk.date_start >= '$start_timestamp' AND talk.date_start <= '$end_timestamp'
                                                     ORDER BY date_start ASC";
 
-        if($limit != 0)
-            $query = $query . " LIMIT '$limit'";
+        $query = $this->addLimit($limit, $query);
 
         $query = @pg_query($this->connection, $query);
 
@@ -269,7 +266,6 @@ class DatabaseManager implements DatabaseManagerInterface {
 
     public function getAbandonedTalks($limit)
     {
-//        TODO: do poprawienia
         $query = "SELECT t.id as talk, q2.s as number, t.title, t.date_start as start_timestamp, t.room from (
                   SELECT count(*) as s, q1.talk_id from 
                         (SELECT t.id as talk_id, s.login from talk t JOIN registrations_on_events s on s.event_name = t.event_name except SELECT b.talk_id, b.login from attendance_on_talks b) q1 
@@ -279,13 +275,19 @@ class DatabaseManager implements DatabaseManagerInterface {
                   JOIN talk t on q2.talk_id = t.id
                   ORDER by number DESC";
 
-        if($limit != 0)
-            $query = $query . " LIMIT '$limit'";
+        $query = $this->addLimit($limit, $query);
 
         $query = @pg_query($this->connection, $query);
 
 
         return pg_fetch_all($query) ? pg_fetch_all($query) : array();
+    }
+
+    private function addLimit($limit, $query)
+    {
+        if ($limit != 0)
+            $query = $query . " LIMIT '$limit'";
+        return $query;
     }
 }
 ?>
