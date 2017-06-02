@@ -120,6 +120,7 @@ class TalkService
 
     public function getRecentlyAddedTalks($limit)
     {
+//TODO:        To jeszcze zrobię :3
         return false;
     }
 

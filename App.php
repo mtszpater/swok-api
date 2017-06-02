@@ -1,5 +1,5 @@
 <?php
-include_once "OperationManager.php";
+include_once "ApiController.php";
 include_once "ConsoleReader.php";
 
 class App
@@ -13,9 +13,9 @@ class App
      */
     private $consoleReader;
     /**
-     * @var OperationManager
+     * @var ApiController
      */
-    private $operationManager;
+    private $apiController;
 
     public function __construct()
     {
@@ -33,7 +33,7 @@ class App
 
     public function execute()
     {
-        $this->operationManager->execute();
+        $this->apiController->execute();
         echo "\n";
     }
 
@@ -57,9 +57,9 @@ class App
 
     private function initializeOperationManager()
     {
-        $this->operationManager = new OperationManager($this->db_name, $this->db_user, $this->db_password);
-        $this->operationManager->functionName = $this->consoleReader->getCurrentFunctionName();
-        $this->operationManager->args = $this->consoleReader->getCurrentArgs();
+        $this->apiController = new ApiController($this->db_name, $this->db_user, $this->db_password);
+        $this->apiController->functionName = $this->consoleReader->getCurrentFunctionName();
+        $this->apiController->args = $this->consoleReader->getCurrentArgs();
     }
 
     private function saveDataToDb()
