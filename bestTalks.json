@@ -1,0 +1,64 @@
+{ "open": { "baza": "project1", "login": "prj1own", "password": "pass"}}
+{ "organizer": { "secret": "d8578edf8458ce06fbc5bb76a58c5ca4", "newlogin": "org", "newpassword": "orgpass"}}
+{ "user": { "login": "org", "password": "orgpass", "newlogin": "mem1", "newpassword": "mempass"}}
+{ "user": { "login": "org", "password": "orgpass", "newlogin": "mem2", "newpassword": "mempass"}}
+{ "user": { "login": "org", "password": "orgpass", "newlogin": "mem3", "newpassword": "mempass"}}
+{ "event": { "login": "org", "password": "orgpass", "eventname": "event", "start_timestamp": "2000-1-1", "end_timestamp": "2000-1-2"}}
+{ "talk": { "login": "org", "password": "orgpass", "speakerlogin": "org", "talk": "all/all", "title": "a", "start_timestamp": "2000-1-1", "room": "1", "initial_evaluation": "7", "eventname": "event"}}
+{ "attendance": { "login": "mem1", "password": "mempass", "talk": "all/all"}}
+{ "evaluation": { "login": "mem1", "password": "mempass", "talk": "all/all", "rating": "1"}}
+{ "attendance": { "login": "mem2", "password": "mempass", "talk": "all/all"}}
+{ "evaluation": { "login": "mem2", "password": "mempass", "talk": "all/all", "rating": "4"}}
+{ "attendance": { "login": "mem3", "password": "mempass", "talk": "all/all"}}
+{ "evaluation": { "login": "mem3", "password": "mempass", "talk": "all/all", "rating": "6"}}
+{ "talk": { "login": "org", "password": "orgpass", "speakerlogin": "org", "talk": "all/two", "title": "a", "start_timestamp": "2000-1-1", "room": "1", "initial_evaluation": "7", "eventname": "event"}}
+{ "attendance": { "login": "org", "password": "orgpass", "talk": "all/two"}}
+{ "attendance": { "login": "mem1", "password": "mempass", "talk": "all/two"}}
+{ "attendance": { "login": "mem2", "password": "mempass", "talk": "all/two"}}
+{ "evaluation": { "login": "mem2", "password": "mempass", "talk": "all/two", "rating": "4"}}
+{ "attendance": { "login": "mem3", "password": "mempass", "talk": "all/two"}}
+{ "evaluation": { "login": "mem3", "password": "mempass", "talk": "all/two", "rating": "6"}}
+{ "talk": { "login": "org", "password": "orgpass", "speakerlogin": "org", "talk": "all/no_one", "title": "a", "start_timestamp": "2000-1-1", "room": "1", "initial_evaluation": "7", "eventname": "event"}}
+{ "attendance": { "login": "mem1", "password": "mempass", "talk": "all/no_one"}}
+{ "attendance": { "login": "mem2", "password": "mempass", "talk": "all/no_one"}}
+{ "attendance": { "login": "mem3", "password": "mempass", "talk": "all/no_one"}}
+{ "best_talks": { "start_timestamp": "1000-1-1", "end_timestamp": "3000-1-1 4:00", "limit": "0", "all": "1"}}
+{ "best_talks": { "start_timestamp": "1000-1-1", "end_timestamp": "3000-1-1 4:00", "limit": "0", "all": "0"}}
+{ "talk": { "login": "org", "password": "orgpass", "speakerlogin": "org", "talk": "no_one/all", "title": "a", "start_timestamp": "2000-1-1", "room": "1", "initial_evaluation": "8", "eventname": "event"}}
+{ "evaluation": { "login": "mem1", "password": "mempass", "talk": "no_one/all", "rating": "1"}}
+{ "evaluation": { "login": "mem2", "password": "mempass", "talk": "no_one/all", "rating": "4"}}
+{ "evaluation": { "login": "mem3", "password": "mempass", "talk": "no_one/all", "rating": "6"}}
+{ "talk": { "login": "org", "password": "orgpass", "speakerlogin": "org", "talk": "no_one/two", "title": "a", "start_timestamp": "2000-1-1", "room": "1", "initial_evaluation": "8", "eventname": "event"}}
+{ "attendance": { "login": "org", "password": "orgpass", "talk": "all/two"}}
+{ "evaluation": { "login": "mem2", "password": "mempass", "talk": "no_one/two", "rating": "4"}}
+{ "evaluation": { "login": "mem3", "password": "mempass", "talk": "no_one/two", "rating": "6"}}
+{ "talk": { "login": "org", "password": "orgpass", "speakerlogin": "org", "talk": "no_one/no_one", "title": "a", "start_timestamp": "2000-1-1", "room": "1", "initial_evaluation": "8", "eventname": "event"}}
+{ "best_talks": { "start_timestamp": "1000-1-1", "end_timestamp": "3000-1-1 4:00", "limit": "0", "all": "1"}}
+{ "best_talks": { "start_timestamp": "1000-1-1", "end_timestamp": "3000-1-1 4:00", "limit": "0", "all": "0"}}
+
+{"status":"OK","data":[
+    {"talk":"all/no_one","start_time":"2000-01-01 00:00:00","title":"a","room":"1","usun":"7"},
+    {"talk":"all/two","start_time":"2000-01-01 00:00:00","title":"a","room":"1","usun":"5.66666666666667"},
+    {"talk":"all/all","start_time":"2000-01-01 00:00:00","title":"a","room":"1","usun":"4.5"}]}
+
+{"status":"OK","data":[
+    {"talk":"all/no_one","start_time":"2000-01-01 00:00:00","title":"a","room":"1","usun":"7"},
+    {"talk":"all/two","start_time":"2000-01-01 00:00:00","title":"a","room":"1","usun":"5.66666666666667"},
+    {"talk":"all/all","start_time":"2000-01-01 00:00:00","title":"a","room":"1","usun":"4.5"}]}
+
+
+{"status":"OK","data":[
+    {"talk":"no_one/no_one","start_time":"2000-01-01 00:00:00","title":"a","room":"1","usun":"8"},
+    {"talk":"all/no_one","start_time":"2000-01-01 00:00:00","title":"a","room":"1","usun":"7"},
+    {"talk":"no_one/two","start_time":"2000-01-01 00:00:00","title":"a","room":"1","usun":"6"},
+    {"talk":"all/two","start_time":"2000-01-01 00:00:00","title":"a","room":"1","usun":"5.66666666666667"},
+    {"talk":"no_one/all","start_time":"2000-01-01 00:00:00","title":"a","room":"1","usun":"4.75"},
+    {"talk":"all/all","start_time":"2000-01-01 00:00:00","title":"a","room":"1","usun":"4.5"}]}
+
+{"status":"OK","data":[
+    {"talk":"no_one/all","start_time":"2000-01-01 00:00:00","title":"a","room":"1","usun":"8"},
+    {"talk":"no_one/two","start_time":"2000-01-01 00:00:00","title":"a","room":"1","usun":"8"},
+    {"talk":"no_one/no_one","start_time":"2000-01-01 00:00:00","title":"a","room":"1","usun":"8"},
+    {"talk":"all/no_one","start_time":"2000-01-01 00:00:00","title":"a","room":"1","usun":"7"},
+    {"talk":"all/two","start_time":"2000-01-01 00:00:00","title":"a","room":"1","usun":"5.66666666666667"},
+    {"talk":"all/all","start_time":"2000-01-01 00:00:00","title":"a","room":"1","usun":"4.5"}]}
