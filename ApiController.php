@@ -201,13 +201,15 @@ class ApiController
             return;
         }
 
-        if(!$this->adm->userExists($this->args['speakerlogin'])){
+        if (!$this->adm->userExists($this->args['speakerlogin'])) {
             $this->status = StatusHandler::error("speakerlogin nie istnieje");
             return;
         }
 
-        if ($this->talk->createTalk($this->args['speakerlogin'], $this->args['talk'], $this->args['title'], $this->args['start_timestamp'], $this->args['room'], $this->args['initial_evaluation'], $this->args['eventname']))
+        if ($this->talk->createTalk($this->args['speakerlogin'], $this->args['talk'], $this->args['title'], $this->args['start_timestamp'], $this->args['room'], $this->args['initial_evaluation'], $this->args['eventname'])) {
+            $this->database->evaluationTalk($this->adm->getUserLogin(), $this->args['talk'], $this->args['initial_evaluation'], true);
             $this->status = StatusHandler::success();
+        }
         else
             $this->status = StatusHandler::error("sth went wrong");
 

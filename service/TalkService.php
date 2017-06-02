@@ -26,8 +26,7 @@ class TalkService
             if ($this->database->existsProposalTalk(intval($talk_id))) {
                 $this->rejectTalk($talk_id);
             }
-
-            $this->database->evaluationTalk($user_login, $talk_id, $initial_evaluation, true);
+            
             return true;
         }
 
@@ -54,10 +53,11 @@ class TalkService
 
     public function evaluationTalk($user_login, $talk_id, $rate)
     {
-        if (!$this->database->existsTalk($talk_id)) return false;
+        if (!$this->database->existsTalk($talk_id))
+            return false;
 
         if ($this->database->evaluationTalk($user_login, intval($talk_id), intval($rate)))
-                return true;
+            return true;
 
         return false;
     }
