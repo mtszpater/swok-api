@@ -130,13 +130,12 @@ class TalkService
 
     public function getRecentlyAddedTalks($limit)
     {
-//TODO:        To jeszcze zrobię :3
         return false;
     }
 
     public function recommendedTalks($start_timestamp, $end_timestamp, $limit)
     {
-        return false;
+        return $this->database->getMostPopularTalks($start_timestamp, $end_timestamp, $limit);
     }
 
 }
