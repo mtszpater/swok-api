@@ -1,4 +1,15 @@
 # Projekt: System wspomagający organizację konferencji
+
+### Wymagania
+* PHP 5.6.30 (lub nowsze)
+* PostgreSQL
+
+## Uruchomienie
+Aplikacja czyta ze standardowego wejścia (konsoli):
+```sh
+$ php src/index.php > out
+```
+
 ### Specyfikacja autorstwa [Piotra Wieczorka](http://www.ii.uni.wroc.pl/~piotrek/)
 
 Jesteś odpowiedzialny za implementację systemu wspomagającego organizację i przeprowadzenie konferencji. Twoim zadaniem jest zaimplementowanie zdefiniowanego poniżej API.
@@ -45,3 +56,5 @@ Metoda | Argumenty | Opis | Wyjście
 (U) friends_talks | login password start_timestamp end_timestamp limit | lista referatów  rozpoczynających się w podanym przedziale czasowym wygłaszanych przez znajomych danego uczestnika posortowana wg czasu rozpoczęcia, wypisuje pierwsze limit referatów, przy czym 0 oznacza, że należy wypisać wszystkie | talk speakerlogin start_timestamp title room
 (U) friends_events | login password event | lista znajomych uczestniczących w danym wydarzeniu | login event friendlogin 
 (U) recommended_talks | login password start_timestamp end_timestamp limit | zwraca referaty rozpoczynające się w podanym przedziale czasowym, które mogą zainteresować danego uczestnika (zaproponuj parametr score obliczany na podstawie dostępnych danych – ocen, obecności, znajomości itp.), wypisuje pierwsze limit referatów wg nalepszego score, przy czym 0 oznacza, że należy wypisać wszystkie | talk speakerlogin start_timestamp title room score
+
+
