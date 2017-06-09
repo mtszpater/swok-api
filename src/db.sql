@@ -1,12 +1,3 @@
-drop table if exists attendance_on_talks;
-drop table if exists registrations_on_events;
-drop table if exists friendship;
-drop table if exists rate;
-drop table if exists talk_proposal;
-drop table if exists talk;
-drop table if exists event;
-drop table if exists member;
-
 CREATE TABLE IF NOT EXISTS member (
   login text UNIQUE PRIMARY KEY,
   password text NOT NULL,

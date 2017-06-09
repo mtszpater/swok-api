@@ -10,7 +10,7 @@ class DatabaseManager implements DatabaseManagerInterface {
 	}
 
     public function loadDatabase(){
-        $filename = './database/db.sql';
+        $filename = './db.sql';
 
         $templine = '';
         $lines = file($filename);
@@ -143,7 +143,7 @@ class DatabaseManager implements DatabaseManagerInterface {
     public function getUserPlan($user_login, $limit)
     {
 
-        $query = "SELECT registrations_on_events.login, id as talk, date_start as start_timestamp, title, room FROM registrations_on_events
+        $query = "SELECT talk.login as login, id as talk, date_start as start_timestamp, title, room FROM registrations_on_events
                   JOIN talk ON registrations_on_events.event_name=talk.event_name
                   WHERE registrations_on_events.login = '$user_login'
                   ORDER BY talk.date_start ASC";
@@ -171,7 +171,7 @@ class DatabaseManager implements DatabaseManagerInterface {
 
         if($all == 1)
         {
-            $query = "SELECT avg(rate) as rate, rate.talk_id as talk, talk.date_start as start_timestamp, talk.room, talk.title FROM talk
+            $query = "SELECT rate.talk_id as talk, talk.date_start as start_timestamp, talk.room, talk.title FROM talk
                     JOIN rate on talk.id = rate.talk_id
                     WHERE talk.date_start >= '$start_timestamp' AND talk.date_start <= '$end_timestamp'
                     GROUP BY rate.talk_id, talk.date_start, talk.room, talk.title
@@ -180,9 +180,10 @@ class DatabaseManager implements DatabaseManagerInterface {
         }
         else
         {
-            $query = "SELECT  talk_id as talk, avg(rate) as rate, talk.title, talk.date_start as start_timestamp, talk.room FROM rate
+            $query = "SELECT  talk_id as talk, talk.title, talk.date_start as start_timestamp, talk.room FROM rate
                         JOIN talk on rate.talk_id = talk.id
                         WHERE rate.login||'~'||talk_id IN (SELECT login||'~'||talk_id from rate where initial_evaluation = true union ( SELECT login||'~'||talk_id from rate intersect SELECT login||'~'||talk_id from attendance_on_talks ) )
+                        AND  talk.date_start >= '$start_timestamp' AND talk.date_start <= '$end_timestamp'
                         GROUP BY talk_id,  talk.title, talk.date_start, talk.room
                         ORDER BY avg(rate) DESC";
 

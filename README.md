@@ -7,7 +7,10 @@
 ## Uruchomienie
 Aplikacja czyta ze standardowego wejścia (konsoli):
 ```sh
-$ php src/index.php > out
+$ cd src
+```
+```sh
+$ php index.php > out
 ```
 
 ### Specyfikacja autorstwa [Piotra Wieczorka](http://www.ii.uni.wroc.pl/~piotrek/)
