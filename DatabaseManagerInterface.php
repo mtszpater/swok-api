@@ -30,4 +30,5 @@ interface DatabaseManagerInterface
     public function getAllRejectedTalks();
     public function getAllRejectedTalksForUser($user_login);
     public function getAbandonedTalks($limit);
+    public function deleteProposalTalk($talk_id);
 }

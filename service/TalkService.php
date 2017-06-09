@@ -9,11 +9,11 @@ class TalkService
         $this->database = $database;
     }
 
-    public function createTalk($user_login, $talk_id, $title, $start_timestamp, $room, $initial_evaluation, $event_name)
+    public function createTalk($user_login, $talk_id, $title, $start_timestamp, $room, $event_name)
     {
         if( ! ($event_name === "") ) {
             if (!$this->database->isEventNameBusy($event_name)) return false;
-            if ($this->database->existsTalk(intval($talk_id))) return false;
+            if ($this->database->existsTalk($talk_id)) return false;
 
             $event_start = $this->database->getStartTimeStampOfEvent($event_name);
             if ($event_start >= $start_timestamp) return false;
@@ -21,10 +21,10 @@ class TalkService
             $event_name = NULL;
         }
 
-        if ($this->database->createTalk($user_login, intval($talk_id), $title, $start_timestamp, intval($room), $event_name)) {
+        if ($this->database->createTalk($user_login, $talk_id, $title, $start_timestamp, intval($room), $event_name)) {
 
-            if ($this->database->existsProposalTalk(intval($talk_id))) {
-                $this->rejectTalk($talk_id);
+            if ($this->database->existsProposalTalk($talk_id)) {
+                $this->deleteTalk($talk_id);
             }
             
             return true;
@@ -37,15 +37,25 @@ class TalkService
     {
         if (!$this->database->existsProposalTalk($talk_id)) return false;
 
-        if ($this->database->rejectTalk(intval($talk_id)))
+        if ($this->database->rejectTalk($talk_id))
                 return true;
+
+        return false;
+    }
+
+    public function deleteTalk($talk_id)
+    {
+        if (!$this->database->existsProposalTalk($talk_id)) return false;
+
+        if ($this->database->deleteProposalTalk($talk_id))
+            return true;
 
         return false;
     }
 
     public function checkAttendance($user_login, $talk_id)
     {
-        if ($this->database->checkAttendance($user_login, intval($talk_id)))
+        if ($this->database->checkAttendance($user_login, $talk_id))
                 return true;
 
         return false;
@@ -56,7 +66,7 @@ class TalkService
         if (!$this->database->existsTalk($talk_id))
             return false;
 
-        if ($this->database->evaluationTalk($user_login, intval($talk_id), intval($rate)))
+        if ($this->database->evaluationTalk($user_login, $talk_id, intval($rate)))
             return true;
 
         return false;
@@ -67,7 +77,7 @@ class TalkService
         if ($this->database->existsProposalTalk($talk_id)) return false;
         if ($this->database->existsTalk($talk_id)) return false;
 
-        if ($this->database->createProposalTalk($user_login, intval($talk_id), $title, $start_timestamp))
+        if ($this->database->createProposalTalk($user_login, $talk_id, $title, $start_timestamp))
                 return true;
 
         return false;
@@ -128,4 +138,5 @@ class TalkService
     {
         return false;
     }
+
 }

@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS member (
 );
 
 CREATE TABLE IF NOT EXISTS talk_proposal (
-  id serial PRIMARY KEY,
+  id text PRIMARY KEY,
   title text NOT NULL,
   login text NOT NULL,
   rejected bool default false,
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS event (
 );
 
 CREATE TABLE IF NOT EXISTS talk (
-  id serial PRIMARY KEY,
+  id text PRIMARY KEY,
   title text NOT NULL,
   login text NOT NULL,
   members int default 0,
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS registrations_on_events(
 
 CREATE TABLE IF NOT EXISTS attendance_on_talks(
   login text NOT NULL,
-  talk_id int NOT NULL,
+  talk_id text NOT NULL,
   PRIMARY KEY (login, talk_id)
 );
 
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS friendship (
 );
 
 CREATE TABLE IF NOT EXISTS rate (
-  talk_id int NOT NULL,
+  talk_id text NOT NULL,
   login text NOT NULL,
   rate int NOT NULL,
   initial_evaluation bool default false,
@@ -93,35 +93,35 @@ ALTER TABLE ONLY logs ADD CONSTRAINT fk_logs_login FOREIGN KEY (login) REFERENCE
 --  WYZWALACZE DLA AKTUALIZOWANIA LICZBY UZYTKOWNIKOW, KTORZY WZIELI UDZIAŁ W REFERACIE
 -- 
 
-CREATE OR REPLACE FUNCTION get_all_events_members(numeric) RETURNS bigint 
-  AS 'select count(*) from attendance_on_talks WHERE talk_id = $1;' LANGUAGE SQL IMMUTABLE RETURNS NULL ON NULL INPUT;
+CREATE OR REPLACE FUNCTION get_all_events_members(numeric) RETURNS bigint
+AS 'select count(*) from attendance_on_talks WHERE talk_id = $1;' LANGUAGE SQL IMMUTABLE RETURNS NULL ON NULL INPUT;
 
 CREATE OR REPLACE FUNCTION update_all_events_members() RETURNS TRIGGER AS $$
-    BEGIN
-      UPDATE talk SET members = (Select * from get_all_events_members(talk.id));
-      return new;
-    END;
+BEGIN
+  UPDATE talk SET members = (Select * from get_all_events_members(talk.id));
+  return new;
+END;
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER update_talk_after_insert
-AFTER INSERT OR UPDATE OR DELETE ON attendance_on_talks 
-  FOR EACH ROW EXECUTE PROCEDURE update_all_events_members();
+AFTER INSERT OR UPDATE OR DELETE ON attendance_on_talks
+FOR EACH ROW EXECUTE PROCEDURE update_all_events_members();
 
 -- 
 --  WYZWALACZE DLA AKTUALIZOWANIA LICZBY REFERATÓW 
 -- 
 
-CREATE OR REPLACE FUNCTION get_all_talks_count(text) RETURNS bigint 
-  AS 'select count(*) from talk WHERE event_name = $1;' LANGUAGE SQL IMMUTABLE RETURNS NULL ON NULL INPUT;
+CREATE OR REPLACE FUNCTION get_all_talks_count(text) RETURNS bigint
+AS 'select count(*) from talk WHERE event_name = $1;' LANGUAGE SQL IMMUTABLE RETURNS NULL ON NULL INPUT;
 
 CREATE OR REPLACE FUNCTION update_talks_count() RETURNS TRIGGER AS $$
-    BEGIN
-      UPDATE event SET talks = (Select * from get_all_talks_count(event.name));
-      return new;
-    END;
+BEGIN
+  UPDATE event SET talks = (Select * from get_all_talks_count(event.name));
+  return new;
+END;
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER update_event_after_insert
-AFTER INSERT OR UPDATE OR DELETE ON talk 
-  FOR EACH ROW EXECUTE PROCEDURE update_talks_count();
+AFTER INSERT OR UPDATE OR DELETE ON talk
+FOR EACH ROW EXECUTE PROCEDURE update_talks_count();
 

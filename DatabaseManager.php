@@ -112,6 +112,11 @@ class DatabaseManager implements DatabaseManagerInterface {
         return @pg_query($this->connection, "update talk_proposal SET rejected = TRUE where id = '$talk_id'") ? true : false;
     }
 
+    public function deleteProposalTalk($talk_id)
+    {
+        return @pg_query($this->connection, "delete from talk_proposal where id = '$talk_id'") ? true : false;
+    }
+
     public function proposalTalk($user_login, $talk_id, $title, $start_timestamp)
     {
         return @pg_query($this->connection, "insert into talk_proposal (id, title, login, date_start) VALUES ('$talk_id', '$title', '$user_login', '$start_timestamp')") ? true : false;
@@ -218,7 +223,7 @@ class DatabaseManager implements DatabaseManagerInterface {
 
     public function getProposalTalks()
     {
-        $query = @pg_query($this->connection, "SELECT id as talk, title, login as speakerlogin, date_start as start_timestamp FROM talk_proposal;");
+        $query = @pg_query($this->connection, "SELECT id as talk, title, login as speakerlogin, date_start as start_timestamp FROM talk_proposal where rejected = FALSE;");
         return pg_fetch_all($query) ? pg_fetch_all($query) : array();
     }
 
