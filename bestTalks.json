@@ -1,4 +1,4 @@
-{ "open": { "baza": "xxx2", "login": "ja", "password": ""}}
+{ "open": { "baza": "xx5", "login": "ja", "password": ""}}
 {"organizer": {"secret": "d8578edf8458ce06fbc5bb76a58c5ca4", "newlogin": "org", "newpassword": "qwerty"}}
 {"event": {"login": "org", "password": "qwerty", "eventname": "ev0", "start_timestamp": "2017-01-01", "end_timestamp": "2017-08-05"}}
 {"event": {"login": "org", "password": "qwerty", "eventname": "ev1", "start_timestamp": "2017-01-01", "end_timestamp": "2017-08-05"}}

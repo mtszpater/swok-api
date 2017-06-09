@@ -20,13 +20,9 @@ class DatabaseManager implements DatabaseManagerInterface {
                 continue;
 
             $templine .= $line;
-
-            if (substr(trim($line), -1, 1) == ';')
-            {
-                @pg_query($this->connection, $templine);
-                $templine = '';
-            }
         }
+
+        @pg_query($this->connection, $templine);
     }
 
     public function userExists($user_login, $user_password)
