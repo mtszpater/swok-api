@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="dataSourceStorageLocal">
-    <data-source name="PostgreSQL - springbootdb@localhost" uuid="5d892c4e-ec31-41d6-8dbe-1f173dba251b">
-      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
-      <introspection-schemas>springbootdb:public</introspection-schemas>
-    </data-source>
-  </component>
-</project>
