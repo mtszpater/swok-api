@@ -1,10 +1,20 @@
 <?php
+
+/**
+ * Class ConsoleReader
+ */
 class ConsoleReader
 {
+    /**
+     * @var
+     */
     private $currentFunctionName;
+    /**
+     * @var
+     */
     private $currentArgs;
 
-    public function _readLine(){
+    public function readLine() {
         $this->currentArgs = array();
 
         $stdin = fopen('php://stdin', 'r');
@@ -20,13 +30,11 @@ class ConsoleReader
         }
     }
 
-    public function getCurrentFunctionName()
-    {
+    public function getCurrentFunctionName() {
         return $this->currentFunctionName;
     }
 
-    public function getCurrentArgs()
-    {
+    public function getCurrentArgs() {
         return $this->currentArgs;
     }
 }

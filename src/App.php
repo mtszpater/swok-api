@@ -2,11 +2,26 @@
 include_once "ApiController.php";
 include_once "ConsoleReader.php";
 
+/**
+ * Class App
+ */
 class App
 {
-    private $db_name;
-    private $db_user;
-    private $db_password;
+    /**
+     * @var
+     */
+    private $dbName;
+    /**
+     * @var
+     */
+    private $dbUser;
+    /**
+     * @var
+     */
+    private $dbPassword;
+    /**
+     * @var bool
+     */
     private $firstLine = true;
     /**
      * @Var ConsoleReader
@@ -17,29 +32,29 @@ class App
      */
     private $apiController;
 
-    public function __construct()
-    {
+    /**
+     * App constructor.
+     */
+    public function __construct() {
         $this->consoleReader = new ConsoleReader();
     }
 
-    public function readLine()
-    {
-        if ($this->firstLine)
+    public function readLine() {
+        if ($this->firstLine) {
             $this->readFirstLine();
-        else
+        }
+        else {
             $this->readNextLine();
-
+        }
     }
 
-    public function execute()
-    {
+    public function execute() {
         $this->apiController->execute();
         echo "\n";
     }
 
-    private function readFirstLine()
-    {
-        $this->consoleReader->_readLine();
+    private function readFirstLine() {
+        $this->consoleReader->readLine();
         if ($this->consoleReader->getCurrentFunctionName() === "open") {
             $this->saveDataToDb();
             $this->initializeOperationManager();
@@ -49,25 +64,22 @@ class App
         }
     }
 
-    private function readNextLine()
-    {
-        $this->consoleReader->_readLine();
+    private function readNextLine() {
+        $this->consoleReader->readLine();
         $this->initializeOperationManager();
     }
 
-    private function initializeOperationManager()
-    {
-        $this->apiController = new ApiController($this->db_name, $this->db_user, $this->db_password);
+    private function initializeOperationManager() {
+        $this->apiController = new ApiController($this->dbName, $this->dbUser, $this->dbPassword);
         $this->apiController->functionName = $this->consoleReader->getCurrentFunctionName();
         $this->apiController->args = $this->consoleReader->getCurrentArgs();
     }
 
-    private function saveDataToDb()
-    {
+    private function saveDataToDb() {
         $tmpArgs = $this->consoleReader->getCurrentArgs();
-        $this->db_name = $tmpArgs['baza'];
-        $this->db_password = $tmpArgs['password'];
-        $this->db_user = $tmpArgs['login'];
+        $this->dbName = $tmpArgs['baza'];
+        $this->dbPassword = $tmpArgs['password'];
+        $this->dbUser = $tmpArgs['login'];
     }
 
 

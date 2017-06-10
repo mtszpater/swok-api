@@ -4,10 +4,22 @@ require_once "service/UserService.php";
 require_once "service/TalkService.php";
 require_once "service/EventService.php";
 
+/**
+ * Class ApiController
+ */
 class ApiController
 {
+    /**
+     * @var
+     */
     public $functionName;
+    /**
+     * @var array
+     */
     public $args = array();
+    /**
+     * @var DatabaseManager
+     */
     private $database;
     /**
      * @var UserService
@@ -21,23 +33,30 @@ class ApiController
      * @var EventService
      */
     private $event;
+    /**
+     * @var
+     */
     private $status;
 
 
-    public function __construct($db_name, $db_user, $db_password)
-    {
-        $this->database = new DatabaseManager($db_name, $db_user, $db_password);
+    /**
+     * ApiController constructor.
+     * @param $dbName
+     * @param $dbUser
+     * @param $dbPassword
+     */
+    public function __construct($dbName, $dbUser, $dbPassword) {
+        $this->database = new DatabaseManager($dbName, $dbUser, $dbPassword);
     }
 
-    public function execute(){
+    public function execute() {
         $this->_prepareArguments();
         $this->_init();
         $this->_run();
         $this->_printResult();
     }
 
-    private function _prepareArguments()
-    {
+    private function _prepareArguments() {
         /**
          * Najlepiej przed SQLInjection użyć tutaj PDO
          * <ale uznałem, że może być problem z instalacją>
@@ -47,25 +66,31 @@ class ApiController
         }
     }
 
-    private function _init()
-    {
-        $user_password = '';
-        $user_login = '';
+    private function _init() {
+        $userPassword = '';
+        $userLogin = '';
 
-        if(isset($this->args['password'])) $user_password = $this->args['password'];
-        if(isset($this->args['login'])) $user_login = $this->args['login'];
-        if(isset($this->args['login1']))  $user_login = $this->args['login1'];
+        if(isset($this->args['password'])) {
+            $userPassword = $this->args['password'];
+        }
+
+        if(isset($this->args['login'])) {
+            $userLogin = $this->args['login'];
+        }
+        
+        if(isset($this->args['login1'])) {
+            $userLogin = $this->args['login1'];
+        }
 
         /**
          * Nie fajnie, że jedna komenda w API inny argument loginu :c
          */
-        $this->adm = new UserService($user_login, $user_password, $this->database);
+        $this->adm = new UserService($userLogin, $userPassword, $this->database);
         $this->talk = new TalkService($this->database);
         $this->event = new EventService($this->database);
     }
 
-    private function _run()
-    {
+    private function _run() {
         switch ($this->functionName) {
             case "open":
                 $this->_open();
@@ -165,49 +190,49 @@ class ApiController
         }
     }
 
-    private function _open()
-    {
+    private function _open() {
         $this->database->loadDatabase();
         $this->status = StatusHandler::success();
     }
 
-    private function _organizer()
-    {
-        if($this->adm->createOrganizer($this->args['newlogin'], $this->args['newpassword'], $this->args['secret']))
+    private function _organizer() {
+        if($this->adm->createOrganizer($this->args['newlogin'], $this->args['newpassword'], $this->args['secret'])) {
             $this->status = StatusHandler::success();
-        else
+        }
+        else {
             $this->status = StatusHandler::error(StatusHandler::STH_WRONG);
+        }
     }
 
-    private function _user()
-    {
+    private function _user() {
         if (!$this->adm->isAdmin()) {
             $this->status = StatusHandler::error(StatusHandler::NOT_ADMIN);
             return;
         }
 
-        if ($this->adm->registerUser($this->args['newlogin'], $this->args['newpassword']))
+        if ($this->adm->registerUser($this->args['newlogin'], $this->args['newpassword'])) {
             $this->status = StatusHandler::success();
-        else
+        }
+        else {
             $this->status = StatusHandler::error(StatusHandler::STH_WRONG);
-
+        }
     }
 
-    private function _event()
-    {
+    private function _event() {
         if (!$this->adm->isAdmin()) {
             $this->status = StatusHandler::error(StatusHandler::NOT_ADMIN);
             return;
         }
 
-        if ($this->event->createEvent($this->args['eventname'], $this->args['start_timestamp'], $this->args['end_timestamp']))
+        if ($this->event->createEvent($this->args['eventname'], $this->args['start_timestamp'], $this->args['end_timestamp'])) {
             $this->status = StatusHandler::success();
-        else
+        }
+        else {
             $this->status = StatusHandler::error(StatusHandler::STH_WRONG);
+        }
     }
 
-    private function _talk()
-    {
+    private function _talk() {
         if (!$this->adm->isAdmin()) {
             $this->status = StatusHandler::error(StatusHandler::NOT_ADMIN );
             return;
@@ -222,79 +247,84 @@ class ApiController
             $this->database->evaluationTalk($this->adm->getUserLogin(), $this->args['talk'], $this->args['initial_evaluation'], true);
             $this->status = StatusHandler::success();
         }
-        else
+        else {
             $this->status = StatusHandler::error(StatusHandler::STH_WRONG);
+        }
 
     }
 
-    private function _reject()
-    {
+    private function _reject() {
         if (!$this->adm->isAdmin()) {
             $this->status = StatusHandler::error(StatusHandler::NOT_ADMIN);
             return;
         }
 
-        if ($this->talk->rejectTalk($this->args['talk']))
-                $this->status = StatusHandler::success();
-        else
+        if ($this->talk->rejectTalk($this->args['talk'])) {
+            $this->status = StatusHandler::success();
+        }
+        else {
             $this->status = StatusHandler::error(StatusHandler::STH_WRONG);
+        }
 
     }
 
-    private function _registerUserForEvent()
-    {
+    private function _registerUserForEvent() {
         if (!$this->adm->isLogged()) {
             $this->status = StatusHandler::error(StatusHandler::NOT_LOGGED);
             return;
         }
 
-        if ($this->event->registerUserForEvent($this->adm->getUserLogin(), $this->args['eventname']))
+        if ($this->event->registerUserForEvent($this->adm->getUserLogin(), $this->args['eventname'])) {
             $this->status = StatusHandler::success();
-        else
+        }
+        else {
             $this->status = StatusHandler::error(StatusHandler::STH_WRONG);
+        }
     }
 
-    private function _attendance()
-    {
+    private function _attendance() {
         if (!$this->adm->isLogged()) {
             $this->status = StatusHandler::error(StatusHandler::NOT_LOGGED);
             return;
         }
 
-        if ($this->talk->checkAttendance($this->adm->getUserLogin(), $this->args['talk']))
+        if ($this->talk->checkAttendance($this->adm->getUserLogin(), $this->args['talk'])) {
             $this->status = StatusHandler::success();
-        else
+        }
+        else {
             $this->status = StatusHandler::error(StatusHandler::STH_WRONG);
+        }
     }
 
-    private function _evaluation()
-    {
+    private function _evaluation() {
         if (!$this->adm->isLogged()) {
             $this->status = StatusHandler::error(StatusHandler::NOT_LOGGED);
             return;
         }
 
-        if ($this->talk->evaluationTalk($this->adm->getUserLogin(), $this->args['talk'], $this->args['rating']))
+        if ($this->talk->evaluationTalk($this->adm->getUserLogin(), $this->args['talk'], $this->args['rating'])) {
             $this->status = StatusHandler::success();
-        else
+        }
+        else {
             $this->status = StatusHandler::error(StatusHandler::STH_WRONG);
+        }
     }
 
-    private function _proposal()
-    {
+    private function _proposal() {
         if (!$this->adm->isLogged()) {
             $this->status = StatusHandler::error(StatusHandler::NOT_LOGGED);
             return;
         }
 
-        if ($this->talk->createProposalTalk($this->adm->getUserLogin(), $this->args['talk'], $this->args['title'], $this->args['start_timestamp']))
+        if ($this->talk->createProposalTalk($this->adm->getUserLogin(), $this->args['talk'], $this->args['title'], $this->args['start_timestamp'])) {
             $this->status = StatusHandler::success();
-        else
+        }
+        else {
             $this->status = StatusHandler::error(StatusHandler::STH_WRONG);
+        }
     }
 
-    private function _proposals()
-    {
+    private function _proposals() {
         if (!$this->adm->isAdmin()) {
             $this->status = StatusHandler::error(StatusHandler::NOT_ADMIN);
             return;
@@ -303,42 +333,38 @@ class ApiController
         $this->status = StatusHandler::success($this->talk->proposal());
     }
 
-    private function _friends()
-    {
+    private function _friends() {
         if (!$this->adm->isLogged()) {
             $this->status = StatusHandler::error(StatusHandler::NOT_LOGGED);
             return;
         }
 
-        if ($this->adm->addFriend($this->args['login2']))
+        if ($this->adm->addFriend($this->args['login2'])) {
             $this->status = StatusHandler::success();
-        else
+        }
+        else {
             $this->status = StatusHandler::error(StatusHandler::STH_WRONG);
+        }
 
     }
 
-    private function _userPlan()
-    {
+    private function _userPlan() {
         $this->status = StatusHandler::success($this->adm->getUserPlan($this->args['login'], $this->args['limit']));
     }
 
-    private function _dayPlan()
-    {
+    private function _dayPlan() {
         $this->status = StatusHandler::success($this->talk->getDayPlan($this->args['timestamp']));
     }
 
-    private function _bestTalks()
-    {
+    private function _bestTalks() {
         $this->status = StatusHandler::success($this->talk->getBestTalks($this->args['start_timestamp'], $this->args['end_timestamp'], $this->args['limit'], $this->args['all']));
     }
 
-    private function _mostPopularTalks()
-    {
+    private function _mostPopularTalks() {
         $this->status = StatusHandler::success($this->talk->getMostPopularTalks($this->args['start_timestamp'], $this->args['end_timestamp'], $this->args['limit']));
     }
 
-    private function _attendedTalks()
-    {
+    private function _attendedTalks() {
         if (!$this->adm->isLogged()) {
             $this->status = StatusHandler::error(StatusHandler::NOT_LOGGED);
             return;
@@ -347,8 +373,7 @@ class ApiController
         $this->status = StatusHandler::success($this->talk->attendedTalks($this->adm->getUserLogin()));
     }
 
-    private function _abandonedTalks()
-    {
+    private function _abandonedTalks() {
         if (!$this->adm->isAdmin()) {
             $this->status = StatusHandler::error(StatusHandler::NOT_ADMIN);
             return;
@@ -357,13 +382,11 @@ class ApiController
         $this->status = StatusHandler::success($this->talk->abandonedTalks($this->args['limit']));
     }
 
-    private function _recentlyAddedTalks()
-    {
+    private function _recentlyAddedTalks() {
         $this->status = StatusHandler::not_implemented();
     }
 
-    private function _rejectedTalks()
-    {
+    private function _rejectedTalks() {
         if ($this->adm->isAdmin())
             $this->status = StatusHandler::success($this->talk->getAllRejectedTalks());
         elseif ($this->adm->isLogged())
@@ -372,8 +395,7 @@ class ApiController
             $this->status = StatusHandler::error(StatusHandler::STH_WRONG);
     }
 
-    private function _friendsTalks()
-    {
+    private function _friendsTalks() {
         if (!$this->adm->isLogged()) {
             $this->status = StatusHandler::error(StatusHandler::NOT_LOGGED);
             return;
@@ -382,8 +404,7 @@ class ApiController
         $this->status = StatusHandler::success($this->talk->friendsTalks($this->adm->getUserLogin(), $this->args['start_timestamp'], $this->args['end_timestamp'], $this->args['limit']));
     }
 
-    private function _friendsEvents()
-    {
+    private function _friendsEvents() {
         if (!$this->adm->isLogged()) {
             $this->status = StatusHandler::error(StatusHandler::NOT_LOGGED);
             return;
@@ -392,8 +413,7 @@ class ApiController
         $this->status = StatusHandler::success($this->adm->friendsEvents($this->args['eventname']));
     }
 
-    private function _recommendedTalks()
-    {
+    private function _recommendedTalks() {
         if (!$this->adm->isLogged()) {
             $this->status = StatusHandler::error(StatusHandler::NOT_LOGGED);
             return;
@@ -402,8 +422,7 @@ class ApiController
         $this->status = StatusHandler::success($this->talk->recommendedTalks($this->args['start_timestamp'], $this->args['end_timestamp'], $this->args['limit']));
     }
 
-    private function _printResult()
-    {
+    private function _printResult() {
         echo json_encode($this->status);
     }
 

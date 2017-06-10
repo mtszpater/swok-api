@@ -1,30 +1,58 @@
 <?php
 include_once __DIR__ . "/../DatabaseManagerInterface.php";
+
+/**
+ * Class TalkService
+ */
 class TalkService
 {
+    /**
+     * @var DatabaseManagerInterface
+     */
     private $database;
 
-    public function __construct(DatabaseManagerInterface $database)
-    {
+    /**
+     * TalkService constructor.
+     * @param DatabaseManagerInterface $database
+     */
+    public function __construct(DatabaseManagerInterface $database) {
         $this->database = $database;
     }
 
-    public function createTalk($user_login, $talk_id, $title, $start_timestamp, $room, $event_name)
-    {
-        if( ! ($event_name === "") ) {
-            if (!$this->database->isEventNameBusy($event_name)) return false;
-            if ($this->database->existsTalk($talk_id)) return false;
+    /**
+     * @param $userLogin
+     * @param $talkId
+     * @param $title
+     * @param $startTimestamp
+     * @param $room
+     * @param $eventName
+     * @return bool
+     */
+    public function createTalk($userLogin, $talkId, $title, $startTimestamp, $room, $eventName) {
+        if( ! ($eventName === "") ) {
+            if (!$this->database->isEventNameBusy($eventName)) {
+                return false;
+            }
 
-            $event_start = $this->database->getStartTimeStampOfEvent($event_name);
-            if ($event_start >= $start_timestamp) return false;
-        }else{
-            $event_name = NULL;
+            if ($this->database->existsTalk($talkId)) {
+                return false;
+            }
+
+            $event_start = $this->database->getStartTimeStampOfEvent($eventName);
+
+            if ($event_start >= $startTimestamp) {
+                return false;
+            }
+
+        }
+        else {
+            $eventName = NULL;
         }
 
-        if ($this->database->createTalk($user_login, $talk_id, $title, $start_timestamp, intval($room), $event_name)) {
+        if ($this->database->createTalk($userLogin, $talkId, $title, $startTimestamp, intval($room), $eventName)) {
 
-            if ($this->database->existsProposalTalk($talk_id)) {
-                $this->deleteTalk($talk_id);
+            if ($this->database->existsProposalTalk($talkId)) {
+                $this->deleteTalk($talkId);
             }
             
             return true;
@@ -33,109 +61,186 @@ class TalkService
         return false;
     }
 
-    public function rejectTalk($talk_id)
-    {
-        if (!$this->database->existsProposalTalk($talk_id)) return false;
-
-        if ($this->database->rejectTalk($talk_id))
-                return true;
-
-        return false;
-    }
-
-    public function deleteTalk($talk_id)
-    {
-        if (!$this->database->existsProposalTalk($talk_id)) return false;
-
-        if ($this->database->deleteProposalTalk($talk_id))
-            return true;
-
-        return false;
-    }
-
-    public function checkAttendance($user_login, $talk_id)
-    {
-        if ($this->database->checkAttendance($user_login, $talk_id))
-                return true;
-
-        return false;
-    }
-
-    public function evaluationTalk($user_login, $talk_id, $rate)
-    {
-        if (!$this->database->existsTalk($talk_id))
+    /**
+     * @param $talkId
+     * @return bool
+     */
+    public function rejectTalk($talkId) {
+        if (!$this->database->existsProposalTalk($talkId)) {
             return false;
+        }
 
-        if ($this->database->evaluationTalk($user_login, $talk_id, intval($rate)))
+        if ($this->database->rejectTalk($talkId)) {
             return true;
+        }
 
         return false;
     }
 
-    public function createProposalTalk($user_login, $talk_id, $title, $start_timestamp)
-    {
-        if ($this->database->existsProposalTalk($talk_id)) return false;
-        if ($this->database->existsTalk($talk_id)) return false;
+    /**
+     * @param $talkId
+     * @return bool
+     */
+    public function deleteTalk($talkId) {
+        if (!$this->database->existsProposalTalk($talkId)) {
+            return false;
+        }
 
-        if ($this->database->createProposalTalk($user_login, $talk_id, $title, $start_timestamp))
-                return true;
+        if ($this->database->deleteProposalTalk($talkId)) {
+            return true;
+        }
 
         return false;
     }
 
-    public function attendedTalks($user_login)
-    {
-        return $this->database->getAttendedTalks($user_login);
+    /**
+     * @param $userLogin
+     * @param $talkId
+     * @return bool
+     */
+    public function checkAttendance($userLogin, $talkId) {
+        if ($this->database->checkAttendance($userLogin, $talkId)) {
+            return true;
+        }
+
+        return false;
     }
 
-    public function abandonedTalks($limit)
-    {
+    /**
+     * @param $userLogin
+     * @param $talkId
+     * @param $rate
+     * @return bool
+     */
+    public function evaluationTalk($userLogin, $talkId, $rate) {
+        if (!$this->database->existsTalk($talkId)) {
+            return false;
+        }
+
+        if ($this->database->evaluationTalk($userLogin, $talkId, intval($rate))) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param $userLogin
+     * @param $talkId
+     * @param $title
+     * @param $startTimestamp
+     * @return bool
+     */
+    public function createProposalTalk($userLogin, $talkId, $title, $startTimestamp) {
+        if ($this->database->existsProposalTalk($talkId)) {
+            return false;
+        }
+
+        if ($this->database->existsTalk($talkId)) {
+            return false;
+        }
+
+        if ($this->database->createProposalTalk($userLogin, $talkId, $title, $startTimestamp)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param $userLogin
+     * @return mixed
+     */
+    public function attendedTalks($userLogin) {
+        return $this->database->getAttendedTalks($userLogin);
+    }
+
+    /**
+     * @param $limit
+     * @return mixed
+     */
+    public function abandonedTalks($limit) {
         return $this->database->getAbandonedTalks($limit);
     }
 
-    public function getAllRejectedTalks()
-    {
+    /**
+     * @return mixed
+     */
+    public function getAllRejectedTalks() {
         return $this->database->getAllRejectedTalks();
     }
 
-    public function getAllRejectedTalksForUser($user_login)
-    {
-        return $this->database->getAllRejectedTalksForUser($user_login);
+    /**
+     * @param $userLogin
+     * @return mixed
+     */
+    public function getAllRejectedTalksForUser($userLogin) {
+        return $this->database->getAllRejectedTalksForUser($userLogin);
     }
 
-    public function proposal()
-    {
+    /**
+     * @return mixed
+     */
+    public function proposal() {
         return $this->database->getProposalTalks();
     }
 
-    public function friendsTalks($user_login, $start_timestamp, $end_timestamp, $limit)
-    {
-        return $this->database->getFriendsTalks($user_login, $start_timestamp, $end_timestamp, $limit);
+    /**
+     * @param $userLogin
+     * @param $startTimestamp
+     * @param $endTimestamp
+     * @param $limit
+     * @return mixed
+     */
+    public function friendsTalks($userLogin, $startTimestamp, $endTimestamp, $limit) {
+        return $this->database->getFriendsTalks($userLogin, $startTimestamp, $endTimestamp, $limit);
     }
 
-    public function getDayPlan($timestamp)
-    {
+    /**
+     * @param $timestamp
+     * @return mixed
+     */
+    public function getDayPlan($timestamp) {
         return $this->database->getDayPlan($timestamp);
     }
 
-    public function getBestTalks($start_timestamp, $end_timestamp, $limit, $all)
-    {
-        return $this->database->getBestTalks($start_timestamp, $end_timestamp, $limit, $all);
+    /**
+     * @param $startTimestamp
+     * @param $endTimestamp
+     * @param $limit
+     * @param $all
+     * @return mixed
+     */
+    public function getBestTalks($startTimestamp, $endTimestamp, $limit, $all) {
+        return $this->database->getBestTalks($startTimestamp, $endTimestamp, $limit, $all);
     }
 
-    public function getMostPopularTalks($start_timestamp, $end_timestamp, $limit)
-    {
-        return $this->database->getMostPopularTalks($start_timestamp, $end_timestamp, $limit);
+    /**
+     * @param $startTimestamp
+     * @param $endTimestamp
+     * @param $limit
+     * @return mixed
+     */
+    public function getMostPopularTalks($startTimestamp, $endTimestamp, $limit) {
+        return $this->database->getMostPopularTalks($startTimestamp, $endTimestamp, $limit);
     }
 
-    public function getRecentlyAddedTalks($limit)
-    {
+    /**
+     * @param $limit
+     * @return bool
+     */
+    public function getRecentlyAddedTalks($limit) {
         return false;
     }
 
-    public function recommendedTalks($start_timestamp, $end_timestamp, $limit)
-    {
-        return $this->database->getMostPopularTalks($start_timestamp, $end_timestamp, $limit);
+    /**
+     * @param $startTimestamp
+     * @param $endTimestamp
+     * @param $limit
+     * @return mixed
+     */
+    public function recommendedTalks($startTimestamp, $endTimestamp, $limit) {
+        return $this->database->getMostPopularTalks($startTimestamp, $endTimestamp, $limit);
     }
 
 }

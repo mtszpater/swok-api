@@ -2,50 +2,88 @@
 include_once __DIR__ . "/../DatabaseManagerInterface.php";
 require_once "GuestService.php";
 
+/**
+ * Class UserService
+ */
 class UserService extends GuestService
 {
-    private $user_login;
-    private $user_password;
+    /**
+     * @var DatabaseManagerInterface
+     */
+    private $userLogin;
+    /**
+     * @var
+     */
+    private $userPassword;
 
-    public function __construct($user_login, $user_password, DatabaseManagerInterface $database)
-    {
-        $this->user_login = $user_login;
-        $this->user_password = $user_password;
+    /**
+     * UserService constructor.
+     * @param DatabaseManagerInterface $userLogin
+     * @param $userPassword
+     * @param DatabaseManagerInterface $database
+     */
+    public function __construct($userLogin, $userPassword, DatabaseManagerInterface $database) {
+        $this->userLogin = $userLogin;
+        $this->userPassword = $userPassword;
 
         parent::__construct($database);
     }
 
-    public function addFriend($user_login)
-    {
-        if ($user_login === $this->user_login) return false;
-        if (!$this->database->isLoginBusy($user_login)) return false;
+    /**
+     * @param $userLogin
+     * @return bool
+     */
+    public function addFriend($userLogin) {
+        if ($userLogin === $this->userLogin) {
+            return false;
+        }
 
-        if ($this->database->addFriend($this->user_login, $user_login))
+        if (!$this->database->isLoginBusy($userLogin)) {
+            return false;
+        }
+
+        if ($this->database->addFriend($this->userLogin, $userLogin)) {
             return true;
+        }
 
         return false;
     }
 
-    public function friendsEvents($event)
-    {
-        return $this->database->getFriendsEvents($this->user_login, $event);
+    /**
+     * @param $eventName
+     * @return mixed
+     */
+    public function friendsEvents($eventName) {
+        return $this->database->getFriendsEvents($this->userLogin, $eventName);
     }
 
-    public function isLogged()
-    {
-        if(!$this->database->userExists($this->user_login, $this->user_password)) return false;
+    /**
+     * @return bool
+     */
+    public function isLogged() {
+        if(!$this->database->userExists($this->userLogin, $this->userPassword)) {
+            return false;
+        }
+
         return true;
     }
 
-    public function isAdmin()
-    {
-        if (!$this->database->isAdmin($this->user_login, $this->user_password)) return false;
+    /**
+     * @return bool
+     */
+    public function isAdmin() {
+        if (!$this->database->isAdmin($this->userLogin, $this->userPassword)) {
+            return false;
+        }
+
         return true;
     }
 
-    public function getUserLogin()
-    {
-        return $this->user_login;
+    /**
+     * @return DatabaseManagerInterface
+     */
+    public function getUserLogin() {
+        return $this->userLogin;
     }
 
 

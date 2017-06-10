@@ -1,38 +1,56 @@
 <?php
 include_once __DIR__ . "/../DatabaseManagerInterface.php";
+
 /**
- * Created by PhpStorm.
- * User: pater
- * Date: 27.05.2017
- * Time: 22:05
+ * Class EventService
  */
 class EventService
 {
+    /**
+     * @var DatabaseManagerInterface
+     */
     private $database;
 
-    public function __construct(DatabaseManagerInterface $database)
-    {
+    /**
+     * EventService constructor.
+     * @param DatabaseManagerInterface $database
+     */
+    public function __construct(DatabaseManagerInterface $database) {
         $this->database = $database;
     }
 
-    public function createEvent($event_name, $start, $end)
-    {
-        if ($this->database->isEventNameBusy($event_name)) return false;
+    /**
+     * @param $eventName
+     * @param $eventStart
+     * @param $eventEnd
+     * @return bool
+     */
+    public function createEvent($eventName, $eventStart, $eventEnd) {
+        if ($this->database->isEventNameBusy($eventName)) {
+            return false;
+        }
 
-        if ($this->database->createEvent($event_name, $start, $end))
+        if ($this->database->createEvent($eventName, $eventStart, $eventEnd)) {
             return true;
+        }
 
         return false;
     }
 
-    public function registerUserForEvent($user_login, $event_name)
-    {
-        if (!$this->database->isEventNameBusy($event_name)) return false;
+    /**
+     * @param $userLogin
+     * @param $eventName
+     * @return bool
+     */
+    public function registerUserForEvent($userLogin, $eventName) {
+        if (!$this->database->isEventNameBusy($eventName)) {
+            return false;
+        }
 
-        if ($this->database->registerUserForEvent($user_login, $event_name))
+        if ($this->database->registerUserForEvent($userLogin, $eventName)) {
             return true;
+        }
 
         return false;
     }
-
 }

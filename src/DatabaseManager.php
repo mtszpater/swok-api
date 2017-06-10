@@ -1,10 +1,24 @@
 <?php
 include_once "DatabaseManagerInterface.php";
 
+/**
+ * Class DatabaseManager
+ */
 class DatabaseManager implements DatabaseManagerInterface {
-	private $connection = null;
+    /**
+     * @var null|resource
+     */
+    private $connection = null;
 
-	public function __construct($dbname = 'springbootdb', $user = 'ja', $password = '', $host = 'localhost', $port = '5432')
+    /**
+     * DatabaseManager constructor.
+     * @param string $dbname
+     * @param string $user
+     * @param string $password
+     * @param string $host
+     * @param string $port
+     */
+    public function __construct($dbname = 'springbootdb', $user = 'ja', $password = '', $host = 'localhost', $port = '5432')
     {
 		$this->connection = @pg_connect("host=".$host." port=".$port." dbname=".$dbname." user=".$user." password=".$password."") or die("Niepoprawne dane\n");
 	}
@@ -25,6 +39,11 @@ class DatabaseManager implements DatabaseManagerInterface {
         @pg_query($this->connection, $templine);
     }
 
+    /**
+     * @param $user_login
+     * @param $user_password
+     * @return bool
+     */
     public function userExists($user_login, $user_password)
     {
 		$query = @pg_query($this->connection, "select * from member WHERE login='$user_login' AND password='$user_password';");
@@ -32,23 +51,43 @@ class DatabaseManager implements DatabaseManagerInterface {
 		return pg_num_rows($query) == 1 ? true : false;
 	}
 
-	public function isAdmin($user_login, $user_password)
+    /**
+     * @param $user_login
+     * @param $user_password
+     * @return bool
+     */
+    public function isAdmin($user_login, $user_password)
     {
         $query = @pg_query($this->connection, "select * from member WHERE login='$user_login' AND password='$user_password' AND admin='1';");
 
         return pg_num_rows($query) == 1 ? true : false;
     }
 
+    /**
+     * @param $event_name
+     * @param $start_timestamp
+     * @param $end_timestamp
+     * @return bool
+     */
     public function createEvent($event_name, $start_timestamp, $end_timestamp)
     {
         return @pg_query($this->connection, "insert into event (name, date_start, date_end) VALUES ('$event_name', '$start_timestamp', '$end_timestamp');") ? true : false;
     }
 
-	public function registerUser($user_login, $user_password)
+    /**
+     * @param $user_login
+     * @param $user_password
+     * @return bool
+     */
+    public function registerUser($user_login, $user_password)
     {
         return @pg_query($this->connection, "insert into member (login, password) VALUES ('$user_login', '$user_password')") ? true : false;
     }
 
+    /**
+     * @param $user_login
+     * @return bool
+     */
     public function isLoginBusy($user_login)
     {
         $query = @pg_query($this->connection, "select * from member WHERE login='$user_login'");
@@ -56,6 +95,10 @@ class DatabaseManager implements DatabaseManagerInterface {
         return pg_num_rows($query) == 1 ? true : false;
     }
 
+    /**
+     * @param $event_name
+     * @return bool
+     */
     public function isEventNameBusy($event_name)
     {
         $query = @pg_query($this->connection, "select * from event WHERE name='$event_name'");
@@ -63,6 +106,10 @@ class DatabaseManager implements DatabaseManagerInterface {
         return pg_num_rows($query) == 1 ? true : false;
     }
 
+    /**
+     * @param $talk_id
+     * @return bool
+     */
     public function existsProposalTalk($talk_id)
     {
         $query = @pg_query($this->connection, "select * from talk_proposal WHERE id='$talk_id'");
@@ -70,6 +117,10 @@ class DatabaseManager implements DatabaseManagerInterface {
         return pg_num_rows($query) == 1 ? true : false;
     }
 
+    /**
+     * @param $talk_id
+     * @return bool
+     */
     public function existsTalk($talk_id)
     {
         $query = @pg_query($this->connection, "select * from talk WHERE id='$talk_id'");
@@ -77,6 +128,15 @@ class DatabaseManager implements DatabaseManagerInterface {
         return pg_num_rows($query) == 1 ? true : false;
     }
 
+    /**
+     * @param $user_login
+     * @param $talk
+     * @param $title
+     * @param $start_timestamp
+     * @param $room
+     * @param null $event_name
+     * @return bool
+     */
     public function createTalk($user_login, $talk, $title, $start_timestamp, $room, $event_name = NULL)
     {
         if(is_null($event_name))
@@ -85,16 +145,33 @@ class DatabaseManager implements DatabaseManagerInterface {
             return @pg_query($this->connection, "insert into talk (id, title, login, date_start, room, event_name) VALUES('$talk', '$title', '$user_login', '$start_timestamp', '$room', '$event_name')") ? true : false;
     }
 
+    /**
+     * @param $user_login
+     * @param $event_name
+     * @return bool
+     */
     public function registerUserForEvent($user_login, $event_name)
     {
         return @pg_query($this->connection, "insert into registrations_on_events (login, event_name) VALUES ('$user_login', '$event_name')") ? true : false;
     }
 
+    /**
+     * @param $user_login
+     * @param $talk_id
+     * @return bool
+     */
     public function checkAttendance($user_login, $talk_id)
     {
         return @pg_query($this->connection, "insert into attendance_on_talks (login, talk_id) VALUES ('$user_login', '$talk_id')") ? true : false;
     }
 
+    /**
+     * @param $user_login
+     * @param $talk_id
+     * @param $rate
+     * @param bool $initial_evaluation
+     * @return bool
+     */
     public function evaluationTalk($user_login, $talk_id, $rate, $initial_evaluation = false)
     {
         if( $initial_evaluation )
@@ -103,36 +180,72 @@ class DatabaseManager implements DatabaseManagerInterface {
             return @pg_query($this->connection, "insert into rate (talk_id, login, rate, initial_evaluation) VALUES ('$talk_id', '$user_login', '$rate', 'FALSE')") ? true : false;
     }
 
+    /**
+     * @param $talk_id
+     * @return bool
+     */
     public function rejectTalk($talk_id)
     {
         return @pg_query($this->connection, "update talk_proposal SET rejected = TRUE where id = '$talk_id'") ? true : false;
     }
 
+    /**
+     * @param $talk_id
+     * @return bool
+     */
     public function deleteProposalTalk($talk_id)
     {
         return @pg_query($this->connection, "delete from talk_proposal where id = '$talk_id'") ? true : false;
     }
 
+    /**
+     * @param $user_login
+     * @param $talk_id
+     * @param $title
+     * @param $start_timestamp
+     * @return bool
+     */
     public function proposalTalk($user_login, $talk_id, $title, $start_timestamp)
     {
         return @pg_query($this->connection, "insert into talk_proposal (id, title, login, date_start) VALUES ('$talk_id', '$title', '$user_login', '$start_timestamp')") ? true : false;
     }
 
+    /**
+     * @param $user_login
+     * @param $user_password
+     * @return bool
+     */
     public function registerOrganizer($user_login, $user_password)
     {
         return @pg_query($this->connection, "insert into member (login, password, admin) VALUES ('$user_login', '$user_password', true)") ? true : false;
     }
 
+    /**
+     * @param $user_login
+     * @param $talk
+     * @param $title
+     * @param $start_timestamp
+     * @return bool
+     */
     public function createProposalTalk($user_login, $talk, $title, $start_timestamp)
     {
         return @pg_query($this->connection, "insert into talk_proposal (id, title, login, date_start) VALUES ('$talk', '$title', '$user_login', '$start_timestamp')") ? true : false;
     }
 
+    /**
+     * @param $user_login
+     * @param $user_login2
+     * @return bool
+     */
     public function addFriend($user_login, $user_login2)
     {
         return @pg_query($this->connection, "insert into friendship (first_user, second_user) VALUES ('$user_login', '$user_login2')") ? true : false;
     }
 
+    /**
+     * @param $event_name
+     * @return string
+     */
     public function getStartTimeStampOfEvent($event_name)
     {
         $query = @pg_query($this->connection, "select date_start from event where name = '$event_name'");
@@ -140,6 +253,11 @@ class DatabaseManager implements DatabaseManagerInterface {
         return pg_fetch_result($query, 0, 0);
     }
 
+    /**
+     * @param $user_login
+     * @param $limit
+     * @return array
+     */
     public function getUserPlan($user_login, $limit)
     {
 
@@ -158,6 +276,10 @@ class DatabaseManager implements DatabaseManagerInterface {
 
     }
 
+    /**
+     * @param $timestamp
+     * @return array
+     */
     public function getDayPlan($timestamp)
     {
         $query = @pg_query($this->connection,
@@ -166,6 +288,13 @@ class DatabaseManager implements DatabaseManagerInterface {
         return pg_fetch_all($query) ? pg_fetch_all($query) : array();
     }
 
+    /**
+     * @param $start_timestamp
+     * @param $end_timestamp
+     * @param $limit
+     * @param $all
+     * @return array
+     */
     public function getBestTalks($start_timestamp, $end_timestamp, $limit, $all)
     {
 
@@ -196,6 +325,12 @@ class DatabaseManager implements DatabaseManagerInterface {
         return pg_fetch_all($query) ? pg_fetch_all($query) : array();
     }
 
+    /**
+     * @param $start_timestamp
+     * @param $end_timestamp
+     * @param $limit
+     * @return array
+     */
     public function getMostPopularTalks($start_timestamp, $end_timestamp, $limit)
     {
 
@@ -209,6 +344,10 @@ class DatabaseManager implements DatabaseManagerInterface {
 
     }
 
+    /**
+     * @param $user_login
+     * @return array
+     */
     public function getAttendedTalks($user_login)
     {
         $query = @pg_query($this->connection, "SELECT attendance_on_talks.talk_id as talk, talk.date_start as start_timestamp, title, room  FROM talk
@@ -218,12 +357,22 @@ class DatabaseManager implements DatabaseManagerInterface {
         return pg_fetch_all($query) ? pg_fetch_all($query) : array();
     }
 
+    /**
+     * @return array
+     */
     public function getProposalTalks()
     {
         $query = @pg_query($this->connection, "SELECT id as talk, title, login as speakerlogin, date_start as start_timestamp FROM talk_proposal where rejected = FALSE;");
         return pg_fetch_all($query) ? pg_fetch_all($query) : array();
     }
 
+    /**
+     * @param $user_login
+     * @param $start_timestamp
+     * @param $end_timestamp
+     * @param $limit
+     * @return array
+     */
     public function getFriendsTalks($user_login, $start_timestamp, $end_timestamp, $limit)
     {
             $query = "Select talk.id as talk, talk.login as speakerlogin, talk.date_start as start_timestamp, title, room from friendship f1
@@ -242,6 +391,11 @@ class DatabaseManager implements DatabaseManagerInterface {
 
     }
 
+    /**
+     * @param $user_login
+     * @param $event_name
+     * @return array
+     */
     public function getFriendsEvents($user_login, $event_name)
     {
         $query = @pg_query($this->connection, "Select f1.first_user as login, r.event_name as event, r.login as friendlogin from friendship f1
@@ -254,18 +408,29 @@ class DatabaseManager implements DatabaseManagerInterface {
         return pg_fetch_all($query) ? pg_fetch_all($query) : array();
     }
 
+    /**
+     * @return array
+     */
     public function getAllRejectedTalks()
     {
         $query = @pg_query($this->connection, "Select t.id as talk, t.login as speakerlogin, t.date_start as start_timestamp, t.title FROM talk_proposal t WHERE t.rejected = 't';");
         return pg_fetch_all($query) ? pg_fetch_all($query) : array();
     }
 
+    /**
+     * @param $user_login
+     * @return array
+     */
     public function getAllRejectedTalksForUser($user_login)
     {
         $query = @pg_query($this->connection, "Select t.id as talk, t.login as speakerlogin, t.date_start as start_timestamp, t.title FROM talk_proposal t WHERE t.rejected = 't' AND t.login = '$user_login';");
         return pg_fetch_all($query) ? pg_fetch_all($query) : array();
     }
 
+    /**
+     * @param $limit
+     * @return array
+     */
     public function getAbandonedTalks($limit)
     {
         $query = "SELECT t.id as talk, q2.s as number, t.title, t.date_start as start_timestamp, t.room from (
@@ -285,6 +450,11 @@ class DatabaseManager implements DatabaseManagerInterface {
         return pg_fetch_all($query) ? pg_fetch_all($query) : array();
     }
 
+    /**
+     * @param $limit
+     * @param $query
+     * @return string
+     */
     private function addLimit($limit, $query)
     {
         if ($limit != 0)
