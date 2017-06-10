@@ -52,7 +52,7 @@ class App
         $this->consoleReader->readLine();
 
         if ($this->consoleReader->getCurrentFunctionName() === "open") {
-            $this->setDatabaseProperties();
+            $this->setDefaultDatabaseProperties();
             $this->initializeApiController();
             $this->firstLine = false;
         } else {
@@ -65,7 +65,7 @@ class App
         $this->initializeApiController();
     }
 
-    private function setDatabaseProperties() {
+    private function setDefaultDatabaseProperties() {
         $tmpArgs = $this->consoleReader->getCurrentArgs();
         $this->dbName = $tmpArgs['baza'];
         $this->dbPassword = $tmpArgs['password'];
