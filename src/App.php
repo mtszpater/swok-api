@@ -48,16 +48,12 @@ class App
         }
     }
 
-    public function execute() {
-        $this->apiController->execute();
-        echo "\n";
-    }
-
     private function readFirstLine() {
         $this->consoleReader->readLine();
+
         if ($this->consoleReader->getCurrentFunctionName() === "open") {
-            $this->saveDataToDb();
-            $this->initializeOperationManager();
+            $this->setDatabaseProperties();
+            $this->initializeApiController();
             $this->firstLine = false;
         } else {
             throw new Exception("Bad first argument, should be open");
@@ -66,21 +62,25 @@ class App
 
     private function readNextLine() {
         $this->consoleReader->readLine();
-        $this->initializeOperationManager();
+        $this->initializeApiController();
     }
 
-    private function initializeOperationManager() {
-        $this->apiController = new ApiController($this->dbName, $this->dbUser, $this->dbPassword);
-        $this->apiController->functionName = $this->consoleReader->getCurrentFunctionName();
-        $this->apiController->args = $this->consoleReader->getCurrentArgs();
-    }
-
-    private function saveDataToDb() {
+    private function setDatabaseProperties() {
         $tmpArgs = $this->consoleReader->getCurrentArgs();
         $this->dbName = $tmpArgs['baza'];
         $this->dbPassword = $tmpArgs['password'];
         $this->dbUser = $tmpArgs['login'];
     }
 
+    private function initializeApiController() {
+        $this->apiController = new ApiController($this->dbName, $this->dbUser, $this->dbPassword);
+        $this->apiController->functionName = $this->consoleReader->getCurrentFunctionName();
+        $this->apiController->args = $this->consoleReader->getCurrentArgs();
+    }
+
+    public function execute() {
+        $this->apiController->execute();
+        echo "\n";
+    }
 
 }
