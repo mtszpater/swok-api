@@ -1,3 +1,7 @@
+DROP TRIGGER IF EXISTS update_talk_after_insert ON attendance_on_talks;
+DROP TRIGGER IF EXISTS update_event_after_insert ON talk;
+
+
 CREATE TABLE IF NOT EXISTS member (
   login text UNIQUE PRIMARY KEY,
   password text NOT NULL,
@@ -7,7 +11,7 @@ CREATE TABLE IF NOT EXISTS member (
 CREATE TABLE IF NOT EXISTS talk_proposal (
   id text PRIMARY KEY,
   title text NOT NULL,
-  login text NOT NULL,
+  login text NOT NULL REFERENCES member(login),
   rejected bool default false,
   date_start TIMESTAMP NOT NULL
 );
@@ -24,52 +28,42 @@ CREATE TABLE IF NOT EXISTS event (
 CREATE TABLE IF NOT EXISTS talk (
   id text PRIMARY KEY,
   title text NOT NULL,
-  login text NOT NULL,
+  login text NOT NULL REFERENCES member(login),
   members int default 0,
   date_start TIMESTAMP NOT NULL,
   room int NOT NULL,
-  event_name text NULL
+  event_name text NULL  REFERENCES event(name)
 );
 
+
 CREATE TABLE IF NOT EXISTS registrations_on_events(
-  login text NOT NULL,
-  event_name text,
+  login text NOT NULL REFERENCES member(login),
+  event_name text REFERENCES event(name),
   PRIMARY KEY (login, event_name)
 );
 
 CREATE TABLE IF NOT EXISTS attendance_on_talks(
-  login text NOT NULL,
-  talk_id text NOT NULL,
+  login text NOT NULL REFERENCES member(login),
+  talk_id text NOT NULL REFERENCES talk(id),
   PRIMARY KEY (login, talk_id)
 );
 
 CREATE TABLE IF NOT EXISTS friendship (
-  first_user TEXT NOT NULL,
-  second_user TEXT NOT NULL,
+  first_user TEXT NOT NULL REFERENCES member(login),
+  second_user TEXT NOT NULL REFERENCES member(login),
   PRIMARY KEY (first_user, second_user),
   check ( second_user != first_user )
 );
 
 CREATE TABLE IF NOT EXISTS rate (
-  talk_id text NOT NULL,
-  login text NOT NULL,
+  talk_id text NOT NULL  REFERENCES talk(id),
+  login text NOT NULL  REFERENCES member(login),
   rate int NOT NULL,
   initial_evaluation bool default false,
   PRIMARY KEY (talk_id, login),
   check ( rate >= 0 AND rate <= 10 )
 );
 
-ALTER TABLE ONLY talk_proposal ADD CONSTRAINT fk_talk_proposal_login FOREIGN KEY (login) REFERENCES member(login);
-ALTER TABLE ONLY talk ADD CONSTRAINT fk_talk_login FOREIGN KEY (login) REFERENCES member(login);
-ALTER TABLE ONLY talk ADD CONSTRAINT fk_talk_event FOREIGN KEY (event_name) REFERENCES event(name);
-ALTER TABLE ONLY registrations_on_events ADD CONSTRAINT fk_ron_login FOREIGN KEY (login) REFERENCES member(login);
-ALTER TABLE ONLY registrations_on_events ADD CONSTRAINT fk_ron_event FOREIGN KEY (event_name) REFERENCES event(name);
-ALTER TABLE ONLY attendance_on_talks ADD CONSTRAINT fk_aon_login FOREIGN KEY (login) REFERENCES member(login);
-ALTER TABLE ONLY attendance_on_talks ADD CONSTRAINT fk_aon_talk FOREIGN KEY (talk_id) REFERENCES talk(id);
-ALTER TABLE ONLY friendship ADD CONSTRAINT fk_friendship_fu FOREIGN KEY (first_user) REFERENCES member(login);
-ALTER TABLE ONLY friendship ADD CONSTRAINT fk_friendship_su FOREIGN KEY (second_user) REFERENCES member(login);
-ALTER TABLE ONLY rate ADD CONSTRAINT fk_rate_login FOREIGN KEY (login) REFERENCES member(login);
-ALTER TABLE ONLY rate ADD CONSTRAINT fk_rate_talk_id FOREIGN KEY (talk_id) REFERENCES talk(id);
 --
 --  WYZWALACZE DLA AKTUALIZOWANIA LICZBY UZYTKOWNIKOW, KTORZY WZIELI UDZIAŁ W REFERACIE
 --

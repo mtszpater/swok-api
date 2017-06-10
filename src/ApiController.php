@@ -43,7 +43,7 @@ class ApiController
          * <ale uznałem, że może być problem z instalacją>
          */
         foreach ($this->args as $key => $value) {
-            $this->args['key'] = str_replace( ";", "-", $value);
+            $this->args[$key] = str_replace( ";", "", $value);
         }
     }
 
@@ -389,11 +389,16 @@ class ApiController
             return;
         }
 
-        $this->status = StatusHandler::success($this->adm->friendsEvents($this->args['event']));
+        $this->status = StatusHandler::success($this->adm->friendsEvents($this->args['eventname']));
     }
 
     private function _recommendedTalks()
     {
+        if (!$this->adm->isLogged()) {
+            $this->status = StatusHandler::error(StatusHandler::NOT_LOGGED);
+            return;
+        }
+
         $this->status = StatusHandler::success($this->talk->recommendedTalks($this->args['start_timestamp'], $this->args['end_timestamp'], $this->args['limit']));
     }
 

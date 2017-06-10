@@ -10,7 +10,7 @@ class DatabaseManager implements DatabaseManagerInterface {
 	}
 
     public function loadDatabase(){
-        $filename = './db.sql';
+        $filename = __DIR__ . '/db.sql';
 
         $templine = '';
         $lines = file($filename);
@@ -145,7 +145,7 @@ class DatabaseManager implements DatabaseManagerInterface {
 
         $query = "SELECT talk.login as login, id as talk, date_start as start_timestamp, title, room FROM registrations_on_events
                   JOIN talk ON registrations_on_events.event_name=talk.event_name
-                  WHERE registrations_on_events.login = '$user_login'
+                  WHERE registrations_on_events.login = '$user_login' AND NOW() <= date_start
                   ORDER BY talk.date_start ASC";
 
         if($limit != 0){
