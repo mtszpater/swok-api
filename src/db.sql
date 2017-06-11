@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS talk (
   members int default 0,
   date_start TIMESTAMP NOT NULL,
   room int NOT NULL,
+  talk_added TIMESTAMP default now(),
   event_name text NULL  REFERENCES event(name)
 );
 

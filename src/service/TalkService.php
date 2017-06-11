@@ -228,7 +228,7 @@ class TalkService
      * @return bool
      */
     public function getRecentlyAddedTalks($limit) {
-        return false;
+        return $this->database->getRecentlyAddedTalks($limit);
     }
 
     /**

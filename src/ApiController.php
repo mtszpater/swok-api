@@ -283,7 +283,7 @@ class ApiController
     }
 
     private function recently_added_talks() {
-        $this->status = StatusHandler::not_implemented();
+        $this->status = StatusHandler::success($this->talkService->getRecentlyAddedTalks($this->args['limit']));
     }
 
     private function rejected_talks() {
