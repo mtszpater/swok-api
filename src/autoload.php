@@ -1,13 +1,13 @@
 <?php
 function autoLoadServices($className) {
-    $filename = "service/" . $className . ".php";
+    $filename = __DIR__ . "/service/" . $className . ".php";
     if (is_readable($filename)) {
         require_once $filename;
     }
 }
 
 function autoloadController($className) {
-    $filename = "" . $className . ".php";
+    $filename =  __DIR__ . "/" . $className . ".php";
     if (is_readable($filename)) {
         require_once $filename;
     }
