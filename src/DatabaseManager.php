@@ -1,6 +1,11 @@
 <?php
 /**
  * Class DatabaseManager
+ *
+ * To nie jest zbyt dobra klasa i jestem tego świadomy. Dobrą implementacją byłoby
+ * utworzenie "unikalnych" metod typu select/insert/[..], które odpowiednio radziłyby sobie z podanymi argumentami
+ *
+ * a jeszcze lepszym wyjściem byłoby użycie jakiegoś gotowego frameworku :)
  */
 class DatabaseManager implements DatabaseManagerInterface {
     /**

@@ -57,11 +57,6 @@ class App
         }
     }
 
-    private function readNextLine() {
-        $this->consoleReader->readLine();
-        $this->initializeApiController();
-    }
-
     private function setDefaultDatabaseProperties() {
         $tmpArgs = $this->consoleReader->getCurrentArgs();
         $this->dbName = $tmpArgs['baza'];
@@ -73,6 +68,11 @@ class App
         $this->apiController = new ApiController($this->dbName, $this->dbUser, $this->dbPassword);
         $this->apiController->functionName = $this->consoleReader->getCurrentFunctionName();
         $this->apiController->args = $this->consoleReader->getCurrentArgs();
+    }
+
+    private function readNextLine() {
+        $this->consoleReader->readLine();
+        $this->initializeApiController();
     }
 
     public function execute() {
