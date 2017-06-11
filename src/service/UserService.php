@@ -1,7 +1,4 @@
 <?php
-include_once __DIR__ . "/../DatabaseManagerInterface.php";
-require_once "GuestService.php";
-
 /**
  * Class UserService
  */

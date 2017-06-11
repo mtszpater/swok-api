@@ -1,7 +1,4 @@
 <?php
-include_once __DIR__ . "/../DatabaseManagerInterface.php";
-include_once __DIR__ . "/../StatusHandler.php";
-
 /**
  * Class GuestService
  */
@@ -64,7 +61,6 @@ abstract class GuestService
         if ($this->database->registerUser($userLogin, $userPassword)) {
             return true;
         }
-
         return false;
     }
 

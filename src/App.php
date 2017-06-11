@@ -1,7 +1,4 @@
 <?php
-include_once "ApiController.php";
-include_once "ConsoleReader.php";
-
 /**
  * Class App
  */

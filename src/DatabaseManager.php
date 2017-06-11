@@ -1,6 +1,4 @@
 <?php
-include_once "DatabaseManagerInterface.php";
-
 /**
  * Class DatabaseManager
  */

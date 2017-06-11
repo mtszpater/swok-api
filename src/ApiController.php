@@ -1,9 +1,4 @@
 <?php
-require_once "DatabaseManager.php";
-require_once "service/UserService.php";
-require_once "service/TalkService.php";
-require_once "service/EventService.php";
-
 /**
  * Class ApiController
  */

@@ -1,6 +1,4 @@
 <?php
-include_once __DIR__ . "/../DatabaseManagerInterface.php";
-
 /**
  * Class EventService
  */
